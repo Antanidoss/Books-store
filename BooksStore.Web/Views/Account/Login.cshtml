@@ -1,0 +1,27 @@
+﻿@model LoginModel
+
+    <div class="regLog-div">
+        <form method="post" asp-action="Login" asp-controller="Account" class="regLog-form">
+            <div asp-validation-summary="All"></div>            
+
+            <div class="form-group">
+                <input asp-for="Email" class="regLog-input" type="email" placeholder=" " />
+                <label asp-for="Email" class="regLog-label">Эл.Почта:</label>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Password" class="regLog-input" type="password" placeholder=" " />               
+                <label asp-for="Password" class="regLog-label">Пароль:</label>
+            </div>            
+
+            <div class="form_group">
+                <label asp-for="IsParsistent" class="logReg-label">Запомнить:</label>
+                <input asp-for="IsParsistent" class="regLog-input" type="checkbox" />
+            </div>
+
+            <div class="form-group">
+                <input class="regLog-submit" value="Войти" type="submit" />
+            </div>
+            <a asp-action="Registration" asp-controller="Account">Зарегестрироваться</a>
+        </form>
+</div>

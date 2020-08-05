@@ -1,0 +1,16 @@
+﻿@model string
+
+<div>
+    <div class="addCategory-div">
+        <form asp-action="AddCategory" asp-controller="Category" method="post" class="addCategory-form">
+            <div class="vailidate-div" asp-validation-summary="All"></div>
+            <div class="addCategory-name">
+                <label for="categoryName">Название</label><br />
+                <input name="categoryName" />
+            </div>
+            <div>
+                <input type="submit" class="button" value="Создать" />
+            </div>
+        </form>
+    </div>
+</div>

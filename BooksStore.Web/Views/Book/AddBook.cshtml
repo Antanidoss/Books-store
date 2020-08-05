@@ -1,0 +1,46 @@
+﻿@model BookCreateModel
+
+<div>
+    <form asp-action="AddBook" asp-controller="Book" method="post" enctype="multipart/form-data" class="addBook-form">
+        <div class="vailidate-div" asp-validation-summary="All"></div>
+        <div>
+            <label asp-for="Title">Названия:</label><br />
+            <input asp-for="Title" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label asp-for="Descriptions">Описания:</label><br />
+            <textarea class="inputGroup-addBook textarea-addBook" asp-for="Descriptions"></textarea>
+        </div>
+        <div>
+            <label asp-for="CategoryName">Категория:</label><br />
+            <input asp-for="CategoryName" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label asp-for="NumberOfPages">Количество страниц:</label><br />
+            <input asp-for="NumberOfPages" type="number" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label asp-for="Price">Цена:</label><br />
+            <input asp-for="Price" type="number" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label asp-for="FirstNameAuthor">Имя автора:</label><br />
+            <input asp-for="FirstNameAuthor" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label asp-for="SurnameAuthor">Фамилия автора:</label><br />
+            <input asp-for="SurnameAuthor" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label for="uploadedFile">Изображения:</label><br />
+            <input name="uploadedFile" type="file" class="inputGroup-addBook" />
+        </div>
+        <div>
+            <label asp-for="InStock">В наличии</label><br />
+            <input asp-for="InStock" type="checkbox" class="inputGroup-addBook checkbox-addBook" />
+        </div>
+        <div>
+            <input type="submit" value="Создать" class="button" />
+        </div>
+    </form>
+</div>

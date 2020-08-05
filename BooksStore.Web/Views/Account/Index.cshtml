@@ -1,0 +1,34 @@
+﻿@model AppUserViewModel  
+
+<div class="indexAccountInfo-div">
+    @if(Model.RoleName == "admin")
+    {
+        <div class="info-group-div">
+            <a asp-action="IndexBooksAdmin" asp-controller="Book">Удалить книгу или обновить книгу</a>
+        </div>
+        <div class="info-group-div">
+            <a asp-action="AddBook" asp-controller="Book">Добавить книгу</a>
+        </div>
+        <div class="info-group-div">
+            <a asp-action="AddCategory" asp-controller="Category">Добавить категорию</a>
+        </div>
+        <div class="info-group-div">
+            <a asp-action="AddRole" asp-controller="Role">Добавить роль</a>
+        </div>
+        <div class="info-group-div">
+            <a asp-action="IndexRole" asp-controller="Role">Просмотреть роли</a>
+        </div>
+        <div class="info-group-div">
+            <a asp-action="IndexСategoriesAdmin" asp-controller="Category">Просмотреть категории</a>
+        </div>
+    }
+
+    <div class="info-group-div">
+        <a asp-action="IndexOrders" asp-controller="Order">Заказы</a>
+    </div>
+
+    <div class="info-group-div">
+        <a asp-action="Logout" asp-controller="Account">Выйти</a>
+    </div>
+    
+</div>

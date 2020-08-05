@@ -1,0 +1,13 @@
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.Db.deps.json
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.Db.dll
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\obj\Debug\netcoreapp3.1\BooksStore.Db.AssemblyInfoInputs.cache
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\obj\Debug\netcoreapp3.1\BooksStore.Db.AssemblyInfo.cs
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\obj\Debug\netcoreapp3.1\BooksStore.Db.csprojAssemblyReference.cache
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.Db.pdb
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.BL.dll
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.BL.pdb
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\obj\Debug\netcoreapp3.1\BooksStore.Db.csproj.CopyComplete
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\obj\Debug\netcoreapp3.1\BooksStore.Db.dll
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\obj\Debug\netcoreapp3.1\BooksStore.Db.pdb
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.Db.runtimeconfig.json
+C:\IT\c#\Проекты\BookStore\BooksStore.Db\bin\Debug\netcoreapp3.1\BooksStore.Db.runtimeconfig.dev.json

@@ -1,0 +1,78 @@
+﻿@model BookViewModel
+
+<div class="indexBook-main">
+    <div class="indexBook-book">
+        <div class="indexBook-flexDiv">
+            <div class="indexBook-titleBook">
+                <h2>@Model.Title.</h2>
+            </div>
+
+            <div class="indexBook-authorBook">
+               <h4>@Model.AuthorName</h4>
+            </div>
+        </div>
+        <div class="indexBook-flexDiv">
+            <div class="indexBook-bookImg-div">
+                @if (!string.IsNullOrEmpty(Model.ImgPath))
+                {
+                    <img src="@Url.Content(Model.ImgPath)" />
+                }
+            </div>
+
+            <div class="indexBook-descriptionsBook">
+                @Model.Descriptions
+            </div>
+        </div>
+        <div class="indexBook-flexDiv">
+            <div class="indexBook-stockBook">
+                @if (Model.InStock)
+                {
+                    <text>В наличии</text>
+                }
+                else
+                {
+                    <text>Нет в наличии</text>
+                }
+            </div>
+        </div>
+        <div class="indexBook-flexDiv"> 
+
+            <div class="indexBook-addBusket">
+                @if (!Model.IsAddToBasket)
+                {
+                    <div>
+                        <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
+                            <input type="hidden" value="@Model.Id" name="bookId" />
+                            <input type="submit" value="Добавить в корзину" class="button" />
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="bookInBasket-div">
+                        <a class="button" asp-action="IndexBasket" asp-controller="Basket">
+                            Уже в корзине<i class="fas fa-check"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="indexBook-priceBook">
+                @Model.Price.ToString("c")
+            </div>    
+            
+            <div class="indexBook-indexCommentsHref-div">
+                <a asp-action="IndexComments" asp-controller="Comment" asp-route-bookId="@Model.Id">Отзывы</a>
+            </div>
+
+            <div class="indexBook-categoryBook">
+                Категория: <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@Model.CategoryId">@Model.CategoryName</a>
+            </div>
+
+            <div class="indexBook-pageNumBook">
+                Количество страниц: @Model.NumberOfPages
+            </div>
+            
+        </div>
+   
+    </div>
+</div>

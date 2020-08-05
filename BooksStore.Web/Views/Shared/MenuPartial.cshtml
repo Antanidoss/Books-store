@@ -1,0 +1,28 @@
+﻿<header>
+    <nav class="dws-menu">
+        <ul class="dws-ul">
+            <li class="dws-li">
+                <a asp-action="IndexBooks" asp-controller="Book"><i class="fas fa-home" aria-hidden="true"></i>Главная</a>
+            </li>
+            @*<li class="dws-li">
+                <a asp-action="IndexBooks" asp-controller="Book" ><i class="fas fa-book" aria-hidden="true"></i>Книги</a>
+            </li>*@
+            <li class="dws-li">
+                <a asp-action="IndexBasket" asp-controller="Basket" ><i class="fas fa-shopping-basket" aria-hidden="true"></i>Корзина</a>
+            </li>
+            <li class="dws-li">
+                <a href="#"><i class="fas fa-phone-square-alt" aria-hidden="true"></i>Контакты</a>
+            </li>
+            <li class="dws-li">
+                @if (!Context.User.Identity.IsAuthenticated)
+                {
+                    <a asp-action="Login" asp-controller="Account" ><i class="fas fa-sign-in-alt" aria-hidden="true"></i>Войти</a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-controller="Account">@Context.User.Identity.Name</a>
+                }
+            </li>
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,14 @@
+﻿
+<div class="search">
+    <div class="serchByName">
+        <form asp-action="IndexBooksByName" asp-controller="Book" method="get">
+            <input type="search" placeholder="Название" name="bookName" />
+            <input type="submit" value="Поиск" class="button" />
+        </form>
+    </div>
+    <div class="serchByCategory">
+        <div>
+            @Html.ActionLink("Поиск по категориям", "IndexCategories", "Category")
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+﻿@model BasketViewModel
+
+
+<div class="indexBasket-main">
+    @if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
+    {
+        <div class="indexBooks-div">
+
+            @foreach (var book in Model.BookIndexModel.Objects)
+            {
+                <div class="indexBooks-book-div">
+
+                    <div class="indexBooks-bookTitle-div">
+                        <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a>
+                    </div>
+
+                    <div class="indexBooks-bookImg-div">
+                        @if (!string.IsNullOrEmpty(book.ImgPath))
+                        {
+                            <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">
+                                <img src="@Url.Content(book.ImgPath)" />
+                            </a>
+                        }
+                    </div>
+
+                    <div class="indexBooks-bookStock-div">
+                        <text>В наличии</text>
+                    </div>
+
+                    <div class="indexBasket-lowPanel">
+                        <div class="basketIndex-buy">
+                            <form asp-action="AddOrder" asp-controller="Order" method="post">
+                                <input name="createModel.BookOrderIds" value="@book.Id" type="hidden" />
+                                <div>
+                                    <input type="submit" value="Купить" class="basketIndex-buy-dutton button" />
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="indexBooks-BasketbookPrice-div">
+                            @book.Price.ToString("c")
+                        </div>
+
+                        <div class="basketIndex-remove">
+                            <form asp-action="RemoveBasketBook" asp-controller="Basket" method="get">
+                                <input value="@book.Id" type="hidden" name="bookId" />
+                                <input type="submit" value="Убрать с корзины" class="basketIndex-removeBook-dutton button" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="buyRemoveAll-baasket-div">
+            <div class="basketIndex-buyAll-div">
+                <form asp-action="AddOrder" asp-controller="Order" method="post">
+                    @for (int i = 0; i < Model.BookIndexModel.Objects.Count(); i++)
+                    {
+                        <input name="createModel.BookOrderIds[@i]" value="@Model.BookIndexModel.Objects[i].Id" type="hidden" />
+                    }
+                    <div>
+                        <input type="submit" value="Купить все @Model.TotalPrice.ToString("c")" class="basketIndex-buyAll-dutton button" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="basketIndex-removeAll-div">
+                <form asp-action="RemoveAllBasketBooks" asp-controller="Basket" method="get">
+                    <input type="submit" value="Очистить корзину" class="button" />
+                </form>
+            </div>
+        </div>
+
+        <div>
+
+            @if (Model.BookIndexModel.PageInfo.TotalPage != Model.BookIndexModel.PageInfo.PageNumber)
+            {
+                @Html.ActionLink("Вперед", "IndexBasket", "Basket", new { pageNum = (Model.BookIndexModel.PageInfo.PageNumber + 1) })
+            }
+
+            @if (Model.BookIndexModel.PageInfo.PageNumber > 1)
+            {
+                @Html.ActionLink("Назад", "IndexBasket", "Basket", new { pageNum = (Model.BookIndexModel.PageInfo.PageNumber - 1) })
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="basketEmpty-text-div">
+            <h3>У вас нет товаров в корзине</h3>
+        </div>
+    }
+    @*@await Html.PartialAsync("PopupPartial")*@
+</div>

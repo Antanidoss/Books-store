@@ -1,0 +1,37 @@
+﻿@model IndexViewModel<RoleViewModel>
+
+<div class="indexRoles-main">
+    @if (Model.Objects != null && Model.Objects.Count() != 0)
+    {
+         <div class="indexRoles-roles">
+             @foreach (var role in Model.Objects)
+             {
+                 <div class="indexRoles-role">
+                     <div>
+                         <p><h4>Названия: @role.Name</h4></p>
+                     </div>
+                     <div>
+                         <a asp-action="Edit" asp-controller="Role" asp-route-id="@role.Id">Редактировать</a>
+                     </div>
+                 </div>
+             }
+         </div>
+         <div class="indexRoles-addRole">
+              <a asp-action="AddRole" asp-controller="Role">Создать роль</a>
+         </div>
+         <div>
+             <div>
+                 @if (Model.PageInfo.TotalPage != Model.PageInfo.PageNumber)
+                 {
+                     <a asp-action="Index" asp-controller="Role" asp-route-page="@(Model.PageInfo.PageNumber + 1)">Вперед</a>
+                 }
+             </div>
+             <div>
+                 @if (Model.PageInfo.PageNumber > 1)
+                 {
+                     <a asp-action="Index" asp-controller="Role" asp-route-page="@(Model.PageInfo.PageNumber - 1)">Назад</a>
+                 }
+             </div>
+         </div>
+    }
+</div>

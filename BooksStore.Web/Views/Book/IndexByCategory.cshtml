@@ -1,0 +1,10 @@
+﻿@model IndexViewModel<BookViewModel>
+
+@if (Model.Objects != null && Model.Objects.Count() != 0)
+{
+    @await Html.PartialAsync("IndexBooks", new IndexViewModel<BookViewModel>() { Objects = Model.Objects, PageInfo = Model.PageInfo })
+}
+else
+{
+    <div class="noBookByCategory-div"><h3>Нет книг по данной категории</h3>></div>
+}

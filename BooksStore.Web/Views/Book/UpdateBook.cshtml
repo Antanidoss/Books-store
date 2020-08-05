@@ -1,0 +1,61 @@
+﻿@model BookViewModel
+
+@if (Model != null)
+{
+    <div class="updateBook-div">
+        <div class="updateBook-currentData">
+            <div>
+                <label asp-for="Title">Название: @Model.Title</label>
+            </div>
+            <div>
+                <label asp-for="Descriptions">Описания: <br /> @Model.Descriptions</label>
+            </div>
+            <div>
+                <label asp-for="NumberOfPages">Количество старниц: @Model.NumberOfPages</label>
+            </div>
+            <div>
+                <label asp-for="InStock">
+                    В наличии: 
+                    @if (Model.InStock)
+                    {
+                        <text>да</text>
+                    }
+                    else
+                    {
+                        <text>нет</text>
+                    }
+                </label>
+            </div>
+            <div>
+                <label asp-for="Price">Цена: @Model.Price</label>
+            </div>
+        </div>
+        <div class="updateBook-updateForm-div">
+            <form asp-action="UpdateBook" asp-controller="Book" method="post">
+                <div class="updateForm-group">
+                    <label asp-for="Title">Назваие:</label><br />
+                    <input asp-for="Title" />
+                </div>
+                <div class="updateForm-group">
+                    <label asp-for="Descriptions">Описания:</label><br />
+                    <textarea asp-for="Descriptions">@Model.Descriptions</textarea>
+                </div>
+                <div class="updateForm-group">
+                    <label asp-for="NumberOfPages">Количество страниц:</label><br />
+                    <input asp-for="NumberOfPages" type="number" />
+                </div>
+                <div class="updateForm-group">
+                    <label asp-for="InStock">В наличии:</label><br />
+                    <input asp-for="InStock" type="checkbox" />
+                </div>
+                <div class="updateForm-group">
+                    <label asp-for="Price">Цена:</label><br />
+                    <input asp-for="Price" type="number" />
+                </div>
+                <div class="updateForm-group">
+                    <input type="submit" class="button" value="Обновить" />
+                </div>
+            </form>
+        </div>
+    </div>
+}

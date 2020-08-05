@@ -1,0 +1,79 @@
+﻿@model IndexViewModel<BookViewModel>
+
+@await Html.PartialAsync("SearchPartial")
+
+@if (Model.Objects != null && Model.Objects.Count() != 0)
+{
+    <div class="indexBooks-main">
+        <div class="indexBooks-div">
+            @foreach (var book in Model.Objects)
+            {
+                <div class="indexBooks-book-div">
+
+                    <div class="indexBooks-bookTitle-div">
+                        <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a>
+                    </div>
+
+                    <div class="indexBooks-bookImg-div">
+                        @if (!string.IsNullOrEmpty(book.ImgPath))
+                        {
+                            <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">
+                                <img src="@Url.Content(book.ImgPath)" />
+                            </a>
+                        }
+                    </div>                    
+
+                    <div class="indexBooks-bookStock-div">
+                        @if (book.InStock)
+                        {
+                            <text>В наличии</text>
+                        }
+                        else
+                        {
+                            <text>Нет в наличии</text>
+                        }
+                    </div>
+
+                    <div class="indexBookAdmin-lowPanel">
+
+                        <div class="indexBooks-removeBook-div">
+                            <form asp-action="RemoveBook" asp-controller="Book" method="get">
+                                <input type="hidden" value="@book.Id" name="bookId" />
+                                <input class="indexAdmin-removeBook-button button " value="Удалить" type="submit" />
+                            </form>
+                        </div>
+
+                        <div class="indexBooks-updateBook-div">
+                            <form asp-action="UpdateBook" asp-controller="Book" method="get">
+                                <input type="hidden" value="@book.Id" name="bookId" />
+                                <input type="submit" value="Обновить" class="indexAdmin-updateBook-button button" />
+                            </form>
+                        </div>
+
+                        <div class="indexBooks-bookPrice-div">
+                            @book.Price.ToString("c")
+                        </div>
+
+                        <div class="indexBooks-bookAuthName-div">
+                            @book.AuthorName
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="indexBooks-pagination-div">
+            <div>
+                @if (Model.PageInfo.PageNumber > 1)
+                {
+                    <a asp-action="IndexBooksAdmin" asp-controller="Book" asp-route-pageNum="@(Model.PageInfo.PageNumber - 1)">Назад</a>
+                }
+            </div>
+            <div>
+                @if (Model.PageInfo.TotalPage > Model.PageInfo.PageNumber)
+                {
+                    <a asp-action="IndexBooksAdmin" asp-controller="Book" asp-route-pageNum="@(Model.PageInfo.PageNumber + 1)">Вперед</a>
+                }
+            </div>            
+        </div>
+    </div>
+}

@@ -1,0 +1,34 @@
+@model RegistrationModel
+
+<div class="regLog-div">
+    <form method="POST" asp-action="Registration" asp-controller="Account" class="regLog-form">
+
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-group">
+            <input asp-for="Name" class="regLog-input" />
+            <label asp-for="Name" class="regLog-label">Имя:</label>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Email" class="regLog-input" type="email" placeholder=" " />
+            <label asp-for="Email" class="regLog-label">Эл.Почта:</label>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Password" class="regLog-input" type="password" placeholder=" " />
+            <label asp-for="Password" class="regLog-label">Пароль:</label>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="IsPasrsistent" class="logReg-label">Запомнить:</label>
+            <input asp-for="IsPasrsistent" class="regLog-input" type="checkbox" />
+        </div>
+
+        <div class="form-group">
+            <input class="regLog-submit" value="Зарегестрироваться" type="submit" />
+        </div>
+
+        <a asp-action="Login" asp-controller="Account">Войти</a>
+    </form>
+</div>
