@@ -9040,13 +9040,13 @@
     },
     "BooksStore.Core/1.0.0": {
       "type": "project",
-      "path": "../BooksStore.BL/BooksStore.Core.csproj",
-      "msbuildProject": "../BooksStore.BL/BooksStore.Core.csproj"
+      "path": "../BooksStore.Core/BooksStore.Core.csproj",
+      "msbuildProject": "../BooksStore.Core/BooksStore.Core.csproj"
     },
     "BooksStore.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../BooksStore.Db/BooksStore.Infrastructure.csproj",
-      "msbuildProject": "../BooksStore.Db/BooksStore.Infrastructure.csproj"
+      "path": "../BooksStore.Infrastructure/BooksStore.Infrastructure.csproj",
+      "msbuildProject": "../BooksStore.Infrastructure/BooksStore.Infrastructure.csproj"
     },
     "BooksStore.Service/1.0.0": {
       "type": "project",
@@ -9071,11 +9071,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Web\\BooksStore.Web.csproj",
+      "projectUniqueName": "C:\\IT\\c#\\Test\\BooksStore.Web\\BooksStore.Web.csproj",
       "projectName": "BooksStore.Web",
-      "projectPath": "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Web\\BooksStore.Web.csproj",
+      "projectPath": "C:\\IT\\c#\\Test\\BooksStore.Web\\BooksStore.Web.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Web\\obj\\",
+      "outputPath": "C:\\IT\\c#\\Test\\BooksStore.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9091,14 +9091,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.BL\\BooksStore.Core.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.BL\\BooksStore.Core.csproj"
+            "C:\\IT\\c#\\Test\\BooksStore.Core\\BooksStore.Core.csproj": {
+              "projectPath": "C:\\IT\\c#\\Test\\BooksStore.Core\\BooksStore.Core.csproj"
             },
-            "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Db\\BooksStore.Infrastructure.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Db\\BooksStore.Infrastructure.csproj"
+            "C:\\IT\\c#\\Test\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj": {
+              "projectPath": "C:\\IT\\c#\\Test\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj"
             },
-            "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Service\\BooksStore.Service.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\BookStore\\BooksStore.Service\\BooksStore.Service.csproj"
+            "C:\\IT\\c#\\Test\\BooksStore.Service\\BooksStore.Service.csproj": {
+              "projectPath": "C:\\IT\\c#\\Test\\BooksStore.Service\\BooksStore.Service.csproj"
             }
           }
         }
