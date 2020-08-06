@@ -2,11 +2,11 @@
 
 # **How it looks**
 
-![](https://docs.google.com/uc?id=1dBq0ztV4fyhGLrxIEWzEhW7IqTB-rAJx)
+![](https://disk.yandex.ru/client/disk/%D0%9F%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE/BooksStore?idApp=client&dialog=slider&idDialog=%2Fdisk%2F%D0%9F%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE%2FBooksStore%2FScreenshot_3.png)
 ---
-![](https://docs.google.com/uc?id=1wiPIEx9-_8NBMfbKputNfKkhyo4o0hm1)
+![](https://disk.yandex.ru/client/disk/%D0%9F%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE/BooksStore?idApp=client&dialog=slider&idDialog=%2Fdisk%2F%D0%9F%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE%2FBooksStore%2FScreenshot_2.png)
 ---
-![](https://docs.google.com/uc?id=1U3MQm8KqNQeLOeFnQnkFJtK1MEgsy6ns)
+![](https://disk.yandex.ru/client/disk/%D0%9F%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE/BooksStore?idApp=client&dialog=slider&idDialog=%2Fdisk%2F%D0%9F%D0%BE%D1%80%D1%82%D1%84%D0%BE%D0%BB%D0%B8%D0%BE%2FBooksStore%2FScreenshot_1.png)
 ---
 
 # How to start a project
