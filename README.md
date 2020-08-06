@@ -2,11 +2,11 @@
 
 # **How it looks**
 
-![](https://raw.githubusercontent.com/Antanidoss/BooksStoreProject/master/Screenshot_3.png)
+![](https://raw.githubusercontent.com/Antanidoss/BooksStoreProject/master/imgForMd/Screenshot_3.png)
 ---
-![](https://raw.githubusercontent.com/Antanidoss/BooksStoreProject/master/Screenshot_2.png)
+![](https://raw.githubusercontent.com/Antanidoss/BooksStoreProject/master/imgForMd/Screenshot_2.png)
 ---
-![](https://raw.githubusercontent.com/Antanidoss/BooksStoreProject/master/Screenshot_1.png)
+![](https://raw.githubusercontent.com/Antanidoss/BooksStoreProject/master/imgForMd/Screenshot_1.png)
 ---
 
 # How to start a project
