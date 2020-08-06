@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BooksStore.Infastructure.Migrations
+namespace BooksStore.Infrastructure.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20200729100305_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200806101517_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,9 +100,6 @@ namespace BooksStore.Infastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Patronymic")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
@@ -324,9 +321,6 @@ namespace BooksStore.Infastructure.Migrations
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("TimeCreate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("TimeOfCreate")
                         .HasColumnType("datetime2");

@@ -21,7 +21,7 @@ namespace BooksStore.Web.Converter._Order
                 OrderViewModel orderViewModel = new OrderViewModel()
                 {
                     Id = order.Id,
-                    TimeCreate = order.TimeCreate,
+                    TimeOfCreate = order.TimeOfCreate,
                     TimeOfDelivery = order.TimeOfDelivery,
                     BooksViewModel = BookConverter.ConvertToBookViewModel(order.BookOrders.Select(p => p.Book)).ToList()
                 };

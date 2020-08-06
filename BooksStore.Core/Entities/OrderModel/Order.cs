@@ -9,7 +9,6 @@ namespace BooksStore.Core.OrderModel
     public class Order : BaseEntity
     {
         public IEnumerable<BookOrderJunction> BookOrders { get; set; }
-        public DateTime TimeCreate { get; set; }
         public DateTime TimeOfDelivery { get; set; }
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }

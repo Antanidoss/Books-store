@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BooksStore.Infastructure.Migrations
+namespace BooksStore.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,8 +30,7 @@ namespace BooksStore.Infastructure.Migrations
                     TimeOfCreate = table.Column<DateTime>(nullable: false),
                     UpdateTime = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true),
-                    Patronymic = table.Column<string>(nullable: true)
+                    Surname = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,7 +245,6 @@ namespace BooksStore.Infastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TimeOfCreate = table.Column<DateTime>(nullable: false),
                     UpdateTime = table.Column<DateTime>(nullable: false),
-                    TimeCreate = table.Column<DateTime>(nullable: false),
                     TimeOfDelivery = table.Column<DateTime>(nullable: false),
                     AppUserId = table.Column<string>(nullable: true)
                 },

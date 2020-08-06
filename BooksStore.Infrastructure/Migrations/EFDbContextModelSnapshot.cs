@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BooksStore.Infastructure.Migrations
+namespace BooksStore.Infrastructure.Migrations
 {
     [DbContext(typeof(EFDbContext))]
     partial class EFDbContextModelSnapshot : ModelSnapshot
@@ -100,9 +100,6 @@ namespace BooksStore.Infastructure.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Patronymic")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
@@ -173,7 +170,7 @@ namespace BooksStore.Infastructure.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descriptions")
@@ -322,9 +319,6 @@ namespace BooksStore.Infastructure.Migrations
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("TimeCreate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("TimeOfCreate")
                         .HasColumnType("datetime2");
@@ -507,7 +501,9 @@ namespace BooksStore.Infastructure.Migrations
 
                     b.HasOne("BooksStore.Core.CategoryModel.Category", "Category")
                         .WithMany("Books")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BooksStore.Core.BookOrderJunctionModel.BookOrderJunction", b =>

@@ -10,7 +10,7 @@ namespace BooksStore.Web.Models.ViewModels.Order
     public class OrderViewModel
     {
         public int Id { get; set; }
-        public DateTime TimeCreate { get; set; }
+        public DateTime TimeOfCreate { get; set; }
         public DateTime TimeOfDelivery { get; set; }
         public List<BookViewModel> BooksViewModel { get; set; }
         public bool OrderPlaced
