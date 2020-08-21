@@ -28,9 +28,9 @@ namespace BooksStore.Web.Models.CreateModels.Book
         public string CategoryName { get; set; }
 
         [Required(ErrorMessage = "Введите имя автора книги")]
-        public string FirstNameAuthor { get; set; }
+        public string AuthorFirstname { get; set; }
 
         [Required(ErrorMessage = "Введите фамилию автора книги")]
-        public string SurnameAuthor { get; set; }
+        public string AuthorSurname { get; set; }
     }
 }

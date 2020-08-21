@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Core.BookModel;
-using BooksStore.Core.CommentModel;
+using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Interface.Converter;
+using BooksStore.Web.Converter._Comment;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.ViewModels.Comment;
 using BooksStore.Web.Models.ViewModels.Index;
@@ -20,16 +19,14 @@ namespace BooksStore.Web.Controllers
     public class CommentController : Controller
     {
         ICommentService CommentService { get; set; }
-        ICommentConverter CommentConverter { get; set; }
         IBookService BookService { get; set; }
         ICurrentUser CurrentUser { get; set; }
         IMemoryCache Cache { get; set; }
 
-        public CommentController(ICommentService commentService, ICommentConverter commentConverter, IBookService bookService,
+        public CommentController(ICommentService commentService, IBookService bookService,
             ICurrentUser currentUser, IMemoryCache cache)
         {
             CommentService = commentService;
-            CommentConverter = commentConverter;
             BookService = bookService;
             CurrentUser = currentUser;
             Cache = cache;
@@ -38,11 +35,11 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexComments(int? bookId, int pageNum = 1)
         { 
-            Book book = new Book();         
+            BookDTO book = new BookDTO();         
             if(pageNum >= 1 && bookId.HasValue && (book = await BookService.GetBookByIdAsync(bookId.Value)) != null)
             {
                 int pageSize = 6;
-                if (!Cache.TryGetValue(CacheKeys.GetCommentsKey(bookId.Value , pageNum) , out List<Comment> commentsCache))
+                if (!Cache.TryGetValue(CacheKeys.GetCommentsKey(bookId.Value , pageNum) , out List<CommentDTO> commentsCache))
                 {
                     commentsCache = (await CommentService.GetCommentsByBookId(bookId.Value)).ToList();
                     if (commentsCache.Count() != 0)
@@ -54,11 +51,11 @@ namespace BooksStore.Web.Controllers
                     }
                 }
 
-                string userId = (await CurrentUser.GetCurrentAppUser(HttpContext)).Id;
+                string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
                 BookCommentViewModel bookComment = new BookCommentViewModel() 
                 {
                     IndexCommentModel = new IndexViewModel<CommentViewModel>(pageNum , pageSize, await CommentService.GetCountComments(),
-                    CommentConverter.ConvertToCommentViewModel(commentsCache)),
+                    CommentVMConverter.ConvertToCommentViewModel(commentsCache)),
                     BookId = book.Id,
                     BookName = book.Title,
                     UserIsComment = commentsCache.FirstOrDefault(p => p.AppUserId == userId) != default ? true : false
@@ -74,11 +71,11 @@ namespace BooksStore.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Book book = new Book();
+                BookDTO book = new BookDTO();
                 if(bookId.HasValue && (book = await BookService.GetBookByIdAsync(bookId.Value)) != null)
                 {
-                    string userId = (await CurrentUser.GetCurrentAppUser(HttpContext)).Id;
-                    Comment comment = new Comment() { BookId = book.Id, Descriptions = textComment, AppUserId = userId };
+                    string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
+                    CommentDTO comment = new CommentDTO() { BookId = book.Id, Descriptions = textComment, AppUserId = userId };
                     await CommentService.AddCommentAsync(comment);
 
                     RemoveCommentCache(bookId.Value, 1);
@@ -92,7 +89,7 @@ namespace BooksStore.Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
         {
-            Comment removeComment = new Comment();
+            CommentDTO removeComment = new CommentDTO();
             if(commentId.HasValue && (removeComment = await CommentService.GetCommentById(commentId.Value)) != null)
             {
                 await CommentService.RemoveCommentAsync(removeComment.Id);
@@ -103,7 +100,7 @@ namespace BooksStore.Web.Controllers
 
         private void RemoveCommentCache(int bookId, int pageNum)
         {
-            if(Cache.TryGetValue(CacheKeys.GetCommentsKey(bookId, pageNum), out List<Comment> comments))
+            if(Cache.TryGetValue(CacheKeys.GetCommentsKey(bookId, pageNum), out List<CommentDTO> comments))
             {
                 Cache.Remove(CacheKeys.GetCommentsKey(bookId, pageNum));
             }

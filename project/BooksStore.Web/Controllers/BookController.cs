@@ -4,13 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Core.AuthorModel;
-using BooksStore.Core.BookModel;
-using BooksStore.Core.CategoryModel;
-using BooksStore.Core.ImageModel;
+using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Interface.Converter;
+using BooksStore.Web.Converter._Book;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.CreateModels.Book;
 using BooksStore.Web.Models.ViewModels.Book;
@@ -27,16 +24,13 @@ namespace BooksStore.Web.Controllers
     {
         public IBookService BookService { get; set; }
         public IMemoryCache Cache { get; set; }
-        public IBookConverter BookConverter { get; set; }
         public IWebHostEnvironment AppEnvironment { get; set; }
         public ICurrentUser CurrentUser { get; set; }
 
-        public BookController(IBookService bookService, IMemoryCache cache, IBookConverter bookConverter, IWebHostEnvironment appEnvironment,
-            ICurrentUser currentUser)
+        public BookController(IBookService bookService, IMemoryCache cache, IWebHostEnvironment appEnvironment, ICurrentUser currentUser)
         {
             BookService = bookService;
             Cache = cache;
-            BookConverter = bookConverter;
             AppEnvironment = appEnvironment;
             CurrentUser = currentUser;
         }
@@ -50,12 +44,12 @@ namespace BooksStore.Web.Controllers
                     int pageSize = 6;                                        
                                             
                     indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, await BookService.GetCountBooks(),
-                        BookConverter.ConvertToBookViewModel(await BookService.GetBooks((pageNum - 1) * pageSize , pageSize)));
+                        BookVMConverter.ConvertToBookViewModel(await BookService.GetBooks((pageNum - 1) * pageSize , pageSize)));
                 }
 
                 if (HttpContext.User.Identity.IsAuthenticated && indexBookModel.Objects != null && indexBookModel.Objects.Count() != 0)
                 {
-                    int basketId = (await CurrentUser.GetCurrentAppUser(HttpContext)).BasketId;
+                    int basketId = (await CurrentUser.GetCurrentUser(HttpContext)).BasketId;
 
                     foreach (var book in indexBookModel.Objects)
                     {
@@ -78,7 +72,7 @@ namespace BooksStore.Web.Controllers
         {
             if (bookId.HasValue)
             {
-                if (!Cache.TryGetValue(CacheKeys.GetBookKey(bookId.Value), out Book book))
+                if (!Cache.TryGetValue(CacheKeys.GetBookKey(bookId.Value), out BookDTO book))
                 {
                     book = await BookService.GetBookByIdAsync(bookId.Value);
                     if (book != null)
@@ -94,11 +88,11 @@ namespace BooksStore.Web.Controllers
                     }
                 }
 
-                var bookViewModel = BookConverter.ConvertToBookViewModel(book);
+                var bookViewModel = BookVMConverter.ConvertToBookViewModel(book);
 
                 if (HttpContext.User.Identity.IsAuthenticated)
                 {
-                    int basketId = (await CurrentUser.GetCurrentAppUser(HttpContext)).BasketId;
+                    int basketId = (await CurrentUser.GetCurrentUser(HttpContext)).BasketId;
                     if (await BookService.IsBookInBasketAsync(basketId, bookId.Value))
                     {
                         bookViewModel.IsAddToBasket = true;
@@ -134,16 +128,16 @@ namespace BooksStore.Web.Controllers
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                await BookService.AddBookAsync(new Book()
+                await BookService.AddBookAsync(new BookDTO()
                 {
                     Title = createModel.Title,
                     Descriptions = createModel.Descriptions,
                     Price = createModel.Price,
                     InStock = createModel.InStock,
-                    Category = new Category() { Name = createModel.CategoryName },
+                    CategoryName = createModel.CategoryName,
                     NumberOfPages = createModel.NumberOfPages,
-                    Author = new Author() { FirstName = createModel.FirstNameAuthor, Surname = createModel.SurnameAuthor },
-                    Img = new Img() { Path = path }
+                    AuthorFirstname = createModel.AuthorFirstname,
+                    ImgPath = path 
                 });
 
                 return RedirectToAction(nameof(IndexBooksAdmin), "Book");
@@ -171,10 +165,10 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateBook(int? bookId)
         {
-            Book updateBook = new Book();
+            BookDTO updateBook = new BookDTO();
             if (bookId.HasValue && (updateBook = await BookService.GetBookByIdAsync(bookId.Value)) != null)
             {
-                View(BookConverter.ConvertToBookViewModel(updateBook));
+                View(BookVMConverter.ConvertToBookViewModel(updateBook));
             }
             return NotFound();
         }
@@ -185,7 +179,7 @@ namespace BooksStore.Web.Controllers
         {
             if (model != null)
             {
-                Book updateBook = await BookService.GetBookByIdAsync(model.Id);
+                BookDTO updateBook = await BookService.GetBookByIdAsync(model.Id);
                 if (updateBook != null)
                 {
                     updateBook.Title = model.Title;
@@ -212,7 +206,7 @@ namespace BooksStore.Web.Controllers
             {
                 int pageSize = 6;
 
-                if (!Cache.TryGetValue(CacheKeys.GetBooksByCategoryKey(categoryId.Value), out IEnumerable<Book> booksCategory))
+                if (!Cache.TryGetValue(CacheKeys.GetBooksByCategoryKey(categoryId.Value), out IEnumerable<BookDTO> booksCategory))
                 {
                     booksCategory = await BookService.GetBookByCategoryAsync(categoryId.Value);
                     if(booksCategory.Count() != 0)
@@ -225,7 +219,7 @@ namespace BooksStore.Web.Controllers
                 }
 
                 IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, booksCategory.Count()
-                    ,BookConverter.ConvertToBookViewModel(booksCategory));
+                    ,BookVMConverter.ConvertToBookViewModel(booksCategory));
 
                 return View(indexBookModel);
             }
@@ -242,7 +236,7 @@ namespace BooksStore.Web.Controllers
                 var books = (await BookService.GetBooks((pageNum - 1) * pageSize, pageSize)).Where(p => p.Title == bookName);
 
                 IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, books.Count(),
-                    BookConverter.ConvertToBookViewModel(books));
+                    BookVMConverter.ConvertToBookViewModel(books));
 
                 return View(indexBookModel);
             }
@@ -253,7 +247,7 @@ namespace BooksStore.Web.Controllers
 
         private void RemoveBookInCahe(int bookId)
         {
-            if (Cache.TryGetValue(CacheKeys.GetBookKey(bookId), out Book book))
+            if (Cache.TryGetValue(CacheKeys.GetBookKey(bookId), out BookDTO book))
             {
                 Cache.Remove(CacheKeys.GetBookKey(bookId));
             }

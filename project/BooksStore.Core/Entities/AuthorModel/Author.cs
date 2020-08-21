@@ -9,7 +9,7 @@ namespace BooksStore.Core.AuthorModel
     public class Author : BaseEntity
     {
         [Index(Unique = true)]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
         [Index(Unique = true)]
         public string Surname { get; set; }
         public IEnumerable<Book> Books { get; set; }
@@ -17,7 +17,7 @@ namespace BooksStore.Core.AuthorModel
         public Author() { }
         public override string ToString()
         {
-            return FirstName + " " + Surname;
+            return Firstname + " " + Surname;
         }
     }
 }

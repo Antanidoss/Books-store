@@ -12,16 +12,10 @@ using BooksStore.Service.BasketSer;
 using BooksStore.Service.BookSer;
 using BooksStore.Service.CategorySer;
 using BooksStore.Service.CommentSer;
+using BooksStore.Service.Implementation.Identity;
 using BooksStore.Service.Interfaces;
+using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Service.OrderSer;
-using BooksStore.Web.Converter._AppUser;
-using BooksStore.Web.Converter._Book;
-using BooksStore.Web.Converter._Category;
-using BooksStore.Web.Converter._Comment;
-using BooksStore.Web.Converter._Order;
-using BooksStore.Web.Converter._Role;
-using BooksStore.Web.Interface;
-using BooksStore.Web.Interface.Converter;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.User.CurUser;
 using Microsoft.AspNetCore.Builder;
@@ -79,13 +73,8 @@ namespace BooksStore.Web
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICommentService, CommentService>();
-
-            services.AddTransient<IAppUserConverter, AppUserConverter>();
-            services.AddTransient<IBookConverter, BookConverter>();
-            services.AddTransient<IOrderConverter, OrderConverter>();
-            services.AddTransient<ICommentConverter, CommentConverter>();
-            services.AddTransient<IRoleConverter, RoleConverter>();
-            services.AddTransient<ICategoryConverter, CategoryConverter>();
+            services.AddScoped<IUserManagerService, UserManagerService>();
+            services.AddScoped<IRoleManagerService, RoleManagerService>();
         }
 
         

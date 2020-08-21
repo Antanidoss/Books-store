@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Core.BookOrderJunctionModel;
-using BooksStore.Core.OrderModel;
+using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Interface.Converter;
+using BooksStore.Web.Converter._Order;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.CreateModels.Order;
 using BooksStore.Web.Models.ViewModels.Index;
@@ -21,13 +20,11 @@ namespace BooksStore.Web.Controllers
     public class OrderController : Controller
     {
         IOrderService OrderService { get; set; }
-        IOrderConverter OrderConverter { get; set; }
         ICurrentUser CurrentUser { get; set; }
         IMemoryCache Cache { get; set; }
-        public OrderController(IOrderService orderService, IOrderConverter orderConverter , IMemoryCache cache , ICurrentUser currentUser)
+        public OrderController(IOrderService orderService, IMemoryCache cache , ICurrentUser currentUser)
         {
             OrderService = orderService;
-            OrderConverter = orderConverter;
             Cache = cache;
             CurrentUser = currentUser;
         }
@@ -38,15 +35,15 @@ namespace BooksStore.Web.Controllers
         {
             if (pageNum >= 1)
             {
-                string userId = (await CurrentUser.GetCurrentAppUser(HttpContext)).Id;
+                string curUserId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
                 int pageSize = 5;
 
-                if (!Cache.TryGetValue(CacheKeys.GetOrdersKey(userId), out List<Order> orders))
+                if (!Cache.TryGetValue(CacheKeys.GetOrdersKey(curUserId), out List<OrderDTO> orders))
                 {
-                    orders = (await OrderService.GetOrdersByAppUserId(userId)).ToList();
+                    orders = (await OrderService.GetOrdersByAppUserId(curUserId)).ToList();
                     if (orders.Count() != 0)
                     {
-                        Cache.Set(CacheKeys.GetOrdersKey(userId), orders, new MemoryCacheEntryOptions
+                        Cache.Set(CacheKeys.GetOrdersKey(curUserId), orders, new MemoryCacheEntryOptions
                         {
                             AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetOrdersCacheTime())
                         });
@@ -54,7 +51,7 @@ namespace BooksStore.Web.Controllers
                 }
 
                 IndexViewModel<OrderViewModel> orderIndexModel = new IndexViewModel<OrderViewModel>(pageNum, pageSize,
-                    orders.Count(), OrderConverter.ConvertToOrderViewModel(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));
+                    orders.Count(), OrderVMConverter.ConvertToOrderViewModel(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));
 
                 return View(orderIndexModel);
             }
@@ -67,17 +64,17 @@ namespace BooksStore.Web.Controllers
         {
             if (createModel != null && createModel.BookOrderIds.Count() != 0)
             {
-                string userId = (await CurrentUser.GetCurrentAppUser(HttpContext)).Id;
-                List<BookOrderJunction> bookOrders = new List<BookOrderJunction>();
+                string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
+                List<BookDTO> booksOrder = new List<BookDTO>();
 
                 foreach(var bookId in createModel.BookOrderIds)
                 {
-                    bookOrders.Add(new BookOrderJunction() { BookId = bookId });
+                    booksOrder.Add(new BookDTO() { Id = bookId });
                 }
 
-                Order order = new Order()
+                OrderDTO order = new OrderDTO()
                 {
-                    BookOrders = bookOrders,
+                    BooksOrder = booksOrder,
                     TimeOfDelivery = DateTime.Now.AddDays(3),                   
                     AppUserId = userId
                 };                
@@ -85,7 +82,7 @@ namespace BooksStore.Web.Controllers
                 await OrderService.AddOrderAsync(order);
                 RemoveOrderCache(userId);
                 
-                return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = order.BookOrders.Select(p => p.BookId) });
+                return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = order.BooksOrder.Select(p => p.Id) });
             }
             return NotFound();
         }
@@ -94,12 +91,12 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveOrder(int? orderId)
         {
-            Order order = new Order();
+            OrderDTO order = new OrderDTO();
             if (orderId.HasValue && (order = await OrderService.GetOrderByIdAsync(orderId.Value)) != null)
             {
-                string userId = (await CurrentUser.GetCurrentAppUser(HttpContext)).Id;
+                string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
 
-                if (order != null && order.AppUserId == userId)
+                if (order.AppUserId == userId)
                 {
                     await OrderService.RemoveOrderAsync(order.Id);
                     RemoveOrderCache(userId);
@@ -113,7 +110,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveCompleteOrders()
         {
-            string userId = (await CurrentUser.GetCurrentAppUser(HttpContext)).Id;
+            string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
             await OrderService.RemoveCompleteOrder(userId);
 
             RemoveOrderCache(userId);
@@ -121,9 +118,10 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexOrders));
         }
 
+
         private void RemoveOrderCache(string userId)
         {
-            if(Cache.TryGetValue(CacheKeys.GetOrdersKey(userId), out List<Order> orderCache))
+            if(Cache.TryGetValue(CacheKeys.GetOrdersKey(userId), out List<OrderDTO> orderCache))
             {
                 Cache.Remove(CacheKeys.GetOrdersKey(userId));
             }

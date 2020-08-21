@@ -37,3 +37,16 @@ C:\IT\c#\Test\src\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.
 C:\IT\c#\Test\src\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.csproj.CopyComplete
 C:\IT\c#\Test\src\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.dll
 C:\IT\c#\Test\src\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.pdb
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Service.deps.json
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Service.dll
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Service.pdb
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Core.dll
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.dll
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Core.pdb
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.pdb
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.csprojAssemblyReference.cache
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.AssemblyInfoInputs.cache
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.AssemblyInfo.cs
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.csproj.CopyComplete
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.dll
+C:\IT\c#\Test\Новая папка\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.pdb

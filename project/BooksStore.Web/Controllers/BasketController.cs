@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Core.BasketModel;
-using BooksStore.Core.BookBasketJunctionModel;
-using BooksStore.Core.BookModel;
+using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
+using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Interface.Converter;
+using BooksStore.Web.Converter._Book;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.ViewModels.Basket;
 using BooksStore.Web.Models.ViewModels.Book;
@@ -22,18 +21,17 @@ namespace BooksStore.Web.Controllers
     public class BasketController : Controller
     {
         IBasketService BasketService { get; set; }
-        ICurrentUser AppUserService { get; set; }
-        IBookConverter BookConverter { get; set; }
+        ICurrentUser CurrentUser { get; set; }
         IMemoryCache Cache { get; set; }
         IBookService BookService { get; set; }
+        IUserManagerService UserManagerService { get; set; }
 
-        public BasketController(IBasketService basketService, ICurrentUser appUserService , IBookConverter bookConverter , 
-            IMemoryCache cache)
+        public BasketController(IBasketService basketService, ICurrentUser currentUser, IMemoryCache cache, IUserManagerService userManagerService)
         {
             BasketService = basketService;
-            AppUserService = appUserService;
-            BookConverter = bookConverter;
+            CurrentUser = currentUser;
             Cache = cache;
+            UserManagerService = userManagerService;
         }
 
 
@@ -42,29 +40,29 @@ namespace BooksStore.Web.Controllers
         {
             if (pageNum >= 1)
             {
-                int basketId = await GetCurrentBasketId();
+                AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
+                BasketDTO curBasket = new BasketDTO();
                 BasketViewModel basketViewModel = new BasketViewModel();
                 int pageSize = 6;
 
-                if (!Cache.TryGetValue(CacheKeys.GetBasketKey(basketId), out List<BookBasketJunction> basketBooks))
+                if (!Cache.TryGetValue(CacheKeys.GetBasketKey(curUser.BasketId), out BasketDTO basket))
                 {
-                    var curBasket = await BasketService.GetBasketByIdAsync(basketId);
-                    if (curBasket.BookBaskets.Count() != 0)
+                    curBasket = await BasketService.GetBasketByIdAsync(curUser.BasketId);
+
+                    if (curBasket.BasketBooks.Count() != 0)
                     {
-                        Cache.Set(CacheKeys.GetBasketKey(basketId), curBasket.BookBaskets, new MemoryCacheEntryOptions
+                        Cache.Set(CacheKeys.GetBasketKey(curBasket.Id), curBasket.BasketBooks, new MemoryCacheEntryOptions
                         {
                             AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetBasketCacheTime())
                         });
-                        basketBooks = curBasket.BookBaskets.ToList();
                     }                    
                 }
 
-                var books = BookConverter.ConvertToBookViewModel(basketBooks
+                var books = BookVMConverter.ConvertToBookViewModel(curBasket.BasketBooks
                     ?.Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize)
-                    .Select(p => p.Book) ?? new List<Book>());
+                    .Take(pageSize));
 
-                basketViewModel.BookIndexModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, basketBooks?.Count() ?? 0, books);
+                basketViewModel.BookIndexModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, curBasket?.BasketBooks.Count() ?? 0, books);
 
                 return View(basketViewModel);
             }
@@ -77,11 +75,11 @@ namespace BooksStore.Web.Controllers
         {
             if (bookId.HasValue)
             {
-                int basketId = await GetCurrentBasketId();
+                AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
 
-                await BasketService.AddBasketBookAsync(basketId, bookId.Value);
+                await BasketService.AddBasketBookAsync(curUser.BasketId, bookId.Value);
 
-                RemoveBasketBookCache(basketId);                
+                RemoveBasketBookCache(curUser.BasketId);                
 
                 if(string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 {
@@ -98,11 +96,11 @@ namespace BooksStore.Web.Controllers
         {
             if (bookId.HasValue)
             {
-                int basketId = await GetCurrentBasketId();
+                AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
 
-                await BasketService.RemoveBasketBookAsync(basketId, bookId.Value);
+                await BasketService.RemoveBasketBookAsync(curUser.BasketId, bookId.Value);
 
-                RemoveBasketBookCache(basketId);
+                RemoveBasketBookCache(curUser.BasketId);
             }
 
             if (string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -127,11 +125,11 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveAllBasketBooks()
         {
-            int basketId = await GetCurrentBasketId();
+            AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
 
-            await BasketService.RemoveAllBasketBooksAsync(basketId);
+            await BasketService.RemoveAllBasketBooksAsync(curUser.BasketId);
 
-            RemoveBasketBookCache(basketId);
+            RemoveBasketBookCache(curUser.BasketId);
 
             return RedirectToAction(nameof(IndexBasket));
         }
@@ -139,16 +137,10 @@ namespace BooksStore.Web.Controllers
 
         private void RemoveBasketBookCache(int basketId)
         {
-            if(Cache.TryGetValue(CacheKeys.GetBasketKey(basketId), out List<BookBasketJunction> basketbook))
+            if(Cache.TryGetValue(CacheKeys.GetBasketKey(basketId), out List<BookDTO> basketbook))
             {
                 Cache.Remove(CacheKeys.GetBasketKey(basketId));
             }
-        }
-
-
-        private async Task<int> GetCurrentBasketId()
-        {
-            return (await AppUserService.GetCurrentAppUser(HttpContext)).BasketId;
-        }
+        }       
     }
 }

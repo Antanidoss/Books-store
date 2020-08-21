@@ -54,7 +54,7 @@ namespace BooksStore.Infastructure.AuthorRep
         public async Task<Author> GetAuthorByName(string firstName, string surname)
         {
             var author = await context.Authors
-                .FirstOrDefaultAsync(p => p.FirstName == firstName);
+                .FirstOrDefaultAsync(p => p.Firstname == firstName);
 
             return author != default ? author : null;
         }

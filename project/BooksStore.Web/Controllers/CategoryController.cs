@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Core.CategoryModel;
+using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
-using BooksStore.Web.Cache;
-using BooksStore.Web.Interface.Converter;
-using BooksStore.Web.Models.Pagination;
+using BooksStore.Web.Converter._Category;
 using BooksStore.Web.Models.ViewModels.Category;
 using BooksStore.Web.Models.ViewModels.Index;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace BooksStore.Web.Controllers
 {
@@ -20,11 +15,9 @@ namespace BooksStore.Web.Controllers
     public class CategoryController : Controller
     {
         ICategoryService CategoryService { get; set; }
-        ICategoryConverter CategoryConverter { get; set; }
-        public CategoryController(ICategoryService categoryService, ICategoryConverter categoryConverter)
+        public CategoryController(ICategoryService categoryService)
         {
             CategoryService = categoryService;
-            CategoryConverter = categoryConverter;
         }
 
 
@@ -35,7 +28,8 @@ namespace BooksStore.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await CategoryService.AddCategoryAsync(new Category() { Name = categoryName });
+                await CategoryService.AddCategoryAsync(new CategoryDTO() { Name = categoryName });
+
                 return RedirectToAction("IndexСategoriesAdmin", "Category");
             }
             return View(categoryName);
@@ -60,7 +54,7 @@ namespace BooksStore.Web.Controllers
                 var categories = (await CategoryService.GetCategories((pageNum - 1) * pageSize, pageSize)).ToList();
                 
                 IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, pageSize,
-                     await CategoryService.GetCountCategories(), CategoryConverter.ConvertToCategoryViewModel(categories));
+                     await CategoryService.GetCountCategories(), CategoryVMConverter.ConvertToCategoryViewModel(categories));
 
                 return View(categoryIndexModel);
             }
@@ -71,7 +65,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
         {
-            Category category = new Category();
+            CategoryDTO category = new CategoryDTO();
             if (categoryId.HasValue && (category = await CategoryService.GetCategoryById(categoryId.Value)) != null)
             {
                 await CategoryService.RemoveCategoryAsync(category.Id);
@@ -85,22 +79,20 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int? categoryId)
         {
-            Category category = new Category();
+            CategoryDTO category = new CategoryDTO();
             if (categoryId.HasValue && (category = await CategoryService.GetCategoryById(categoryId.Value)) != null)
             {
-                return View(CategoryConverter.ConvertToCategoryViewModel(category));
+                return View(CategoryVMConverter.ConvertToCategoryViewModel(category));
             }
 
             return NotFound();
         }
-
-
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(CategoryViewModel model)
         {
             if(model != null)
             {
-                await CategoryService.UpdateCategoryAsync(new Category() { Id = model.Id, Name = model.Name });
+                await CategoryService.UpdateCategoryAsync(new CategoryDTO() { Id = model.Id, Name = model.Name });
             }
             return View(nameof(IndexСategoriesAdmin));
         }
