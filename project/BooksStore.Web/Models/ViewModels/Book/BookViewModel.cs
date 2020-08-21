@@ -17,7 +17,7 @@ namespace BooksStore.Web.Models.ViewModels.Book
         public bool InStock { get; set; }
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
-        public string AuthorName { get; set; }
+        public string AuthorFullName { get; set; }
         public int AuthorId { get; set; }
         public string ImgPath { get; set; }
         public bool IsAddToBasket { get; set; }

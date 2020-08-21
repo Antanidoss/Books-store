@@ -14,7 +14,10 @@ namespace BooksStore.Core.AuthorModel
         public string Surname { get; set; }
         public IEnumerable<Book> Books { get; set; }
 
-        public Author() { }
+        public Author() : base()
+        {
+            Books = new List<Book>();
+        }
         public override string ToString()
         {
             return Firstname + " " + Surname;
