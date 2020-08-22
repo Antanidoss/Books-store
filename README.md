@@ -11,7 +11,17 @@
 
 # How to start a project
 
-#### To run this project, simply open a command line console, go to the BooksStore.Web folder and run dotnet run. Then copy the address and go to the site. To log in as an administrator you will need a email and password.
+#### 1.Clone the repository
+---
+#### 2. Next, build the solution by running:
+> #### dotnet restore
+---
+#### 3. Once the front end has started, within the \project\BooksStore.WEB directory, launch the back end by running:
+> ##### dotnet run
+---
+#### 4. Copy the address and go to the site
+---
+#### To log in as an administrator you will need a email and password.
 
-#### Email: adminBooksStore@gmail.com
-#### Password: adminBooksStore123#
+> Email: adminBooksStore@gmail.com
+> Password: adminBooksStore123#
