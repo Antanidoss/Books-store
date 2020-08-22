@@ -50,3 +50,5 @@ C:\IT\c#\Test\Новая папка\project\BooksStore.Infrastructure\obj\Debug\
 C:\IT\c#\Test\Новая папка\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.csproj.CopyComplete
 C:\IT\c#\Test\Новая папка\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.dll
 C:\IT\c#\Test\Новая папка\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.pdb
+C:\IT\c#\Test\Новая папка\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.csproj.CoreCompileInputs.cache
+C:\IT\c#\Test\Новая папка\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.genruntimeconfig.cache

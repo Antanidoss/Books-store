@@ -13,7 +13,7 @@ namespace BooksStore.Web.Converter._Book
             if(bookDTO != null)
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<BookDTO, BookViewModel>()
-                    .ForMember(p => p.AuthorName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname)))
+                    .ForMember(p => p.AuthorFullName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname)))
                     .CreateMapper();
 
                 return mapper.Map<BookDTO, BookViewModel>(bookDTO);
@@ -26,7 +26,7 @@ namespace BooksStore.Web.Converter._Book
             if(booksDTO != null && booksDTO.Count() != 0)
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<BookDTO, BookViewModel>()
-                    .ForMember(p => p.AuthorName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname)))
+                    .ForMember(p => p.AuthorFullName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname)))
                     .CreateMapper();
 
                 return mapper.Map<IEnumerable<BookDTO>, IEnumerable<BookViewModel>>(booksDTO);
