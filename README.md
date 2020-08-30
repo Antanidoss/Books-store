@@ -19,10 +19,13 @@
 
 #### 1.Clone the repository
 ---
-#### 2. Next, build the solution by running:
+#### 2. At the root directory, restore required packages by running:
 > #### dotnet restore
 ---
-#### 3. Once the front end has started, within the \project\BooksStore.WEB directory, launch the back end by running:
+#### 3. Next, build the solution by running:
+> #### dotnet build
+
+#### 4. Once the front end has started, within the \project\BooksStore.WEB directory, launch the back end by running:
 > ##### dotnet run
 ---
 #### 4. Copy the address and go to the site
