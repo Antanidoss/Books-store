@@ -1,3 +1,4 @@
+using AutoMapper;
 using BooksStore.Core.AppUserModel;
 using BooksStore.Infastructure.AuthorRep;
 using BooksStore.Infastructure.BasketRep;
@@ -16,6 +17,7 @@ using BooksStore.Service.Implementation.Identity;
 using BooksStore.Service.Interfaces;
 using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Service.OrderSer;
+using BooksStore.Service.Profiles;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.User.CurUser;
 using Microsoft.AspNetCore.Builder;
@@ -42,13 +44,33 @@ namespace BooksStore.Web
         {
             services.AddControllersWithViews();
 
+            // Database context configuration 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<EFDbContext>(option => option.UseSqlServer(connection));
 
+            //Antiforgery configuration 
             services.AddAntiforgery();
+
+            // Authentication and Authorization configuration 
             services.AddAuthentication();
             services.AddAuthorization();
 
+            // Auto mapper configuration
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AuthorDTOProfile());
+                mc.AddProfile(new BookDTOProfile());
+                mc.AddProfile(new CategoryDTOProfile());
+                mc.AddProfile(new BasketDTOProfile());
+                mc.AddProfile(new OrderDTOProfile());
+                mc.AddProfile(new AppUserDTOProfile());
+                mc.AddProfile(new RoleDTOProfile());
+                mc.AddProfile(new CommentDTOProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            //Identity configuration 
             services.AddIdentity<AppUser, IdentityRole>(option => 
             {
                 option.User.RequireUniqueEmail = true;
@@ -57,9 +79,12 @@ namespace BooksStore.Web
                 option.Password.RequireUppercase = false;
                 option.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<EFDbContext>().AddDefaultTokenProviders();
- 
+
+
+            //Current user configuration 
             services.AddScoped<ICurrentUser, CurrentUser>();
 
+            //Services configuration 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -67,6 +92,7 @@ namespace BooksStore.Web
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
 
+            //Repositories configuration 
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -93,7 +119,7 @@ namespace BooksStore.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+         
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

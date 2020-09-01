@@ -1,8 +1,8 @@
-﻿using BooksStore.Core.BasketModel;
+﻿using AutoMapper;
+using BooksStore.Core.BasketModel;
 using BooksStore.Core.BookBasketJunctionModel;
 using BooksStore.Core.BookModel;
 using BooksStore.Infastructure.Interfaces;
-using BooksStore.Service.Converter;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using System.Collections.Generic;
@@ -15,17 +15,19 @@ namespace BooksStore.Service.BasketSer
     {
         IBasketRepository BasketRepository { get; set; }
         IBookRepository BookRepository { get; set; }
-        public BasketService(IBasketRepository basketRepository, IBookRepository bookRepository)
+        IMapper Mapper { get; set; }
+        public BasketService(IBasketRepository basketRepository, IBookRepository bookRepository, IMapper mapper)
         {
             BasketRepository = basketRepository;
             BookRepository = bookRepository;
+            Mapper = mapper;
         }
 
         public async Task AddBasketAsync(BasketDTO basketDTO)
         {
             if(basketDTO != null && basketDTO != default)
             {
-                await BasketRepository.AddBasketAsync(BasketDTOConverter.ConvertToBasket(basketDTO));
+                await BasketRepository.AddBasketAsync(Mapper.Map<Basket>(basketDTO));
             }
         }
 
@@ -33,7 +35,7 @@ namespace BooksStore.Service.BasketSer
         {
             if (basketId >= 1)
             {
-                return BasketDTOConverter.ConvertToBasketDTO(await BasketRepository.GetBasketById(basketId));
+                return Mapper.Map<BasketDTO>(await BasketRepository.GetBasketById(basketId));
             }
             return null;
         }
@@ -42,7 +44,7 @@ namespace BooksStore.Service.BasketSer
         {
             if (skip >= 0 && take >= 1)
             {
-                return BasketDTOConverter.ConvertToBasketDTO((await BasketRepository.GetBaskets(skip, take) ?? new List<Basket>()));
+                return Mapper.Map<IEnumerable<BasketDTO>>((await BasketRepository.GetBaskets(skip, take) ?? new List<Basket>()));
             }
             return new List<BasketDTO>();
         }
@@ -64,7 +66,7 @@ namespace BooksStore.Service.BasketSer
         {
             if (basketDTO != null && basketDTO != default)
             {
-                await BasketRepository.UpdateBasketAsync(BasketDTOConverter.ConvertToBasket(basketDTO));
+                await BasketRepository.UpdateBasketAsync(Mapper.Map<Basket>(basketDTO));
             }
         }
 
@@ -76,9 +78,9 @@ namespace BooksStore.Service.BasketSer
             if ((basket = await BasketRepository.GetBasketById(basketId)) != null && 
                 (book = await BookRepository.GetBookByIdAsync(bookId)) != null) 
             {               
-                var bookBasket = basket.BookBaskets.ToList();
+                var bookBasket = basket.BasketBooks.ToList();
                 bookBasket.Add(new BookBasketJunction() { BasketId = basketId, BookId = bookId });
-                basket.BookBaskets = bookBasket;
+                basket.BasketBooks = bookBasket;
 
                 await BasketRepository.UpdateBasketAsync(basket);                
             }
@@ -92,13 +94,13 @@ namespace BooksStore.Service.BasketSer
             if ((basket = await BasketRepository.GetBasketById(basketId)) != null &&
                 (book = await BookRepository.GetBookByIdAsync(bookId)) != null)
             {
-                var bookBasket = basket.BookBaskets.ToList();
+                var bookBasket = basket.BasketBooks.ToList();
                 BookBasketJunction bookBasketJunction = bookBasket.FirstOrDefault(p => p.BookId == bookId);
 
                 if(bookBasketJunction != default)
                 {
                     bookBasket.Remove(bookBasketJunction);
-                    basket.BookBaskets = bookBasket;
+                    basket.BasketBooks = bookBasket;
 
                     await BasketRepository.UpdateBasketAsync(basket);
                 }
@@ -111,9 +113,9 @@ namespace BooksStore.Service.BasketSer
 
             if ((basket = await BasketRepository.GetBasketById(basketId)) != null)
             {
-                var bookBasket = basket.BookBaskets.ToList();
+                var bookBasket = basket.BasketBooks.ToList();
                 bookBasket.Clear();
-                basket.BookBaskets = bookBasket;
+                basket.BasketBooks = bookBasket;
 
                 await BasketRepository.UpdateBasketAsync(basket);
             }

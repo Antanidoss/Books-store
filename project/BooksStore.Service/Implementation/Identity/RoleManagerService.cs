@@ -1,5 +1,5 @@
-﻿using BooksStore.Infrastructure;
-using BooksStore.Service.Converter;
+﻿using AutoMapper;
+using BooksStore.Infrastructure;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -12,9 +12,11 @@ namespace BooksStore.Service.Implementation.Identity
     public class RoleManagerService : IRoleManagerService
     {
         RoleManager<IdentityRole> RoleManager { get; set; }
-        public RoleManagerService(RoleManager<IdentityRole> roleManager)
+        IMapper Mapper { get; set; }
+        public RoleManagerService(RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             RoleManager = roleManager;
+            Mapper = mapper;
         }
 
         public async Task<Result> CreateRoleAsync(string roleName)
@@ -31,7 +33,7 @@ namespace BooksStore.Service.Implementation.Identity
         {
             if(roleDTO != null && roleDTO != default)
             {
-                var result = await RoleManager.DeleteAsync(RoleDTOConverter.ConvertToRole(roleDTO));
+                var result = await RoleManager.DeleteAsync(Mapper.Map<IdentityRole>(roleDTO));
                 return result.ToApplicationResult();
             }
             return Result.Failure(new string[] { "Некорректные входные данные" });
@@ -41,7 +43,7 @@ namespace BooksStore.Service.Implementation.Identity
         {
             if (!string.IsNullOrEmpty(roleId))
             {
-                var role = RoleDTOConverter.ConvertToRoleDTO(await RoleManager.FindByIdAsync(roleId));
+                var role = Mapper.Map<RoleDTO>(await RoleManager.FindByIdAsync(roleId));
                 if(role != null)
                 {
                     return (Result.Success(), role);
@@ -54,7 +56,7 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<IEnumerable<RoleDTO>> GetRolesAsync()
         {
-            return RoleDTOConverter.ConvertToRoleDTO(await RoleManager.Roles.ToListAsync());
+            return Mapper.Map<IEnumerable<RoleDTO>>(await RoleManager.Roles.ToListAsync());
         }
     }
 }

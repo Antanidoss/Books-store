@@ -7,12 +7,12 @@ namespace BooksStore.Core.BasketModel
 {
     public class Basket : BaseEntity
     {
-        public IEnumerable<BookBasketJunction> BookBaskets { get; set; }
+        public IEnumerable<BookBasketJunction> BasketBooks { get; set; }
         public AppUser AppUser { get; set; }
 
         public Basket() : base()
         {
-            BookBaskets = new List<BookBasketJunction>();
+            BasketBooks = new List<BookBasketJunction>();
         }
     }
 }

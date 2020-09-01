@@ -1,6 +1,6 @@
-﻿using BooksStore.Core.CommentModel;
+﻿using AutoMapper;
+using BooksStore.Core.CommentModel;
 using BooksStore.Infastructure.Interfaces;
-using BooksStore.Service.Converter;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using System.Collections.Generic;
@@ -11,7 +11,8 @@ namespace BooksStore.Service.CommentSer
     public class CommentService : ICommentService
     {
         ICommentRepository CommentRepository { get; set; }
-        public CommentService(ICommentRepository commentRepository)
+        IMapper Mapper { get; set; }
+        public CommentService(ICommentRepository commentRepository, IMapper mapper)
         {
             CommentRepository = commentRepository;
         }
@@ -20,7 +21,7 @@ namespace BooksStore.Service.CommentSer
         {
             if(commentDTO != null && commentDTO != default)
             {
-                await CommentRepository.AddCommentAsync(CommentDTOConverter.ConvertToComment(commentDTO));
+                await CommentRepository.AddCommentAsync(Mapper.Map<Comment>(commentDTO));
             }
         }
 
@@ -28,7 +29,7 @@ namespace BooksStore.Service.CommentSer
         {
             if (commentId >= 1)
             {
-                return CommentDTOConverter.ConvertToCommentDTO(await CommentRepository.GetCommentById(commentId));
+                return Mapper.Map<CommentDTO>(await CommentRepository.GetCommentById(commentId));
             }
             return null;
         }
@@ -37,7 +38,7 @@ namespace BooksStore.Service.CommentSer
         {
             if (skip >= 0 && take >= 1)
             {
-                return CommentDTOConverter.ConvertToCommentDTO(await CommentRepository.GetComments(skip, take));
+                return Mapper.Map<IEnumerable<CommentDTO>>(await CommentRepository.GetComments(skip, take));
             }
             return new List<CommentDTO>();
         }
@@ -59,7 +60,7 @@ namespace BooksStore.Service.CommentSer
         {
             if (commentDTO != null && commentDTO != default)
             {
-                await CommentRepository.UpdateCommentAsync(CommentDTOConverter.ConvertToComment(commentDTO));
+                await CommentRepository.UpdateCommentAsync(Mapper.Map<Comment>(commentDTO));
             }
         }
 
@@ -67,7 +68,7 @@ namespace BooksStore.Service.CommentSer
         {
             if (bookId >= 1)
             {
-                return CommentDTOConverter.ConvertToCommentDTO((await CommentRepository.GetCommentByBookId(bookId) ?? new List<Comment>()));
+                return Mapper.Map<IEnumerable<CommentDTO>>((await CommentRepository.GetCommentByBookId(bookId) ?? new List<Comment>()));
             }
             return new List<CommentDTO>();
         }

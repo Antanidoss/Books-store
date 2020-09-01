@@ -1,6 +1,6 @@
-﻿using BooksStore.Core.OrderModel;
+﻿using AutoMapper;
+using BooksStore.Core.OrderModel;
 using BooksStore.Infastructure.Interfaces;
-using BooksStore.Service.Converter;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using System;
@@ -12,16 +12,18 @@ namespace BooksStore.Service.OrderSer
     public class OrderService : IOrderService
     {
         IOrderRepository OrderRepository { get; set; }
-        public OrderService(IOrderRepository orderRepository)
+        IMapper Mapper { get; set; }
+        public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
             OrderRepository = orderRepository;
+            Mapper = mapper;
         }
 
         public async Task AddOrderAsync(OrderDTO orderDTO)
         {
             if(orderDTO != null && orderDTO != default)
             {             
-                await OrderRepository.AddOrderAsync(OrderDTOConverter.ConvertToOrder(orderDTO));
+                await OrderRepository.AddOrderAsync(Mapper.Map<Order>(orderDTO));
             }
         }
 
@@ -29,7 +31,7 @@ namespace BooksStore.Service.OrderSer
         {
             if (orderId >= 1)
             {
-                return OrderDTOConverter.ConvertToOrderDTO(await OrderRepository.GetOrderById(orderId));
+                return Mapper.Map<OrderDTO>(await OrderRepository.GetOrderById(orderId));
             }
             return null;
         }
@@ -38,7 +40,7 @@ namespace BooksStore.Service.OrderSer
         {
             if (skip >= 0 && take >= 1)
             {
-                return OrderDTOConverter.ConvertToOrderDTO((await OrderRepository.GetOrders(skip, take) ?? new List<Order>()));
+                return Mapper.Map<IEnumerable<OrderDTO>>((await OrderRepository.GetOrders(skip, take) ?? new List<Order>()));
             }
             return new List<OrderDTO>();
         }
@@ -60,7 +62,7 @@ namespace BooksStore.Service.OrderSer
         {
             if (orderDTO != null && orderDTO != default)
             {
-                await OrderRepository.UpdateOrderAsync(OrderDTOConverter.ConvertToOrder(orderDTO));
+                await OrderRepository.UpdateOrderAsync(Mapper.Map<Order>(orderDTO));
             }
         }
 
@@ -87,7 +89,7 @@ namespace BooksStore.Service.OrderSer
         {
             if (!string.IsNullOrEmpty(appUserId))
             {
-                return OrderDTOConverter.ConvertToOrderDTO(await OrderRepository.GetOrdersByAppUserId(appUserId));
+                return Mapper.Map<IEnumerable<OrderDTO>>(await OrderRepository.GetOrdersByAppUserId(appUserId));
             }
             return new List<OrderDTO>();
         }

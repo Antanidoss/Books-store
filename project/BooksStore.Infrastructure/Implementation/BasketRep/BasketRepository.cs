@@ -26,7 +26,7 @@ namespace BooksStore.Infastructure.BasketRep
         public async Task<Basket> GetBasketById(int basketId)
         {
             var basket = await context.Baskets
-                .Include(p => p.BookBaskets)
+                .Include(p => p.BasketBooks)
                 .ThenInclude(p => p.Book)
                 .ThenInclude(p => p.Img)
                 .FirstOrDefaultAsync(p => p.Id == basketId);       
@@ -51,7 +51,7 @@ namespace BooksStore.Infastructure.BasketRep
             return await context.Baskets
                 .Skip(skip)
                 .Take(take)
-                .Include(p => p.BookBaskets)
+                .Include(p => p.BasketBooks)
                 .ThenInclude(p => p.Book)
                 .ToListAsync();
         }

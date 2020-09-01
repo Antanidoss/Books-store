@@ -22,7 +22,7 @@ namespace BooksStore.Infastructure.OrderRep
         public async Task<Order> GetOrderById(int id)
         {
             Order order = await context.Orders
-                .Include(p => p.BookOrders)
+                .Include(p => p.OrderBooks)
                 .ThenInclude(p => p.Book)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
@@ -55,7 +55,7 @@ namespace BooksStore.Infastructure.OrderRep
             return await context.Orders
                 .Skip(skip)
                 .Take(take)
-                .Include(p => p.BookOrders)
+                .Include(p => p.OrderBooks)
                 .ThenInclude(p => p.Book)
                 .ToListAsync();
         }
@@ -68,7 +68,7 @@ namespace BooksStore.Infastructure.OrderRep
         public async Task<IEnumerable<Order>> GetOrdersByAppUserId(string appUserId)
         {
             return await context.Orders
-                .Include(p => p.BookOrders)
+                .Include(p => p.OrderBooks)
                 .ThenInclude(p => p.Book)
                 .Where(p => p.AppUserId == appUserId).ToListAsync();
         }

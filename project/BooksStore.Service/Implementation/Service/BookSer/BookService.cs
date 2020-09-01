@@ -1,8 +1,8 @@
-﻿using BooksStore.Core.AuthorModel;
+﻿using AutoMapper;
+using BooksStore.Core.AuthorModel;
 using BooksStore.Core.BookModel;
 using BooksStore.Core.CategoryModel;
 using BooksStore.Infastructure.Interfaces;
-using BooksStore.Service.Converter;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using System.Collections.Generic;
@@ -16,18 +16,21 @@ namespace BooksStore.Service.BookSer
         IBookRepository BookRepository { get; set; }
         ICategoryRepository CategoryRepository { get; set; }
         IAuthorRepository AuthorRepository { get; set; }
-        public BookService(IBookRepository bookRepository, ICategoryRepository categoryRepository, IAuthorRepository authorRepository)
+        IMapper Mapper { get; set; }
+        public BookService(IBookRepository bookRepository, ICategoryRepository categoryRepository, IAuthorRepository authorRepository,
+            IMapper mapper)
         {
             BookRepository = bookRepository;
             CategoryRepository = categoryRepository;
             AuthorRepository = authorRepository;
+            Mapper = mapper;
         }
 
         public async Task AddBookAsync(BookDTO bookDTO)
         {
             if(bookDTO != null && bookDTO != default)
             {
-                Book book = BookDTOConverter.ConvertToBook(bookDTO);
+                Book book = Mapper.Map<Book>(bookDTO);
 
                 Category category = await CategoryRepository.GetCategoryByName(bookDTO.CategoryName);
                 if (category != null)
@@ -49,7 +52,7 @@ namespace BooksStore.Service.BookSer
         {
             if (bookId >= 1)
             {
-                return BookDTOConverter.ConvertToBookDTO(await BookRepository.GetBookByIdAsync(bookId));
+                return Mapper.Map<BookDTO>(await BookRepository.GetBookByIdAsync(bookId));
             }
             return null;
         }
@@ -58,7 +61,7 @@ namespace BooksStore.Service.BookSer
         {
             if (skip >= 0 && take >= 1)
             {
-                return BookDTOConverter.ConvertToBookDTO(await BookRepository.GetBooks(skip, take));
+                return Mapper.Map<IEnumerable<BookDTO>>(await BookRepository.GetBooks(skip, take));
             }
             return new List<BookDTO>();
         }
@@ -80,7 +83,7 @@ namespace BooksStore.Service.BookSer
         {
             if(bookDTO != null && bookDTO != default)
             {
-                await BookRepository.UpdateBookAsync(BookDTOConverter.ConvertToBook(bookDTO));
+                await BookRepository.UpdateBookAsync(Mapper.Map<Book>(bookDTO));
             }
         }
 
@@ -103,7 +106,7 @@ namespace BooksStore.Service.BookSer
                 Category category = await CategoryRepository.GetCategoryByIdAsync(categoryId);
                 if (category != null)
                 {
-                    return (BookDTOConverter.ConvertToBookDTO(await BookRepository.GetBooks(0, 6)).Where(p => p.CategoryId == categoryId));
+                    return (Mapper.Map<IEnumerable<BookDTO>>(await BookRepository.GetBooks(0, 6)).Where(p => p.CategoryId == categoryId));
                 }
             }
             return new List<BookDTO>();

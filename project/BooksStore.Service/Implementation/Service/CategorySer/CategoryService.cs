@@ -1,5 +1,6 @@
-﻿using BooksStore.Infastructure.Interfaces;
-using BooksStore.Service.Converter;
+﻿using AutoMapper;
+using BooksStore.Core.CategoryModel;
+using BooksStore.Infastructure.Interfaces;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace BooksStore.Service.CategorySer
     public class CategoryService : ICategoryService
     {
         ICategoryRepository CategoryRepository { get; set; }
+        IMapper Mapper { get; set; }
         public CategoryService(ICategoryRepository categoryRepository)
         {
             CategoryRepository = categoryRepository;
@@ -19,7 +21,7 @@ namespace BooksStore.Service.CategorySer
         {
             if(categoryDTO != null && categoryDTO != default)
             {
-                await CategoryRepository.AddCategoryAsync(CategoryDTOConverter.ConvertToCategory(categoryDTO));
+                await CategoryRepository.AddCategoryAsync(Mapper.Map<Category>(categoryDTO));
             }
         }
                               
@@ -27,7 +29,7 @@ namespace BooksStore.Service.CategorySer
         {
             if (categoryId >= 1)
             {
-                return CategoryDTOConverter.ConvertToCategoryDTO(await CategoryRepository.GetCategoryByIdAsync(categoryId));
+                return Mapper.Map<CategoryDTO>(await CategoryRepository.GetCategoryByIdAsync(categoryId));
             }
             return null;
         }
@@ -36,7 +38,7 @@ namespace BooksStore.Service.CategorySer
         {
             if (skip >= 0 && take >= 1)
             {
-                return CategoryDTOConverter.ConvertToCategoryDTO(await CategoryRepository.GetCategories(skip, take));
+                return Mapper.Map<IEnumerable<CategoryDTO>>(await CategoryRepository.GetCategories(skip, take));
             }
             return new List<CategoryDTO>();
         }
@@ -58,7 +60,7 @@ namespace BooksStore.Service.CategorySer
         {
             if (categoryDTO != null && categoryDTO != default)
             {
-                await CategoryRepository.UpdateCategoryAsync(CategoryDTOConverter.ConvertToCategory(categoryDTO));
+                await CategoryRepository.UpdateCategoryAsync(Mapper.Map<Category>(categoryDTO));
             }
         }
 

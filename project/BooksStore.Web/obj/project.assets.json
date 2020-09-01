@@ -9112,11 +9112,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Web\\BooksStore.Web.csproj",
+      "projectUniqueName": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Web\\BooksStore.Web.csproj",
       "projectName": "BooksStore.Web",
-      "projectPath": "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Web\\BooksStore.Web.csproj",
+      "projectPath": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Web\\BooksStore.Web.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Web\\obj\\",
+      "outputPath": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9132,11 +9132,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj": {
-              "projectPath": "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj"
+            "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj": {
+              "projectPath": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj"
             },
-            "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Service\\BooksStore.Service.csproj": {
-              "projectPath": "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Service\\BooksStore.Service.csproj"
+            "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Service\\BooksStore.Service.csproj": {
+              "projectPath": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Service\\BooksStore.Service.csproj"
             }
           }
         }
@@ -9191,7 +9191,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,5 +1,6 @@
-﻿using BooksStore.Infastructure.Interfaces;
-using BooksStore.Service.Converter;
+﻿using AutoMapper;
+using BooksStore.Core.AuthorModel;
+using BooksStore.Infastructure.Interfaces;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using System.Collections.Generic;
@@ -10,16 +11,18 @@ namespace BooksStore.Service.AuthorSer
     public class AuthorService : IAuthorService
     {
         IAuthorRepository AuthorRepository { get; set; }
-        public AuthorService(IAuthorRepository authorRepository)
+        IMapper Mapper { get; set; }
+        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
         {
             AuthorRepository = authorRepository;
+            Mapper = mapper;
         }
 
         public async Task AddAuthorAsync(AuthorDTO authorDTO)
         {
             if(authorDTO != null && authorDTO != default)
             {
-                await AuthorRepository.AddAuthorAsync(AuthorDTOConverter.ConvertToAuthor(authorDTO));
+                await AuthorRepository.AddAuthorAsync(Mapper.Map<Author>(authorDTO));
             }
         }
 
@@ -27,7 +30,7 @@ namespace BooksStore.Service.AuthorSer
         {
             if (authorId >= 1)
             {
-                return AuthorDTOConverter.ConvertToAuthorDTO(await AuthorRepository.GetAuthorById(authorId));
+                return Mapper.Map<AuthorDTO>(await AuthorRepository.GetAuthorById(authorId));
             }
             return null;
         }
@@ -36,7 +39,7 @@ namespace BooksStore.Service.AuthorSer
         {
             if (skip >= 0 && take >= 1)
             {
-                return AuthorDTOConverter.ConvertToAuthorDTO(await AuthorRepository.GetAuthors(skip, take));
+                return Mapper.Map<IEnumerable<AuthorDTO>>(await AuthorRepository.GetAuthors(skip, take));
             }
             return new List<AuthorDTO>();
         }
@@ -57,7 +60,7 @@ namespace BooksStore.Service.AuthorSer
         {
             if (authorDTO != null && authorDTO != default)
             {
-                await AuthorRepository.UpdateAuthorAsync(AuthorDTOConverter.ConvertToAuthor(authorDTO));
+                await AuthorRepository.UpdateAuthorAsync(Mapper.Map<Author>(authorDTO));
             }
         }
 

@@ -1,6 +1,6 @@
-﻿using BooksStore.Core.AppUserModel;
+﻿using AutoMapper;
+using BooksStore.Core.AppUserModel;
 using BooksStore.Infrastructure;
-using BooksStore.Service.Converter;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -14,10 +14,12 @@ namespace BooksStore.Service.Implementation.Identity
     {
         UserManager<AppUser> UserManager { get; set; }
         SignInManager<AppUser> SignInManager { get; set; }
-        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        IMapper Mapper { get; set; }
+        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            Mapper = mapper;
         }
 
         public async Task<(Result Result, string AppUserId)> CreateAppUserAsync(string userName, string email, string password)
@@ -43,7 +45,7 @@ namespace BooksStore.Service.Implementation.Identity
             var user = await UserManager.FindByEmailAsync(email);
 
             return user != null 
-                ? (Result.Success(), AppUserDTOConverter.ConvertToAppUserDTO(user)) 
+                ? (Result.Success(), Mapper.Map<AppUserDTO>(user)) 
                 : (IdentityResultExtensions.AppUserNotFound(), new AppUserDTO());
         }
 
@@ -52,7 +54,7 @@ namespace BooksStore.Service.Implementation.Identity
             var user = await UserManager.FindByIdAsync(appUserId);
 
             return user != null
-               ? (Result.Success(), AppUserDTOConverter.ConvertToAppUserDTO(user))
+               ? (Result.Success(), Mapper.Map<AppUserDTO>(user))
                : (IdentityResultExtensions.AppUserNotFound(), new AppUserDTO());
         }
 
@@ -97,16 +99,16 @@ namespace BooksStore.Service.Implementation.Identity
             return (IdentityResultExtensions.AppUserNotFound());
         }
 
-        public async Task<bool> IsInRoleAsync(DTO.AppUserDTO appUserDTO, string roleName)
+        public async Task<bool> IsInRoleAsync(AppUserDTO appUserDTO, string roleName)
         {
-            return await UserManager.IsInRoleAsync(AppUserDTOConverter.ConvertToAppUser(appUserDTO), roleName);
+            return await UserManager.IsInRoleAsync(Mapper.Map<AppUser>(appUserDTO), roleName);
         }
 
-        public async Task<Result> RemoveFromRoleAsync(DTO.AppUserDTO appUserDTO, string roleName)
+        public async Task<Result> RemoveFromRoleAsync(AppUserDTO appUserDTO, string roleName)
         {
             if(appUserDTO != null && appUserDTO != default && !string.IsNullOrEmpty(roleName))
             {
-                var result = await UserManager.RemoveFromRoleAsync(AppUserDTOConverter.ConvertToAppUser(appUserDTO), roleName);
+                var result = await UserManager.RemoveFromRoleAsync(Mapper.Map<AppUser>(appUserDTO), roleName);
                 return result.Succeeded ? Result.Success() : result.ToApplicationResult();
             }
             return Result.Failure(new string[] { "Некорректные входные данные" });
@@ -114,7 +116,7 @@ namespace BooksStore.Service.Implementation.Identity
 
         public IEnumerable<AppUserDTO> GetAppUsers()
         {
-            return AppUserDTOConverter.ConvertToAppUserDTO(UserManager.Users);
+            return Mapper.Map<IEnumerable<AppUserDTO>>(UserManager.Users);
         }
 
         public Task<Result> AddToRoleAsync(AppUserDTO appUserDTO, string roleName)
