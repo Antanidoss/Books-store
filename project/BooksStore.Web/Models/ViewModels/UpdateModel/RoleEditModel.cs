@@ -1,11 +1,7 @@
-﻿using BooksStore.Web.Models.ViewModels.AppUser;
-using BooksStore.Web.Models.ViewModels.Role;
-using System;
+﻿using BooksStore.Web.Models.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BooksStore.Web.Models.UpdateModel.Role
+namespace BooksStore.Web.Models.UpdateModel
 {
     public class RoleEditModel
     {

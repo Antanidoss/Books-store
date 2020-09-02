@@ -1,10 +1,6 @@
 ﻿using BooksStore.Web.Models.ViewModels.Index;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BooksStore.Web.Models.ViewModels.Comment
+namespace BooksStore.Web.Models.ViewModels
 {
     public class BookCommentViewModel
     {

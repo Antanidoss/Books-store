@@ -9,10 +9,11 @@ using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
-using BooksStore.Web.Models.CreateModels.Book;
+using BooksStore.Web.Models.CreateModels;
 using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModels.Book;
+using BooksStore.Web.Models.ViewModels;
 using BooksStore.Web.Models.ViewModels.Index;
+using BooksStore.Web.Models.ViewModels.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -132,17 +133,9 @@ namespace BooksStore.Web.Controllers
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                await BookService.AddBookAsync(new BookDTO()
-                {
-                    Title = createModel.Title,
-                    Descriptions = createModel.Descriptions,
-                    Price = createModel.Price,
-                    InStock = createModel.InStock,
-                    CategoryName = createModel.CategoryName,
-                    NumberOfPages = createModel.NumberOfPages,
-                    AuthorFirstname = createModel.AuthorFirstname,
-                    ImgPath = path 
-                });
+                var book = Mapper.Map<BookDTO>(createModel);
+                book.ImgPath = path;
+                await BookService.AddBookAsync(book);
 
                 return RedirectToAction(nameof(IndexBooksAdmin), "Book");
             }
@@ -179,21 +172,14 @@ namespace BooksStore.Web.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> UpdateBook(BookViewModel model)
+        public async Task<IActionResult> UpdateBook(BookUpdateModel model)
         {
             if (model != null)
             {
                 BookDTO updateBook = await BookService.GetBookByIdAsync(model.Id);
                 if (updateBook != null)
-                {
-                    updateBook.Title = model.Title;
-                    updateBook.Descriptions = model.Descriptions;
-                    updateBook.Price = model.Price;
-                    updateBook.NumberOfPages = model.NumberOfPages;
-                    updateBook.InStock = model.InStock;
-                    updateBook.UpdateTime = DateTime.Now;
-
-                    await BookService.UpdateBookAsync(updateBook);
+                {                   
+                    await BookService.UpdateBookAsync(Mapper.Map<BookDTO>(model));
 
                     RemoveBookInCahe(updateBook.Id);
                 }

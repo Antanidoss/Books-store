@@ -6,10 +6,9 @@ using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.UpdateModel.Role;
-using BooksStore.Web.Models.ViewModels.AppUser;
+using BooksStore.Web.Models.UpdateModel;
+using BooksStore.Web.Models.ViewModels;
 using BooksStore.Web.Models.ViewModels.Index;
-using BooksStore.Web.Models.ViewModels.Role;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

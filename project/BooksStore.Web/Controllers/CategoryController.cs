@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,8 +7,9 @@ using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModels.Category;
+using BooksStore.Web.Models.ViewModels;
 using BooksStore.Web.Models.ViewModels.Index;
+using BooksStore.Web.Models.ViewModels.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,7 +64,7 @@ namespace BooksStore.Web.Controllers
 
                 return View(categoryIndexModel);
             }
-            return NotFound();
+            throw new ArgumentException();
         }       
 
 
@@ -76,7 +77,6 @@ namespace BooksStore.Web.Controllers
                 await CategoryService.RemoveCategoryAsync(category.Id);
                 return RedirectToAction(nameof(IndexСategoriesAdmin));
             }
-
             return NotFound();
         }
 
@@ -89,17 +89,18 @@ namespace BooksStore.Web.Controllers
             {
                 return View(Mapper.Map<CategoryViewModel>(category));
             }
-
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateCategory(CategoryViewModel model)
+        public async Task<IActionResult> UpdateCategory(CategoryUpdateModel model)
         {
-            if(model != null)
+            CategoryDTO categoryDTO = new CategoryDTO();
+            if(model != null && (categoryDTO = await CategoryService.GetCategoryById(model.Id)) != null)
             {
-                await CategoryService.UpdateCategoryAsync(new CategoryDTO() { Id = model.Id, Name = model.Name });
+                categoryDTO = Mapper.Map<CategoryDTO>(model);
+                await CategoryService.UpdateCategoryAsync(categoryDTO);
             }
-            return View(nameof(IndexСategoriesAdmin));
+            return NotFound();
         }
     }
 }

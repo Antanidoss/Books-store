@@ -5,7 +5,7 @@ using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.Login;
 using BooksStore.Web.Models.Registration;
-using BooksStore.Web.Models.ViewModels.AppUser;
+using BooksStore.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

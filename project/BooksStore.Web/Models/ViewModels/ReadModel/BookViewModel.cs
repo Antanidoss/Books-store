@@ -1,11 +1,4 @@
-﻿using BooksStore.Web.Models.ViewModels.Comment;
-using BooksStore.Web.Models.ViewModels.Index;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BooksStore.Web.Models.ViewModels.Book
+﻿namespace BooksStore.Web.Models.ViewModels
 {
     public class BookViewModel
     {

@@ -1,11 +1,7 @@
-﻿using BooksStore.Web.Models.ViewModels.Book;
-using BooksStore.Web.Models.ViewModels.Index;
-using System;
-using System.Collections.Generic;
+﻿using BooksStore.Web.Models.ViewModels.Index;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace BooksStore.Web.Models.ViewModels.Basket
+namespace BooksStore.Web.Models.ViewModels
 {
     public class BasketViewModel
     {
@@ -15,6 +11,7 @@ namespace BooksStore.Web.Models.ViewModels.Basket
         {
             get { return BookIndexModel.Objects.Sum(p => p.Price); }
         }
+
         public BasketViewModel()
         {
             BookIndexModel = new IndexViewModel<BookViewModel>();

@@ -9,7 +9,7 @@ using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModels.Comment;
+using BooksStore.Web.Models.ViewModels;
 using BooksStore.Web.Models.ViewModels.Index;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
