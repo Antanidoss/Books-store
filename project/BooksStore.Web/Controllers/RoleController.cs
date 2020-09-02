@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
+using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.UpdateModel.Role;
 using BooksStore.Web.Models.ViewModels.AppUser;
 using BooksStore.Web.Models.ViewModels.Index;
@@ -50,11 +51,9 @@ namespace BooksStore.Web.Controllers
 
                 if ((await RoleManagerService.GetRolesAsync()).Count() != 0)
                 {
-                    int pageSize = 4;
-
                     var roles = await RoleManagerService.GetRolesAsync();
 
-                    indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, pageSize, roles.Count(),
+                    indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(),
                         Mapper.Map<IEnumerable<RoleViewModel>>(roles));
                 }
                 return View(indexViewModel);

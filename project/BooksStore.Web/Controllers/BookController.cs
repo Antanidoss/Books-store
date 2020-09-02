@@ -10,6 +10,7 @@ using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.CreateModels.Book;
+using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModels.Book;
 using BooksStore.Web.Models.ViewModels.Index;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ namespace BooksStore.Web.Controllers
             {
                 if (indexBookModel?.Objects == null)
                 {
-                    int pageSize = 6;                                        
+                    int pageSize = PageSizes.Books;                                        
                                             
                     indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, await BookService.GetCountBooks(),
                         Mapper.Map<IEnumerable<BookViewModel>>(await BookService.GetBooks((pageNum - 1) * pageSize , pageSize)));
@@ -82,7 +83,7 @@ namespace BooksStore.Web.Controllers
                     {
                         Cache.Set(CacheKeys.GetBookKey(bookId.Value), book, new MemoryCacheEntryOptions
                         {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetBookCacheTime())
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.BookCacheTime)
                         });
                     }
                     else
@@ -216,7 +217,7 @@ namespace BooksStore.Web.Controllers
                     {
                         Cache.Set(CacheKeys.GetBooksByCategoryKey(categoryId.Value), booksCategory, new MemoryCacheEntryOptions
                         {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetBooksByCategoryCacheTime())
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.BooksByCategoryCacheTime)
                         });
                     }                   
                 }

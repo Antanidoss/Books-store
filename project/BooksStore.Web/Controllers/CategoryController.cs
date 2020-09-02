@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
+using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModels.Category;
 using BooksStore.Web.Models.ViewModels.Index;
 using Microsoft.AspNetCore.Authorization;
@@ -53,8 +54,8 @@ namespace BooksStore.Web.Controllers
         {
             if (pageNum >= 1)
             {
-                int pageSize = 6;
-             
+                int pageSize = PageSizes.Categories;
+
                 var categories = (await CategoryService.GetCategories((pageNum - 1) * pageSize, pageSize)).ToList();
                 
                 IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, pageSize,

@@ -8,6 +8,7 @@ using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
+using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModels.Comment;
 using BooksStore.Web.Models.ViewModels.Index;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +41,6 @@ namespace BooksStore.Web.Controllers
             BookDTO book = new BookDTO();         
             if(pageNum >= 1 && bookId.HasValue && (book = await BookService.GetBookByIdAsync(bookId.Value)) != null)
             {
-                int pageSize = 6;
                 if (!Cache.TryGetValue(CacheKeys.GetCommentsKey(bookId.Value , pageNum) , out List<CommentDTO> commentsCache))
                 {
                     commentsCache = (await CommentService.GetCommentsByBookId(bookId.Value)).ToList();
@@ -48,7 +48,7 @@ namespace BooksStore.Web.Controllers
                     {
                         Cache.Set(CacheKeys.GetCommentsKey(bookId.Value, pageNum), commentsCache, new MemoryCacheEntryOptions
                         {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetCommentsCacheTime())
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.CommentsCacheTime)
                         });
                     }
                 }
@@ -56,7 +56,7 @@ namespace BooksStore.Web.Controllers
                 string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
                 BookCommentViewModel bookComment = new BookCommentViewModel() 
                 {
-                    IndexCommentModel = new IndexViewModel<CommentViewModel>(pageNum , pageSize, await CommentService.GetCountComments(),
+                    IndexCommentModel = new IndexViewModel<CommentViewModel>(pageNum , PageSizes.Comments, await CommentService.GetCountComments(),
                     Mapper.Map<IEnumerable<CommentViewModel>>(commentsCache)),
                     BookId = book.Id,
                     BookName = book.Title,

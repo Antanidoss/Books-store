@@ -8,6 +8,7 @@ using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.CreateModels.Order;
+using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModels.Index;
 using BooksStore.Web.Models.ViewModels.Order;
 using Microsoft.AspNetCore.Authorization;
@@ -38,7 +39,6 @@ namespace BooksStore.Web.Controllers
             if (pageNum >= 1)
             {
                 string curUserId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
-                int pageSize = 5;
 
                 if (!Cache.TryGetValue(CacheKeys.GetOrdersKey(curUserId), out List<OrderDTO> orders))
                 {
@@ -47,10 +47,12 @@ namespace BooksStore.Web.Controllers
                     {
                         Cache.Set(CacheKeys.GetOrdersKey(curUserId), orders, new MemoryCacheEntryOptions
                         {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetOrdersCacheTime())
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.OrdersCacheTime)
                         });
                     }
                 }
+
+                int pageSize = PageSizes.Orders;
 
                 IndexViewModel<OrderViewModel> orderIndexModel = new IndexViewModel<OrderViewModel>(pageNum, pageSize,
                     orders.Count(), Mapper.Map<IEnumerable<OrderViewModel>>(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));

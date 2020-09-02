@@ -8,6 +8,7 @@ using BooksStore.Service.Interfaces;
 using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
+using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModels.Basket;
 using BooksStore.Web.Models.ViewModels.Book;
 using BooksStore.Web.Models.ViewModels.Index;
@@ -43,7 +44,6 @@ namespace BooksStore.Web.Controllers
                 AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
                 BasketDTO curBasket = new BasketDTO();
                 BasketViewModel basketViewModel = new BasketViewModel();
-                int pageSize = 6;
 
                 if (!Cache.TryGetValue(CacheKeys.GetBasketKey(curUser.BasketId), out BasketDTO basket))
                 {
@@ -53,10 +53,12 @@ namespace BooksStore.Web.Controllers
                     {
                         Cache.Set(CacheKeys.GetBasketKey(curBasket.Id), curBasket.BasketBooks, new MemoryCacheEntryOptions
                         {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTime.GetBasketCacheTime())
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.BasketCacheTime)
                         });
                     }                    
                 }
+
+                int pageSize = PageSizes.Basket;
 
                 var books = Mapper.Map<IEnumerable<BookViewModel>>(curBasket.BasketBooks
                     ?.Skip((pageNum - 1) * pageSize)
