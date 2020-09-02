@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Converter._Comment;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.ViewModels.Comment;
 using BooksStore.Web.Models.ViewModels.Index;
@@ -22,14 +22,16 @@ namespace BooksStore.Web.Controllers
         IBookService BookService { get; set; }
         ICurrentUser CurrentUser { get; set; }
         IMemoryCache Cache { get; set; }
+        IMapper Mapper { get; set; }
 
-        public CommentController(ICommentService commentService, IBookService bookService,
-            ICurrentUser currentUser, IMemoryCache cache)
+        public CommentController(ICommentService commentService, IBookService bookService, ICurrentUser currentUser, IMemoryCache cache,
+            IMapper mapper)
         {
             CommentService = commentService;
             BookService = bookService;
             CurrentUser = currentUser;
             Cache = cache;
+            Mapper = mapper;
         }
 
         [HttpGet]
@@ -55,7 +57,7 @@ namespace BooksStore.Web.Controllers
                 BookCommentViewModel bookComment = new BookCommentViewModel() 
                 {
                     IndexCommentModel = new IndexViewModel<CommentViewModel>(pageNum , pageSize, await CommentService.GetCountComments(),
-                    CommentVMConverter.ConvertToCommentViewModel(commentsCache)),
+                    Mapper.Map<IEnumerable<CommentViewModel>>(commentsCache)),
                     BookId = book.Id,
                     BookName = book.Title,
                     UserIsComment = commentsCache.FirstOrDefault(p => p.AppUserId == userId) != default ? true : false

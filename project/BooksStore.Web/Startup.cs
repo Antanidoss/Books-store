@@ -20,6 +20,7 @@ using BooksStore.Service.OrderSer;
 using BooksStore.Service.Profiles;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.User.CurUser;
+using BooksStore.Web.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -58,6 +59,7 @@ namespace BooksStore.Web
             // Auto mapper configuration
             var mappingConfig = new MapperConfiguration(mc =>
             {
+                //DTO profiles
                 mc.AddProfile(new AuthorDTOProfile());
                 mc.AddProfile(new BookDTOProfile());
                 mc.AddProfile(new CategoryDTOProfile());
@@ -66,6 +68,13 @@ namespace BooksStore.Web
                 mc.AddProfile(new AppUserDTOProfile());
                 mc.AddProfile(new RoleDTOProfile());
                 mc.AddProfile(new CommentDTOProfile());
+                //View model profiles
+                mc.AddProfile(new AppUserVMProfile());
+                mc.AddProfile(new BookVMProfile());
+                mc.AddProfile(new CommentVMProfile());
+                mc.AddProfile(new CategoryVMProfile());
+                mc.AddProfile(new RoleVMProfile());
+                mc.AddProfile(new OrderVMProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

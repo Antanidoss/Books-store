@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
-using BooksStore.Web.Converter._AppUser;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.Login;
 using BooksStore.Web.Models.Registration;
+using BooksStore.Web.Models.ViewModels.AppUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +15,12 @@ namespace BooksStore.Web.Controllers
     {
         ICurrentUser CurrentUser { get; set; }
         IUserManagerService UserManagerService { get; set; }
-        public AccountController(ICurrentUser currentUser, IUserManagerService userManagerService)
+        IMapper Mapper { get; set; }
+        public AccountController(ICurrentUser currentUser, IUserManagerService userManagerService, IMapper mapper)
         {
             CurrentUser = currentUser;      
             UserManagerService = userManagerService;
+            Mapper = mapper;
         }
 
         [HttpGet]
@@ -76,7 +79,7 @@ namespace BooksStore.Web.Controllers
         public async Task<IActionResult> Index()
         {
             AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
-            var userViewModel = AppUserVMConverter.ConvertToAppUserViewModel(curUser);
+            var userViewModel = Mapper.Map<AppUserViewModel>(curUser);
 
             userViewModel.RoleName = await UserManagerService.IsInRoleAsync(curUser , "admin") ? "admin" : "user";
 

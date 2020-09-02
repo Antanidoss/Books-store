@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Converter._Book;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.ViewModels.Basket;
 using BooksStore.Web.Models.ViewModels.Book;
@@ -24,14 +24,14 @@ namespace BooksStore.Web.Controllers
         ICurrentUser CurrentUser { get; set; }
         IMemoryCache Cache { get; set; }
         IBookService BookService { get; set; }
-        IUserManagerService UserManagerService { get; set; }
+        IMapper Mapper { get; set; }
 
-        public BasketController(IBasketService basketService, ICurrentUser currentUser, IMemoryCache cache, IUserManagerService userManagerService)
+        public BasketController(IBasketService basketService, ICurrentUser currentUser, IMemoryCache cache, IMapper mapper)
         {
             BasketService = basketService;
             CurrentUser = currentUser;
             Cache = cache;
-            UserManagerService = userManagerService;
+            Mapper = mapper;
         }
 
 
@@ -58,7 +58,7 @@ namespace BooksStore.Web.Controllers
                     }                    
                 }
 
-                var books = BookVMConverter.ConvertToBookViewModel(curBasket.BasketBooks
+                var books = Mapper.Map<IEnumerable<BookViewModel>>(curBasket.BasketBooks
                     ?.Skip((pageNum - 1) * pageSize)
                     .Take(pageSize));
 

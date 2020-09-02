@@ -12,9 +12,10 @@ namespace BooksStore.Service.CategorySer
     {
         ICategoryRepository CategoryRepository { get; set; }
         IMapper Mapper { get; set; }
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             CategoryRepository = categoryRepository;
+            Mapper = mapper;
         }
 
         public async Task AddCategoryAsync(CategoryDTO categoryDTO)

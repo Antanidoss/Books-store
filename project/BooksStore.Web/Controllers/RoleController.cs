@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
-using BooksStore.Web.Converter._AppUser;
-using BooksStore.Web.Converter._Role;
 using BooksStore.Web.Models.UpdateModel.Role;
+using BooksStore.Web.Models.ViewModels.AppUser;
 using BooksStore.Web.Models.ViewModels.Index;
 using BooksStore.Web.Models.ViewModels.Role;
 using Microsoft.AspNetCore.Authorization;
@@ -19,10 +19,12 @@ namespace BooksStore.Web.Controllers
     {
         IRoleManagerService RoleManagerService { get; set; }
         IUserManagerService UserManagerService { get; set; }
-        public RoleController(IRoleManagerService roleManagerService, IUserManagerService userManagerService)
+        IMapper Mapper { get; set; }
+        public RoleController(IRoleManagerService roleManagerService, IUserManagerService userManagerService, IMapper mapper)
         {
             RoleManagerService = roleManagerService;
             UserManagerService = userManagerService;
+            Mapper = mapper; 
         }
 
         [HttpGet]
@@ -53,7 +55,7 @@ namespace BooksStore.Web.Controllers
                     var roles = await RoleManagerService.GetRolesAsync();
 
                     indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, pageSize, roles.Count(),
-                        RoleVMConverter.ConvertToRoleViewModel(roles));
+                        Mapper.Map<IEnumerable<RoleViewModel>>(roles));
                 }
                 return View(indexViewModel);
             }
@@ -78,9 +80,9 @@ namespace BooksStore.Web.Controllers
 
                 return base.View(new RoleEditModel()
                 {
-                    Memebers = AppUserVMConverter.ConvertToAppUserViewModel(members),
-                    NonMembers = AppUserVMConverter.ConvertToAppUserViewModel(nonMembers),
-                    RoleViewModel = RoleVMConverter.ConvertToRoleViewModel(result.RoleDTO)
+                    Memebers = Mapper.Map<IEnumerable<AppUserViewModel>>(members),
+                    NonMembers = Mapper.Map<IEnumerable<AppUserViewModel>>(nonMembers),
+                    RoleViewModel = Mapper.Map<RoleViewModel>(result.RoleDTO)
                 });
             }
             return View(StatusCode(404));

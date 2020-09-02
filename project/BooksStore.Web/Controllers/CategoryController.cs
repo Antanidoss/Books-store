@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
-using BooksStore.Web.Converter._Category;
 using BooksStore.Web.Models.ViewModels.Category;
 using BooksStore.Web.Models.ViewModels.Index;
 using Microsoft.AspNetCore.Authorization;
@@ -15,9 +17,11 @@ namespace BooksStore.Web.Controllers
     public class CategoryController : Controller
     {
         ICategoryService CategoryService { get; set; }
-        public CategoryController(ICategoryService categoryService)
+        IMapper Mapper { get; set; }
+        public CategoryController(ICategoryService categoryService, IMapper mapper)
         {
             CategoryService = categoryService;
+            Mapper = mapper;
         }
 
 
@@ -54,7 +58,7 @@ namespace BooksStore.Web.Controllers
                 var categories = (await CategoryService.GetCategories((pageNum - 1) * pageSize, pageSize)).ToList();
                 
                 IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, pageSize,
-                     await CategoryService.GetCountCategories(), CategoryVMConverter.ConvertToCategoryViewModel(categories));
+                     await CategoryService.GetCountCategories(), Mapper.Map<IEnumerable<CategoryViewModel>>(categories));
 
                 return View(categoryIndexModel);
             }
@@ -82,7 +86,7 @@ namespace BooksStore.Web.Controllers
             CategoryDTO category = new CategoryDTO();
             if (categoryId.HasValue && (category = await CategoryService.GetCategoryById(categoryId.Value)) != null)
             {
-                return View(CategoryVMConverter.ConvertToCategoryViewModel(category));
+                return View(Mapper.Map<CategoryViewModel>(category));
             }
 
             return NotFound();

@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Converter._Book;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.CreateModels.Book;
 using BooksStore.Web.Models.ViewModels.Book;
@@ -22,17 +22,20 @@ namespace BooksStore.Web.Controllers
 {
     public class BookController : Controller
     {
-        public IBookService BookService { get; set; }
-        public IMemoryCache Cache { get; set; }
-        public IWebHostEnvironment AppEnvironment { get; set; }
-        public ICurrentUser CurrentUser { get; set; }
+        IBookService BookService { get; set; }
+        IMemoryCache Cache { get; set; }
+        IWebHostEnvironment AppEnvironment { get; set; }
+        ICurrentUser CurrentUser { get; set; }
+        IMapper Mapper { get; set; }
 
-        public BookController(IBookService bookService, IMemoryCache cache, IWebHostEnvironment appEnvironment, ICurrentUser currentUser)
+        public BookController(IBookService bookService, IMemoryCache cache, IWebHostEnvironment appEnvironment, ICurrentUser currentUser,
+            IMapper mapper)
         {
             BookService = bookService;
             Cache = cache;
             AppEnvironment = appEnvironment;
             CurrentUser = currentUser;
+            Mapper = mapper;
         }
 
         public async Task<IActionResult> IndexBooks(int pageNum = 1, IndexViewModel<BookViewModel> indexBookModel = null)
@@ -44,7 +47,7 @@ namespace BooksStore.Web.Controllers
                     int pageSize = 6;                                        
                                             
                     indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, await BookService.GetCountBooks(),
-                        BookVMConverter.ConvertToBookViewModel(await BookService.GetBooks((pageNum - 1) * pageSize , pageSize)));
+                        Mapper.Map<IEnumerable<BookViewModel>>(await BookService.GetBooks((pageNum - 1) * pageSize , pageSize)));
                 }
 
                 if (HttpContext.User.Identity.IsAuthenticated && indexBookModel.Objects != null && indexBookModel.Objects.Count() != 0)
@@ -88,7 +91,7 @@ namespace BooksStore.Web.Controllers
                     }
                 }
 
-                var bookViewModel = BookVMConverter.ConvertToBookViewModel(book);
+                var bookViewModel = Mapper.Map<BookViewModel>(book);
 
                 if (HttpContext.User.Identity.IsAuthenticated)
                 {
@@ -168,7 +171,7 @@ namespace BooksStore.Web.Controllers
             BookDTO updateBook = new BookDTO();
             if (bookId.HasValue && (updateBook = await BookService.GetBookByIdAsync(bookId.Value)) != null)
             {
-                View(BookVMConverter.ConvertToBookViewModel(updateBook));
+                View(Mapper.Map<BookViewModel>(updateBook));
             }
             return NotFound();
         }
@@ -218,8 +221,8 @@ namespace BooksStore.Web.Controllers
                     }                   
                 }
 
-                IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, booksCategory.Count()
-                    ,BookVMConverter.ConvertToBookViewModel(booksCategory));
+                IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, booksCategory.Count(),
+                    Mapper.Map<IEnumerable<BookViewModel>>(booksCategory));
 
                 return View(indexBookModel);
             }
@@ -236,7 +239,7 @@ namespace BooksStore.Web.Controllers
                 var books = (await BookService.GetBooks((pageNum - 1) * pageSize, pageSize)).Where(p => p.Title == bookName);
 
                 IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, books.Count(),
-                    BookVMConverter.ConvertToBookViewModel(books));
+                    Mapper.Map<IEnumerable<BookViewModel>>(books));
 
                 return View(indexBookModel);
             }

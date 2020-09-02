@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Cache;
-using BooksStore.Web.Converter._Order;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.CreateModels.Order;
 using BooksStore.Web.Models.ViewModels.Index;
@@ -22,11 +22,13 @@ namespace BooksStore.Web.Controllers
         IOrderService OrderService { get; set; }
         ICurrentUser CurrentUser { get; set; }
         IMemoryCache Cache { get; set; }
-        public OrderController(IOrderService orderService, IMemoryCache cache , ICurrentUser currentUser)
+        IMapper Mapper { get; set; }
+        public OrderController(IOrderService orderService, IMemoryCache cache , ICurrentUser currentUser, IMapper mapper)
         {
             OrderService = orderService;
             Cache = cache;
             CurrentUser = currentUser;
+            Mapper = mapper;
         }
 
 
@@ -51,7 +53,7 @@ namespace BooksStore.Web.Controllers
                 }
 
                 IndexViewModel<OrderViewModel> orderIndexModel = new IndexViewModel<OrderViewModel>(pageNum, pageSize,
-                    orders.Count(), OrderVMConverter.ConvertToOrderViewModel(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));
+                    orders.Count(), Mapper.Map<IEnumerable<OrderViewModel>>(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));
 
                 return View(orderIndexModel);
             }
