@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModels;
-using BooksStore.Web.Models.ViewModels.Index;
-using BooksStore.Web.Models.ViewModels.UpdateModel;
+using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Models.ViewModel.Index;
+using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,15 +30,15 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public IActionResult AddCategory() => View();
         [HttpPost]
-        public async Task<IActionResult> AddCategory([Required(ErrorMessage ="Введите название категории")]string categoryName)
+        public async Task<IActionResult> AddCategory(CategoryCreateModel categoryCreateModel)
         {
             if (ModelState.IsValid)
             {
-                await CategoryService.AddCategoryAsync(new CategoryDTO() { Name = categoryName });
+                await CategoryService.AddCategoryAsync(Mapper.Map<CategoryDTO>(categoryCreateModel));
 
                 return RedirectToAction("IndexСategoriesAdmin", "Category");
             }
-            return View(categoryName);
+            return View(categoryCreateModel);
         }
 
 

@@ -3,9 +3,8 @@ using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Web.Interfaces;
-using BooksStore.Web.Models.Login;
-using BooksStore.Web.Models.Registration;
-using BooksStore.Web.Models.ViewModels;
+using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

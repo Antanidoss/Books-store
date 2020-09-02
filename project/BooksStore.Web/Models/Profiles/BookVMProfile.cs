@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using BooksStore.Service.DTO;
-using BooksStore.Web.Models.CreateModels.Book;
-using BooksStore.Web.Models.ViewModels.Book;
-using System.Collections.Generic;
-using System.Linq;
+using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 
 namespace BooksStore.Web.Profiles
 {
@@ -15,6 +14,7 @@ namespace BooksStore.Web.Profiles
                     .ForMember(p => p.AuthorFullName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname));
 
             CreateMap<BookCreateModel, BookDTO>();
+            CreateMap<BookUpdateModel, BookDTO>();
         }
     }
 }

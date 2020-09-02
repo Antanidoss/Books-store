@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Models.ViewModels.Index
+namespace BooksStore.Web.Models.ViewModel.Index
 {
     public class IndexViewModel<T> where T : class
     {

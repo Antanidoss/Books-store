@@ -28,83 +28,34 @@ using BooksStore.Web.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Login;
+using BooksStore.Web.Models.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Registration;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Index;
+using BooksStore.Web.Models.ViewModel.CreateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 7 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Basket;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 8 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.CreateModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 9 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Role;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Order;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 11 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.AppUser;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Comment;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 13 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Category;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"13438559ecda088416042f3fbd2f63e5046ec246", @"/Views/Book/IndexBooksAdmin.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"35cac5bbf695ac1a4b1c468db7e3e5409d36b9ce", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2a9aaa5e8563b0a4fe20125e359d3158d94d297d", @"/Views/_ViewImports.cshtml")]
     public class Views_Book_IndexBooksAdmin : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IndexViewModel<BookViewModel>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "IndexBook", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -166,7 +117,7 @@ Write(await Html.PartialAsync("SearchPartial"));
 #line hidden
 #nullable disable
             WriteLiteral("                <div class=\"indexBooks-book-div\">\r\n\r\n                    <div class=\"indexBooks-bookTitle-div\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec2468357", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec2466994", async() => {
 #nullable restore
 #line 14 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\Book\IndexBooksAdmin.cshtml"
                                                                                                Write(book.Title);
@@ -214,7 +165,7 @@ Write(await Html.PartialAsync("SearchPartial"));
 #line hidden
 #nullable disable
             WriteLiteral("                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24611406", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24610043", async() => {
                 WriteLiteral("\r\n                                <img");
                 BeginWriteAttribute("src", " src=\"", 839, "\"", 871, 1);
 #nullable restore
@@ -296,7 +247,7 @@ WriteAttributeValue("", 845, Url.Content(book.ImgPath), 845, 26, false);
 #line hidden
 #nullable disable
             WriteLiteral("                    </div>\r\n\r\n                    <div class=\"indexBookAdmin-lowPanel\">\r\n\r\n                        <div class=\"indexBooks-removeBook-div\">\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24615744", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24614381", async() => {
                 WriteLiteral("\r\n                                <input type=\"hidden\"");
                 BeginWriteAttribute("value", " value=\"", 1641, "\"", 1657, 1);
 #nullable restore
@@ -328,7 +279,7 @@ WriteAttributeValue("", 1649, book.Id, 1649, 8, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                        </div>\r\n\r\n                        <div class=\"indexBooks-updateBook-div\">\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24618316", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24616953", async() => {
                 WriteLiteral("\r\n                                <input type=\"hidden\"");
                 BeginWriteAttribute("value", " value=\"", 2078, "\"", 2094, 1);
 #nullable restore
@@ -393,7 +344,7 @@ WriteAttributeValue("", 2086, book.Id, 2086, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24622190", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24620827", async() => {
                 WriteLiteral("Назад");
             }
             );
@@ -443,7 +394,7 @@ WriteAttributeValue("", 2086, book.Id, 2086, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24625185", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13438559ecda088416042f3fbd2f63e5046ec24623822", async() => {
                 WriteLiteral("Вперед");
             }
             );

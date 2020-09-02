@@ -28,83 +28,34 @@ using BooksStore.Web.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Login;
+using BooksStore.Web.Models.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Registration;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Index;
+using BooksStore.Web.Models.ViewModel.CreateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 7 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Basket;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 8 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.CreateModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 9 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Role;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Order;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 11 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.AppUser;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Comment;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 13 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Category;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"8bdb6d05441480160381b6b0173492e16895593d", @"/Views/Account/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"35cac5bbf695ac1a4b1c468db7e3e5409d36b9ce", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2a9aaa5e8563b0a4fe20125e359d3158d94d297d", @"/Views/_ViewImports.cshtml")]
     public class Views_Account_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<AppUserViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "IndexBooksAdmin", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -154,7 +105,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("        <div class=\"info-group-div\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d9517", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d8154", async() => {
                 WriteLiteral("Удалить книгу или обновить книгу");
             }
             );
@@ -172,7 +123,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n        </div>\r\n        <div class=\"info-group-div\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d10976", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d9613", async() => {
                 WriteLiteral("Добавить книгу");
             }
             );
@@ -190,7 +141,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n        </div>\r\n        <div class=\"info-group-div\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d12418", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d11054", async() => {
                 WriteLiteral("Добавить категорию");
             }
             );
@@ -208,7 +159,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n        </div>\r\n        <div class=\"info-group-div\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d13864", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d12500", async() => {
                 WriteLiteral("Добавить роль");
             }
             );
@@ -226,7 +177,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n        </div>\r\n        <div class=\"info-group-div\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d15305", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d13941", async() => {
                 WriteLiteral("Просмотреть роли");
             }
             );
@@ -244,7 +195,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n        </div>\r\n        <div class=\"info-group-div\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d16749", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d15385", async() => {
                 WriteLiteral("Просмотреть категории");
             }
             );
@@ -270,7 +221,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n    <div class=\"info-group-div\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d18384", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d17020", async() => {
                 WriteLiteral("Заказы");
             }
             );
@@ -288,7 +239,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n    </div>\r\n\r\n    <div class=\"info-group-div\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d19812", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8bdb6d05441480160381b6b0173492e16895593d18448", async() => {
                 WriteLiteral("Выйти");
             }
             );

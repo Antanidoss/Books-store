@@ -28,83 +28,34 @@ using BooksStore.Web.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Login;
+using BooksStore.Web.Models.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Registration;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Index;
+using BooksStore.Web.Models.ViewModel.CreateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 7 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Basket;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 8 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.CreateModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 9 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Role;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Order;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 11 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.AppUser;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Comment;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 13 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Category;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ea7cea677dd070215f5dba550c4bcadb57333964", @"/Views/Role/IndexRole.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"35cac5bbf695ac1a4b1c468db7e3e5409d36b9ce", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2a9aaa5e8563b0a4fe20125e359d3158d94d297d", @"/Views/_ViewImports.cshtml")]
     public class Views_Role_IndexRole : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IndexViewModel<RoleViewModel>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Edit", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -162,7 +113,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("</h4></p>\r\n                     </div>\r\n                     <div>\r\n                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb573339647494", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb573339646131", async() => {
                 WriteLiteral("Редактировать");
             }
             );
@@ -203,7 +154,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("         </div>\r\n         <div class=\"indexRoles-addRole\">\r\n              ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb5733396410217", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb573339648854", async() => {
                 WriteLiteral("Создать роль");
             }
             );
@@ -230,7 +181,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb5733396411947", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb5733396410583", async() => {
                 WriteLiteral("Вперед");
             }
             );
@@ -280,7 +231,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb5733396414884", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ea7cea677dd070215f5dba550c4bcadb5733396413520", async() => {
                 WriteLiteral("Назад");
             }
             );

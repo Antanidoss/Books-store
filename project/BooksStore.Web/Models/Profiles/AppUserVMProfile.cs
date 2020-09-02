@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Service.DTO;
-using BooksStore.Web.Models.ViewModels.AppUser;
-using System.Collections.Generic;
-using System.Linq;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 
 namespace BooksStore.Web.Profiles
 {

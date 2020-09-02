@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BooksStore.Web.Models.CreateModels
+namespace BooksStore.Web.Models.ViewModel.CreateModel
 {
     public class OrderCreateModel
     {

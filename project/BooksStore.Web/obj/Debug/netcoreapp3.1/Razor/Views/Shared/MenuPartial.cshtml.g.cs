@@ -28,83 +28,34 @@ using BooksStore.Web.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Login;
+using BooksStore.Web.Models.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.Registration;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Index;
+using BooksStore.Web.Models.ViewModel.CreateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 7 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Basket;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 8 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.CreateModels.Book;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 9 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Role;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Order;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 11 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.AppUser;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Comment;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 13 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModels.Category;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"4aeb66b8cd0e4f5281a915d7bec46c0f815a3c49", @"/Views/Shared/MenuPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"35cac5bbf695ac1a4b1c468db7e3e5409d36b9ce", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2a9aaa5e8563b0a4fe20125e359d3158d94d297d", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_MenuPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "IndexBooks", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -139,7 +90,7 @@ using BooksStore.Web.Models.ViewModels.Category;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             WriteLiteral("<header>\r\n    <nav class=\"dws-menu\">\r\n        <ul class=\"dws-ul\">\r\n            <li class=\"dws-li\">\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c497493", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c496130", async() => {
                 WriteLiteral("<i class=\"fas fa-home\" aria-hidden=\"true\"></i>Главная");
             }
             );
@@ -158,7 +109,7 @@ using BooksStore.Web.Models.ViewModels.Category;
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n            </li>\r\n");
             WriteLiteral("            <li class=\"dws-li\">\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c499010", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c497647", async() => {
                 WriteLiteral("<i class=\"fas fa-shopping-basket\" aria-hidden=\"true\"></i>Корзина");
             }
             );
@@ -185,7 +136,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c4910946", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c499583", async() => {
                 WriteLiteral("<i class=\"fas fa-sign-in-alt\" aria-hidden=\"true\"></i>Войти");
             }
             );
@@ -213,7 +164,7 @@ using BooksStore.Web.Models.ViewModels.Category;
 #line hidden
 #nullable disable
             WriteLiteral("                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c4912632", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aeb66b8cd0e4f5281a915d7bec46c0f815a3c4911268", async() => {
 #nullable restore
 #line 23 "C:\IT\c#\Новая папка\project\BooksStore.Web\Views\Shared\MenuPartial.cshtml"
                                                               Write(Context.User.Identity.Name);

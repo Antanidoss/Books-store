@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Models.ViewModels.UpdateModel
+namespace BooksStore.Web.Models.ViewModel.UpdateModel
 {
     public class CategoryUpdateModel
     {

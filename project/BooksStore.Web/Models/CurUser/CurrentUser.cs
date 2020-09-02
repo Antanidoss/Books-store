@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Models.User.CurUser
+namespace BooksStore.Web.Models.CurUser
 {
     public class CurrentUser : ICurrentUser
     {       

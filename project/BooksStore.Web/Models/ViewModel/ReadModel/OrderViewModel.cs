@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BooksStore.Web.Models.ViewModels
+namespace BooksStore.Web.Models.ViewModel.ReadModel
 {
     public class OrderViewModel
     {

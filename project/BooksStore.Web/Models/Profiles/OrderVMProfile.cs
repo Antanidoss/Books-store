@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Service.DTO;
-using BooksStore.Web.Models.ViewModels.Order;
+using BooksStore.Web.Models.ViewModel.ReadModel;
 
 namespace BooksStore.Web.Profiles
 {

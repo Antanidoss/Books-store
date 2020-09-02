@@ -1,4 +1,4 @@
-﻿namespace BooksStore.Web.Models.ViewModels
+﻿namespace BooksStore.Web.Models.ViewModel.ReadModel
 {
     public class CommentViewModel
     {

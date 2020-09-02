@@ -1,7 +1,7 @@
-﻿using BooksStore.Web.Models.ViewModels.Index;
+﻿using BooksStore.Web.Models.ViewModel.Index;
 using System.Linq;
 
-namespace BooksStore.Web.Models.ViewModels
+namespace BooksStore.Web.Models.ViewModel.ReadModel
 {
     public class BasketViewModel
     {

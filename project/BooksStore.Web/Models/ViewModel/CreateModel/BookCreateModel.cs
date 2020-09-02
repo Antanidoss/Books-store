@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BooksStore.Web.Models.CreateModels
+namespace BooksStore.Web.Models.ViewModel.CreateModel
 {
     public class BookCreateModel
     {

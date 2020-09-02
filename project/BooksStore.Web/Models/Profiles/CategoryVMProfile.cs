@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Service.DTO;
-using BooksStore.Web.Models.ViewModels.Category;
-using System.Collections.Generic;
-using System.Linq;
+using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 
 namespace BooksStore.Web.Profiles
 {
@@ -11,6 +10,7 @@ namespace BooksStore.Web.Profiles
         public CategoryVMProfile()
         {
             CreateMap<CategoryDTO, CategoryViewModel>();
+            CreateMap<CategoryUpdateModel, CategoryDTO>();
         }
     }
 }

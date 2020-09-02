@@ -1,7 +1,7 @@
-﻿using BooksStore.Web.Models.ViewModels;
+﻿using BooksStore.Web.Models.ViewModel.ReadModel;
 using System.Collections.Generic;
 
-namespace BooksStore.Web.Models.UpdateModel
+namespace BooksStore.Web.Models.ViewModel.UpdateModel
 {
     public class RoleEditModel
     {

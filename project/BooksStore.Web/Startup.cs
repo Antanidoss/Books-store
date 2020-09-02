@@ -19,7 +19,7 @@ using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Service.OrderSer;
 using BooksStore.Service.Profiles;
 using BooksStore.Web.Interfaces;
-using BooksStore.Web.Models.User.CurUser;
+using BooksStore.Web.Models.CurUser;
 using BooksStore.Web.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
