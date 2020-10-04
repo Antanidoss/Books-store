@@ -34,11 +34,11 @@ namespace BooksStore.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await RoleManagerService.CreateRoleAsync(roleName);
-
-                return RedirectToAction("Index", "Role");
+                return View();
             }
-            return View();
+            await RoleManagerService.CreateRoleAsync(roleName);
+
+            return RedirectToAction("Index", "Role");
         }
 
         [HttpGet]
@@ -46,78 +46,79 @@ namespace BooksStore.Web.Controllers
         {
             if (pageNum >= 1)
             {
-                IndexViewModel<RoleViewModel> indexViewModel = new IndexViewModel<RoleViewModel>();
-
-                if ((await RoleManagerService.GetRolesAsync()).Count() != 0)
-                {
-                    var roles = await RoleManagerService.GetRolesAsync();
-
-                    indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(),
-                        Mapper.Map<IEnumerable<RoleViewModel>>(roles));
-                }
-                return View(indexViewModel);
+                return BadRequest("Некорректные данные в запросе");
             }
+            IndexViewModel<RoleViewModel> indexViewModel = new IndexViewModel<RoleViewModel>();
 
-            return BadRequest("Некорректные данные в запросе");
+            if ((await RoleManagerService.GetRolesAsync()).Count() != 0)
+            {
+                var roles = await RoleManagerService.GetRolesAsync();
+
+                indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(),
+                    Mapper.Map<IEnumerable<RoleViewModel>>(roles));
+            }
+            return View(indexViewModel);                       
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(string roleId)
         {
             var result = await RoleManagerService.FindRoleByIdAsync(roleId);
-            if(result.Result.Succeeded)
+            if (!result.Result.Succeeded)
             {
-                var members = new List<AppUserDTO>();
-                var nonMembers = new List<AppUserDTO>();
-
-                foreach(var user in  UserManagerService.GetAppUsers())
-                {
-                    var list = await UserManagerService.IsInRoleAsync(user, result.RoleDTO.Name) ? members : nonMembers;
-                    list.Add(user);
-                }
-
-                return base.View(new RoleEditModel()
-                {
-                    Memebers = Mapper.Map<IEnumerable<AppUserViewModel>>(members),
-                    NonMembers = Mapper.Map<IEnumerable<AppUserViewModel>>(nonMembers),
-                    RoleViewModel = Mapper.Map<RoleViewModel>(result.RoleDTO)
-                });
+                return View(StatusCode(404));
             }
-            return View(StatusCode(404));
+            var members = new List<AppUserDTO>();
+            var nonMembers = new List<AppUserDTO>();
+
+            foreach(var user in  UserManagerService.GetAppUsers())
+            {
+                var list = await UserManagerService.IsInRoleAsync(user, result.RoleDTO.Name) ? members : nonMembers;
+                list.Add(user);
+            }
+
+            return base.View(new RoleEditModel()
+            {
+                Memebers = Mapper.Map<IEnumerable<AppUserViewModel>>(members),
+                NonMembers = Mapper.Map<IEnumerable<AppUserViewModel>>(nonMembers),
+                RoleViewModel = Mapper.Map<RoleViewModel>(result.RoleDTO)
+            });
+                  
         }
         [HttpPost]
         public async Task<IActionResult> Edit(RoleUpdateModel updateModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                foreach(var userId in updateModel.IdsToAdd)
-                {
-                    var result = await UserManagerService.FindAppUserByIdAsync(userId);
-                    if(result.Result.Succeeded)
-                    {
-                        await UserManagerService.AddToRoleAsync(result.AppUserDTO, updateModel.Name);                            
-                    }
-                    ModelState.AddModelError("", result.Result.ToString());
-                }
-
-                foreach(var userId in updateModel.IdsToDelete)
-                {
-                    var user = (await UserManagerService.FindAppUserByIdAsync(userId)).AppUserDTO;
-                    if(user != null)
-                    {
-                        await UserManagerService.RemoveFromRoleAsync(user, updateModel.Name);
-                    }
-                }
-
-                return RedirectToAction("Index", "Role");
+                return await Edit(updateModel.Id);
             }
-            return await Edit(updateModel.Id);
+
+            foreach(var userId in updateModel.IdsToAdd)
+            {
+                var result = await UserManagerService.FindAppUserByIdAsync(userId);
+                if(result.Result.Succeeded)
+                {
+                    await UserManagerService.AddToRoleAsync(result.AppUserDTO, updateModel.Name);                            
+                }
+                ModelState.AddModelError("", result.Result.ToString());
+            }
+
+            foreach(var userId in updateModel.IdsToDelete)
+            {
+                var user = (await UserManagerService.FindAppUserByIdAsync(userId)).AppUserDTO;
+                if(user != null)
+                {
+                    await UserManagerService.RemoveFromRoleAsync(user, updateModel.Name);
+                }
+            }
+
+            return RedirectToAction("Index", "Role");                        
         }
 
         public async Task<IActionResult> Remove(string roleId)
         {
             var result = await RoleManagerService.FindRoleByIdAsync(roleId);
-            if(result.Result.Succeeded)
+            if(!result.Result.Succeeded)
             {
                 await RoleManagerService.DeleteAsync(result.RoleDTO);
             }

@@ -38,11 +38,11 @@ namespace BooksStore.Web.Controllers
                 {
                     return RedirectToAction("IndexBooks", "Book");
                 }
-                ModelState.AddModelError("", signInResult.ToString());                             
+
+                ModelState.AddModelError("", signInResult.ToString());
             }
             return View(logModel);
         }
-
 
         [HttpGet]
         public IActionResult Registration() => View();
@@ -50,17 +50,15 @@ namespace BooksStore.Web.Controllers
         public async Task<IActionResult> Registration(RegistrationModel regModel)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 var result = await UserManagerService.CreateAppUserAsync(regModel.Name, regModel.Email, regModel.Password);
                 if (!result.Result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Result.ToString());
+                    return View(regModel);
                 }
-                else
-                {
-                    await UserManagerService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
-                    return RedirectToAction("IndexBooks", "Book");
-                }
+                await UserManagerService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
+                return RedirectToAction("IndexBooks", "Book");
             }
             return View(regModel);
         }
@@ -84,6 +82,5 @@ namespace BooksStore.Web.Controllers
 
             return View(userViewModel);
         }
-
     }
 }

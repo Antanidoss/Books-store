@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
-using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -22,73 +21,58 @@ namespace BooksStore.Web.Controllers
     {
         IOrderService OrderService { get; set; }
         ICurrentUser CurrentUser { get; set; }
-        IMemoryCache Cache { get; set; }
         IMapper Mapper { get; set; }
         public OrderController(IOrderService orderService, IMemoryCache cache , ICurrentUser currentUser, IMapper mapper)
         {
             OrderService = orderService;
-            Cache = cache;
             CurrentUser = currentUser;
             Mapper = mapper;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> IndexOrders(int pageNum = 1)
         {
-            if (pageNum >= 1)
+            if (pageNum <= 0)
             {
-                string curUserId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
-
-                if (!Cache.TryGetValue(CacheKeys.GetOrdersKey(curUserId), out List<OrderDTO> orders))
-                {
-                    orders = (await OrderService.GetOrdersByAppUserId(curUserId)).ToList();
-                    if (orders.Count() != 0)
-                    {
-                        Cache.Set(CacheKeys.GetOrdersKey(curUserId), orders, new MemoryCacheEntryOptions
-                        {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.OrdersCacheTime)
-                        });
-                    }
-                }
-
-                int pageSize = PageSizes.Orders;
-
-                IndexViewModel<OrderViewModel> orderIndexModel = new IndexViewModel<OrderViewModel>(pageNum, pageSize,
-                    orders.Count(), Mapper.Map<IEnumerable<OrderViewModel>>(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));
-
-                return View(orderIndexModel);
+                return BadRequest("Некорректные данные в запросе");
             }
-            return BadRequest("Некорректные данные в запросе");
-        }
+            string curUserId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
+            
+            var orders = (await OrderService.GetOrdersByAppUserId(curUserId)).ToList();                                    
 
+            int pageSize = PageSizes.Orders;
+
+            IndexViewModel<OrderViewModel> orderIndexModel = new IndexViewModel<OrderViewModel>(pageNum, pageSize,
+                orders.Count(), Mapper.Map<IEnumerable<OrderViewModel>>(orders.Skip((pageNum - 1) * pageSize).Take(pageSize)));
+
+            return View(orderIndexModel);                      
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddOrder(OrderCreateModel createModel)
         {
-            if (createModel != null && createModel.BookOrderIds.Count() != 0)
+            if (createModel == null && createModel.BookOrderIds.Count() == 0)
             {
-                string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
-                List<BookDTO> booksOrder = new List<BookDTO>();
-
-                foreach(var bookId in createModel.BookOrderIds)
-                {
-                    booksOrder.Add(new BookDTO() { Id = bookId });
-                }
-
-                OrderDTO order = new OrderDTO()
-                {
-                    BooksOrder = booksOrder,
-                    TimeOfDelivery = DateTime.Now.AddDays(3),                   
-                    AppUserId = userId
-                };                
-                
-                await OrderService.AddOrderAsync(order);
-                RemoveOrderCache(userId);
-                
-                return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = order.BooksOrder.Select(p => p.Id) });
+                return NotFound();
             }
-            return NotFound();
+            string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
+            List<BookDTO> booksOrder = new List<BookDTO>();
+
+            foreach(var bookId in createModel.BookOrderIds)
+            {
+                booksOrder.Add(new BookDTO() { Id = bookId });
+            }
+
+            OrderDTO order = new OrderDTO()
+            {
+                BooksOrder = booksOrder,
+                TimeOfDelivery = DateTime.Now.AddDays(3),                   
+                AppUserId = userId
+            };                
+            
+            await OrderService.AddOrderAsync(order);
+            
+            return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = order.BooksOrder.Select(p => p.Id) });                      
         }
 
 
@@ -96,20 +80,18 @@ namespace BooksStore.Web.Controllers
         public async Task<IActionResult> RemoveOrder(int? orderId)
         {
             OrderDTO order = new OrderDTO();
-            if (orderId.HasValue && (order = await OrderService.GetOrderByIdAsync(orderId.Value)) != null)
+            if (!orderId.HasValue && (order = await OrderService.GetOrderByIdAsync(orderId.Value)) == null)
             {
-                string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
-
-                if (order.AppUserId == userId)
-                {
-                    await OrderService.RemoveOrderAsync(order.Id);
-                    RemoveOrderCache(userId);
-                }
-                return RedirectToAction(nameof(IndexOrders));
+                return NotFound();
             }
-            return NotFound();
-        }
+            string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
 
+            if (order.AppUserId == userId)
+            {
+                await OrderService.RemoveOrderAsync(order.Id);
+            }
+            return RedirectToAction(nameof(IndexOrders));
+        }
 
         [HttpGet]
         public async Task<IActionResult> RemoveCompleteOrders()
@@ -117,18 +99,7 @@ namespace BooksStore.Web.Controllers
             string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
             await OrderService.RemoveCompleteOrder(userId);
 
-            RemoveOrderCache(userId);
-
             return RedirectToAction(nameof(IndexOrders));
-        }
-
-
-        private void RemoveOrderCache(string userId)
-        {
-            if(Cache.TryGetValue(CacheKeys.GetOrdersKey(userId), out List<OrderDTO> orderCache))
-            {
-                Cache.Remove(CacheKeys.GetOrdersKey(userId));
-            }
         }
     }
 }

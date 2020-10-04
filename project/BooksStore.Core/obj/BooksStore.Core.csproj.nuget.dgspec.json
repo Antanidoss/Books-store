@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Core\\BooksStore.Core.csproj": {}
+    "C:\\IT\\c#\\Проекты\\store\\project\\BooksStore.Core\\BooksStore.Core.csproj": {}
   },
   "projects": {
-    "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Core\\BooksStore.Core.csproj": {
+    "C:\\IT\\c#\\Проекты\\store\\project\\BooksStore.Core\\BooksStore.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Core\\BooksStore.Core.csproj",
+        "projectUniqueName": "C:\\IT\\c#\\Проекты\\store\\project\\BooksStore.Core\\BooksStore.Core.csproj",
         "projectName": "BooksStore.Core",
-        "projectPath": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Core\\BooksStore.Core.csproj",
+        "projectPath": "C:\\IT\\c#\\Проекты\\store\\project\\BooksStore.Core\\BooksStore.Core.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\IT\\c#\\Новая папка\\project\\BooksStore.Core\\obj\\",
+        "outputPath": "C:\\IT\\c#\\Проекты\\store\\project\\BooksStore.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

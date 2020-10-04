@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using BooksStore.Core.CategoryModel;
 using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
+using BooksStore.Web.CacheOptions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,64 +13,78 @@ namespace BooksStore.Service.CategorySer
 {
     public class CategoryService : ICategoryService
     {
-        ICategoryRepository CategoryRepository { get; set; }
-        IMapper Mapper { get; set; }
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        private readonly ICategoryRepository _categoryRepository;
+
+        private readonly IMapper _mapper;
+
+        private readonly ICacheManager _cacheManager;
+
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, ICacheManager cacheManager)
         {
-            CategoryRepository = categoryRepository;
-            Mapper = mapper;
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
+            _cacheManager = cacheManager;
         }
 
         public async Task AddCategoryAsync(CategoryDTO categoryDTO)
         {
-            if(categoryDTO != null && categoryDTO != default)
+            if(categoryDTO == null)
             {
-                await CategoryRepository.AddCategoryAsync(Mapper.Map<Category>(categoryDTO));
+                throw new ArgumentNullException(nameof(CategoryDTO));
             }
+
+            await _categoryRepository.AddCategoryAsync(_mapper.Map<Category>(categoryDTO));
         }
                               
         public async Task<CategoryDTO> GetCategoryById(int categoryId)
         {
-            if (categoryId >= 1)
+            if (categoryId <= 0)
             {
-                return Mapper.Map<CategoryDTO>(await CategoryRepository.GetCategoryByIdAsync(categoryId));
+                throw new ArgumentException("id не может быть равен или меньше нуля");
             }
-            return null;
+
+            return _mapper.Map<CategoryDTO>(await _categoryRepository.GetCategoryByIdAsync(categoryId));
         }
 
         public async Task<IEnumerable<CategoryDTO>> GetCategories(int skip, int take)
         {
-            if (skip >= 0 && take >= 1)
+            if (skip < 0 && take <= 0)
             {
-                return Mapper.Map<IEnumerable<CategoryDTO>>(await CategoryRepository.GetCategories(skip, take));
+                throw new ArgumentException("Некорректные аргументы skip и take");
             }
-            return new List<CategoryDTO>();
+            return _mapper.Map<IEnumerable<CategoryDTO>>(await _categoryRepository.GetCategories(skip, take));
         }
 
         public async Task RemoveCategoryAsync(int categoryId)
         {
-            if (categoryId >= 1)
+            if (categoryId <= 0)
             {
-                var category = await CategoryRepository.GetCategoryByIdAsync(categoryId);
+                throw new ArgumentException("id не может быть равен или меньше нуля");
+            }
 
-                if (category != default)
-                {
-                    await CategoryRepository.RemoveCategoryAsync(category);
-                }
+            var category = await _categoryRepository.GetCategoryByIdAsync(categoryId);
+
+            if (category != default)
+            {
+                await _categoryRepository.RemoveCategoryAsync(category);
+                _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryId));
             }
         }
 
         public async Task UpdateCategoryAsync(CategoryDTO categoryDTO)
         {
-            if (categoryDTO != null && categoryDTO != default)
+            if (categoryDTO != null)
             {
-                await CategoryRepository.UpdateCategoryAsync(Mapper.Map<Category>(categoryDTO));
+                throw new ArgumentNullException(nameof(CategoryDTO));
             }
+
+            await _categoryRepository.UpdateCategoryAsync(_mapper.Map<Category>(categoryDTO));
+            _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryDTO.Id));
         }
 
         public async Task<int> GetCountCategories()
         {
-            return await CategoryRepository.GetCountCategories();
+            return await _categoryRepository.GetCountCategories();
         }
     }
 }

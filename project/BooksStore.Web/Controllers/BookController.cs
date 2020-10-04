@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
-using BooksStore.Web.Cache;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -18,23 +16,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace BooksStore.Web.Controllers
 {
     public class BookController : Controller
     {
         IBookService BookService { get; set; }
-        IMemoryCache Cache { get; set; }
         IWebHostEnvironment AppEnvironment { get; set; }
         ICurrentUser CurrentUser { get; set; }
         IMapper Mapper { get; set; }
 
-        public BookController(IBookService bookService, IMemoryCache cache, IWebHostEnvironment appEnvironment, ICurrentUser currentUser,
-            IMapper mapper)
+        public BookController(IBookService bookService, IWebHostEnvironment appEnvironment, ICurrentUser currentUser, IMapper mapper)
         {
             BookService = bookService;
-            Cache = cache;
             AppEnvironment = appEnvironment;
             CurrentUser = currentUser;
             Mapper = mapper;
@@ -75,38 +69,24 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexBook(int? bookId)
         {
-            if (bookId.HasValue)
+            if (!bookId.HasValue)
             {
-                if (!Cache.TryGetValue(CacheKeys.GetBookKey(bookId.Value), out BookDTO book))
-                {
-                    book = await BookService.GetBookByIdAsync(bookId.Value);
-                    if (book != null)
-                    {
-                        Cache.Set(CacheKeys.GetBookKey(bookId.Value), book, new MemoryCacheEntryOptions
-                        {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.BookCacheTime)
-                        });
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-
-                var bookViewModel = Mapper.Map<BookViewModel>(book);
-
-                if (HttpContext.User.Identity.IsAuthenticated)
-                {
-                    int basketId = (await CurrentUser.GetCurrentUser(HttpContext)).BasketId;
-                    if (await BookService.IsBookInBasketAsync(basketId, bookId.Value))
-                    {
-                        bookViewModel.IsAddToBasket = true;
-                    }
-                }
-
-                return View(bookViewModel);
+                return NotFound();
             }
-            return NotFound();
+            var book = await BookService.GetBookByIdAsync(bookId.Value);
+                                
+            var bookViewModel = Mapper.Map<BookViewModel>(book);
+
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                int basketId = (await CurrentUser.GetCurrentUser(HttpContext)).BasketId;
+                if (await BookService.IsBookInBasketAsync(basketId, bookId.Value))
+                {
+                    bookViewModel.IsAddToBasket = true;
+                }
+            }
+
+            return View(bookViewModel);                        
         }
 
 
@@ -150,7 +130,6 @@ namespace BooksStore.Web.Controllers
             if (bookId.HasValue)
             {
                 await BookService.RemoveBookAsync(bookId.Value);          
-                RemoveBookInCahe(bookId.Value);
 
                 return RedirectToAction(nameof(IndexBooksAdmin), "Book");
             }
@@ -180,8 +159,6 @@ namespace BooksStore.Web.Controllers
                 if (updateBook != null)
                 {                   
                     await BookService.UpdateBookAsync(Mapper.Map<BookDTO>(model));
-
-                    RemoveBookInCahe(updateBook.Id);
                 }
                 return RedirectToAction("IndexBooksAdmin", "Book");
             }
@@ -195,19 +172,9 @@ namespace BooksStore.Web.Controllers
             if (categoryId.HasValue && pageNum >= 1)
             {
                 int pageSize = 6;
-
-                if (!Cache.TryGetValue(CacheKeys.GetBooksByCategoryKey(categoryId.Value), out IEnumerable<BookDTO> booksCategory))
-                {
-                    booksCategory = await BookService.GetBookByCategoryAsync(categoryId.Value);
-                    if(booksCategory.Count() != 0)
-                    {
-                        Cache.Set(CacheKeys.GetBooksByCategoryKey(categoryId.Value), booksCategory, new MemoryCacheEntryOptions
-                        {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(CacheTimes.BooksByCategoryCacheTime)
-                        });
-                    }                   
-                }
-
+                
+                var booksCategory = await BookService.GetBookByCategoryAsync(categoryId.Value);
+                                                  
                 IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, booksCategory.Count(),
                     Mapper.Map<IEnumerable<BookViewModel>>(booksCategory));
 
@@ -232,15 +199,6 @@ namespace BooksStore.Web.Controllers
             }
 
             return BadRequest("Некорректные данные в запросе");
-        }
-
-
-        private void RemoveBookInCahe(int bookId)
-        {
-            if (Cache.TryGetValue(CacheKeys.GetBookKey(bookId), out BookDTO book))
-            {
-                Cache.Remove(CacheKeys.GetBookKey(bookId));
-            }
-        }
+        }        
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Cache
+namespace BooksStore.Web.CacheOptions
 {
     public static class CacheKeys
     {
@@ -14,5 +14,9 @@ namespace BooksStore.Web.Cache
         public static string GetIndexCategoryKey(int categoryId) => "Category" + categoryId;
         public static string GetCommentsKey(int bookId, int pageNum) => "IndexComments" + bookId + pageNum;
         public static string GetBooksByCategoryKey(int categoryId) => "IndexBooksByCategory" + categoryId;
+        public static string GetAuthorKey(int authorId) => "Author" + authorId;
+        public static string GetCategoryKey(int categoryId) => "Category" + categoryId;
+        public static string GetCommentKey(int commentId) => "Comment" + commentId;
+        public static string GetOrderKey(int orderId) => "Order" + orderId;
     }
 }

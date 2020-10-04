@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KYAI7C4NAiPz0Hv3N2kUvbvYZyDYciBXfdnLQWG8CBCJFfzJjP/Xcafx4CYv2w7nqojjmX4GToqNYzK5te6Nvg==",
+  "dgSpecHash": "uWqDSDWYizDz03mGAQbp28oda0yM7Dqd2yQ2fQiiMELWsVWQZyJmJlhZiN2tCPdfxI4qbBrhUPDSXR6l8rE5aA==",
   "success": true,
-  "projectFilePath": "C:\\IT\\c#\\Test\\Новая папка\\project\\BooksStore.Web\\BooksStore.Web.csproj",
+  "projectFilePath": "C:\\IT\\c#\\Проекты\\store\\project\\BooksStore.Web\\BooksStore.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\automapper\\10.0.0\\automapper.10.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

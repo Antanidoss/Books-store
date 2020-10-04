@@ -8,6 +8,8 @@ using BooksStore.Infastructure.CommentRep;
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces;
 using BooksStore.Infastructure.OrderRep;
+using BooksStore.Infrastructure.Implementation.CacheManager;
+using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Service.AuthorSer;
 using BooksStore.Service.BasketSer;
 using BooksStore.Service.BookSer;
@@ -110,6 +112,8 @@ namespace BooksStore.Web
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.AddScoped<IRoleManagerService, RoleManagerService>();
+
+            services.AddTransient<ICacheManager, MemoryCacheManager>();
         }
 
         

@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using BooksStore.Core.OrderModel;
 using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infrastructure.Exceptions;
+using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
+using BooksStore.Web.CacheOptions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,87 +14,115 @@ namespace BooksStore.Service.OrderSer
 {
     public class OrderService : IOrderService
     {
-        IOrderRepository OrderRepository { get; set; }
-        IMapper Mapper { get; set; }
-        public OrderService(IOrderRepository orderRepository, IMapper mapper)
+        private readonly IOrderRepository _orderRepository;
+
+        private readonly IMapper _mapper;
+
+        private readonly ICacheManager _cacheManager;
+
+        public OrderService(IOrderRepository orderRepository, IMapper mapper, ICacheManager cacheManager)
         {
-            OrderRepository = orderRepository;
-            Mapper = mapper;
+            _orderRepository = orderRepository;
+            _mapper = mapper;
+            _cacheManager = cacheManager;
         }
 
         public async Task AddOrderAsync(OrderDTO orderDTO)
         {
-            if(orderDTO != null && orderDTO != default)
-            {             
-                await OrderRepository.AddOrderAsync(Mapper.Map<Order>(orderDTO));
+            if(orderDTO == null)
+            {
+                throw new ArgumentNullException(nameof(OrderDTO));
             }
+            await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderDTO));
         }
 
         public async Task<OrderDTO> GetOrderByIdAsync(int orderId)
         {
-            if (orderId >= 1)
+            if (_cacheManager.IsSet(CacheKeys.GetOrderKey(orderId)))
             {
-                return Mapper.Map<OrderDTO>(await OrderRepository.GetOrderById(orderId));
+                return _mapper.Map<OrderDTO>(_cacheManager.Get<Order>(CacheKeys.GetOrderKey(orderId)));
             }
-            return null;
+
+            if (orderId <= 0)
+            {
+                throw new ArgumentException("id не может быть равен или меньше нуля");
+            }
+
+            var order = await _orderRepository.GetOrderById(orderId);
+
+            if(order == null)
+            {
+                throw new NotFoundException(nameof(OrderDTO), order);
+            }
+
+            _cacheManager.Set<Order>(CacheKeys.GetOrdersKey(order.AppUserId), order, CacheTimes.OrdersCacheTime);
+            return _mapper.Map<OrderDTO>(order);
         }
 
         public async Task<IEnumerable<OrderDTO>> GetOrders(int skip, int take)
         {
-            if (skip >= 0 && take >= 1)
+            if (skip < 0 && take <= 0)
             {
-                return Mapper.Map<IEnumerable<OrderDTO>>((await OrderRepository.GetOrders(skip, take) ?? new List<Order>()));
+                throw new ArgumentException("Некорректные аргументы skip и take");
             }
-            return new List<OrderDTO>();
+            return _mapper.Map<IEnumerable<OrderDTO>>((await _orderRepository.GetOrders(skip, take) ?? new List<Order>()));
         }
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            if (orderId >= 1)
+            if (orderId <= 0)
             {
-                var order = await OrderRepository.GetOrderById(orderId);
-
-                if (order != null)
-                {
-                    await OrderRepository.RemoveOrderAsync(order);
-                }
+                throw new ArgumentException("id не может быть равен или меньше нуля");
             }
+
+            var order = await _orderRepository.GetOrderById(orderId);
+
+            if (order == null)
+            {
+                throw new NotFoundException(nameof(OrderDTO), order);
+            }
+
+            await _orderRepository.RemoveOrderAsync(order);
+            _cacheManager.Remove(CacheKeys.GetOrdersKey(order.AppUserId));
         }
 
         public async Task UpdateOrderAsync(OrderDTO orderDTO)
         {
-            if (orderDTO != null && orderDTO != default)
+            if (orderDTO == null)
             {
-                await OrderRepository.UpdateOrderAsync(Mapper.Map<Order>(orderDTO));
+                throw new ArgumentNullException(nameof(OrderDTO));
             }
+            await _orderRepository.UpdateOrderAsync(_mapper.Map<Order>(orderDTO));
         }
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
             if (!string.IsNullOrEmpty(appUserId))
             {
-                foreach (var order in (await OrderRepository.GetOrdersByAppUserId(appUserId)))
+                throw new ArgumentException("id не может быть равен null");
+            }
+
+            foreach (var order in (await _orderRepository.GetOrdersByAppUserId(appUserId)))
+            {
+                if (order.TimeOfDelivery < DateTime.Now)
                 {
-                    if (order.TimeOfDelivery < DateTime.Now)
-                    {
-                        await OrderRepository.RemoveOrderAsync(order);
-                    }
+                    await _orderRepository.RemoveOrderAsync(order);
                 }
             }
         }
 
         public async Task<int> GetCountOrders()
         {
-            return await OrderRepository.GetCountOrders();
+            return await _orderRepository.GetCountOrders();
         }
 
         public async Task<IEnumerable<OrderDTO>> GetOrdersByAppUserId(string appUserId)
         {
-            if (!string.IsNullOrEmpty(appUserId))
+            if (string.IsNullOrEmpty(appUserId))
             {
-                return Mapper.Map<IEnumerable<OrderDTO>>(await OrderRepository.GetOrdersByAppUserId(appUserId));
+                throw new ArgumentException("id не может быть равен null");
             }
-            return new List<OrderDTO>();
+            return _mapper.Map<IEnumerable<OrderDTO>>(await _orderRepository.GetOrdersByAppUserId(appUserId));
         }
     }
 }

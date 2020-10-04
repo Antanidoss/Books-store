@@ -26,7 +26,6 @@ namespace BooksStore.Web.Controllers
             Mapper = mapper;
         }
 
-
         [HttpGet]
         public IActionResult AddCategory() => View();
         [HttpPost]
@@ -41,13 +40,11 @@ namespace BooksStore.Web.Controllers
             return View(categoryCreateModel);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> IndexСategoriesAdmin(int pageNum = 1)
         {
             return await IndexCategories(pageNum);
         }
-
 
         [AllowAnonymous]
         [HttpGet]
@@ -67,7 +64,6 @@ namespace BooksStore.Web.Controllers
             throw new ArgumentException();
         }       
 
-
         [HttpGet]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
         {
@@ -79,7 +75,6 @@ namespace BooksStore.Web.Controllers
             }
             return NotFound();
         }
-
 
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int? categoryId)
