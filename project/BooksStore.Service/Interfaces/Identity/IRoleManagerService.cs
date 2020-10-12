@@ -10,8 +10,8 @@ namespace BooksStore.Service.Interfaces.Identity
     public interface IRoleManagerService
     {
         Task<Result> CreateRoleAsync(string roleName);
-        Task<IEnumerable<RoleDTO>> GetRolesAsync();
-        Task<(Result Result, RoleDTO RoleDTO)> FindRoleByIdAsync(string roleId);
+        Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take);
+        Task<RoleDTO> FindRoleByIdAsync(string roleId);
         Task<Result> DeleteAsync(RoleDTO roleDTO);
     }
 }

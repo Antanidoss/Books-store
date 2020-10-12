@@ -28,5 +28,7 @@ namespace BooksStore.Web.Models.ViewModel.CreateModel
 
         [Required(ErrorMessage = "Введите фамилию автора книги")]
         public string AuthorSurname { get; set; }
+
+        public string ImgPath { get; set; }
     }
 }

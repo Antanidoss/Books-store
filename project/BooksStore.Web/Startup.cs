@@ -21,7 +21,9 @@ using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Service.OrderSer;
 using BooksStore.Service.Profiles;
 using BooksStore.Web.Interfaces;
+using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.CurUser;
+using BooksStore.Web.Models.Managers;
 using BooksStore.Web.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -114,6 +116,13 @@ namespace BooksStore.Web
             services.AddScoped<IRoleManagerService, RoleManagerService>();
 
             services.AddTransient<ICacheManager, MemoryCacheManager>();
+
+            services.AddScoped<IBookManager, BookManager>();
+            services.AddScoped<ICommentManager, CommentManager>();
+            services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<IBasketManager, BasketManager>();
+            services.AddScoped<ICategoryManager, CategoryManager>();
+            services.AddScoped<IRoleManager, RoleManager>();
         }
 
         

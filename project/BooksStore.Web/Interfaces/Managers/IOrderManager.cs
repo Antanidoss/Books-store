@@ -1,0 +1,21 @@
+﻿using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BooksStore.Web.Interfaces.Managers
+{
+    public interface IOrderManager
+    {
+        Task AddOrderAsync(OrderCreateModel model);
+        Task<OrderViewModel> GetOrderByIdAsync(int orderId);
+        Task<IEnumerable<OrderViewModel>> GetOrdersByAppUserId(string userId);
+        Task RemoveOrderAsync(int orderId);
+        Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum);
+        Task RemoveCompleteOrderAsync();
+        Task UpdateOrderAsync(OrderUpdateModel model);
+    }
+}

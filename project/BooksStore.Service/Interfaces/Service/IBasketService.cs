@@ -9,13 +9,9 @@ namespace BooksStore.Service.Interfaces
 {
     public interface IBasketService
     {
-        Task AddBasketAsync(BasketDTO basketDTO);
         Task AddBasketBookAsync(int basketId, int bookId);
         Task<BasketDTO> GetBasketByIdAsync(int basketId);
-        Task RemoveBasketAsync(int basketId);
         Task RemoveBasketBookAsync(int basketId, int bookId);
         Task RemoveAllBasketBooksAsync(int basketId);
-        Task<IEnumerable<BasketDTO>> GetBaskets(int skip, int take);
-        Task UpdateBasketAsync(BasketDTO basketDTO);
     }
 }

@@ -49,13 +49,13 @@ namespace BooksStore.Service.BookSer
             Category category = await _categoryRepository.GetCategoryByName(bookDTO.CategoryName);
             if (category == null)
             {
-                throw new NotFoundException(nameof(Category), category);                
+                category = new Category() { Name = bookDTO.CategoryName };                
             }           
 
             Author author = await _authorRepository.GetAuthorByName(book.Author.Firstname, book.Author.Surname);
             if (author == null)
             {
-                throw new NotFoundException(nameof(Author), author);               
+                author = new Author() { Firstname = bookDTO.AuthorFirstname, Surname = bookDTO.AuthorSurname };              
             }
           
             book.Category = category;
@@ -131,10 +131,11 @@ namespace BooksStore.Service.BookSer
             {
                 return true;
             }
+
             return false;
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBookByCategoryAsync(int categoryId)
+        public async Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int skip, int take, int categoryId)
         {
             if (categoryId <= 0)
             {
@@ -147,12 +148,17 @@ namespace BooksStore.Service.BookSer
                 throw new ArgumentNullException(nameof(Category));
             }
 
-            return (_mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(0, 6)).Where(p => p.CategoryId == categoryId)); //TODO:
+            return _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take, (b) => b.CategoryId == categoryId));
         }
 
         public async Task<int> GetCountBooks()
         {
             return await _bookRepository.GetCountBooks();
+        }
+
+        public async Task<IEnumerable<BookDTO>> GetBooksByNameAsync(int skip, int take, string bookName)
+        {
+            return _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take, (b) => b.Title == bookName));
         }
     }
 }

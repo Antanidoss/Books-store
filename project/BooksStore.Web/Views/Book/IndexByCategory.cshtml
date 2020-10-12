@@ -1,8 +1,8 @@
-﻿@model IndexViewModel<BookViewModel>
+﻿@model BookListViewModel
 
-@if (Model.Objects != null && Model.Objects.Count() != 0)
+@if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
 {
-    @await Html.PartialAsync("IndexBooks", new IndexViewModel<BookViewModel>() { Objects = Model.Objects, PageInfo = Model.PageInfo })
+    @await Html.PartialAsync("IndexBooks", new BookListViewModel() { BookIndexModel = Model.BookIndexModel })
 }
 else
 {

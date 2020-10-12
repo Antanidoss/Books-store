@@ -2,8 +2,10 @@
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.BookRep
@@ -63,6 +65,17 @@ namespace BooksStore.Infastructure.BookRep
         public async Task<int> GetCountBooks()
         {
             return await context.Books.CountAsync();
+        }
+
+        public async Task<IEnumerable<Book>> GetBooks(int skip, int take, Func<Book,bool> func)
+        {
+            return context.Books             
+                .Skip(skip)
+                .Take(take)
+                .Include(p => p.Category)
+                .Include(p => p.Img)
+                .Include(p => p.Author)
+                .Where(func);
         }
     }
 }

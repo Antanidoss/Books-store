@@ -1,4 +1,4 @@
-﻿@model BookCommentViewModel
+﻿@model CommentListViewModel
 
     <div>
         <div class="addCommnet-div">
@@ -10,9 +10,9 @@
 
                 <form asp-action="AddComment" asp-controller="Comment" method="post" id="addCommnet-form">
                     <div class="addCommentTextarea-div">
-                        <textarea name="textComment" placeholder="Напишите ваш отзыв"></textarea>
+                        <textarea name="model.Descriptions" placeholder="Напишите ваш отзыв"></textarea>
                     </div>
-                    <input type="hidden" name="bookId" value="@Model.BookId" />
+                    <input type="hidden" name="model.BookId" value="@Model.BookId" />
                     <div class="hideAddComment-div">
                         <div>
                             <input type="submit" value="Добавить" class="button" />
@@ -45,7 +45,7 @@
                             @comment.AppUserName
                         </div>
                         <div class="indexComments-timeCrate-div">
-                            @comment.TimeCreate
+                            @comment.TimeOfCreate
                         </div>
                         <div class="indexComments-descriptions-div">
                             @comment.Descriptions

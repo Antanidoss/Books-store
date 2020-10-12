@@ -19,7 +19,6 @@ namespace BooksStore.Web.Controllers
     {
         IRoleManagerService RoleManagerService { get; set; }
         IUserManagerService UserManagerService { get; set; }
-        IMapper Mapper { get; set; }
         public RoleController(IRoleManagerService roleManagerService, IUserManagerService userManagerService, IMapper mapper)
         {
             RoleManagerService = roleManagerService;

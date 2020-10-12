@@ -16,7 +16,8 @@ namespace BooksStore.Service.Interfaces
         Task<IEnumerable<BookDTO>> GetBooks(int skip, int take);
         Task UpdateBookAsync(BookDTO book);
         Task<bool> IsBookInBasketAsync(int basketId, int bookId);
-        Task<IEnumerable<BookDTO>> GetBookByCategoryAsync(int categoryId);
+        Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int take, int skip, int categoryId);
         Task<int> GetCountBooks();
+        Task<IEnumerable<BookDTO>> GetBooksByNameAsync(int skip, int take, string bookName);
     }
 }

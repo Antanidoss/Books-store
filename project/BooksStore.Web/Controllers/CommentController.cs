@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces;
 using BooksStore.Web.Interfaces;
+using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModel.Index;
+using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,74 +13,52 @@ namespace BooksStore.Web.Controllers
 {
     public class CommentController : Controller
     {
-        ICommentService CommentService { get; set; }
-        IBookService BookService { get; set; }
-        ICurrentUser CurrentUser { get; set; }
-        IMapper Mapper { get; set; }
+        private readonly ICommentManager _commentManager;
 
-        public CommentController(ICommentService commentService, IBookService bookService, ICurrentUser currentUser, IMapper mapper)
+        private readonly IBookManager _bookManager;
+
+        private readonly ICurrentUser _currentUser;
+
+        public CommentController(ICommentManager commentManager, ICurrentUser currentUser, IBookManager bookManager)
         {
-            CommentService = commentService;
-            BookService = bookService;
-            CurrentUser = currentUser;
-            Mapper = mapper;
+            _currentUser = currentUser;
+            _commentManager = commentManager;
+            _bookManager = bookManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> IndexComments(int? bookId, int pageNum = 1)
-        { 
-            BookDTO book = new BookDTO();
-            if (pageNum <= 0 && !bookId.HasValue && (book = await BookService.GetBookByIdAsync(bookId.Value)) == null)
-            {
-                return BadRequest("Некорректные данные в запросе");
-            }
+        {
+            var book = await _bookManager.GetBookByIdAsync(bookId.Value);
 
-            var commentsCache = (await CommentService.GetCommentsByBookId(bookId.Value)).ToList();
-                                
-            string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
-            BookCommentViewModel bookComment = new BookCommentViewModel() 
-            {
-                IndexCommentModel = new IndexViewModel<CommentViewModel>(pageNum , PageSizes.Comments, await CommentService.GetCountComments(),
-                Mapper.Map<IEnumerable<CommentViewModel>>(commentsCache)),
-                BookId = book.Id,
-                BookName = book.Title,
-                UserIsComment = commentsCache.FirstOrDefault(p => p.AppUserId == userId) != default ? true : false
-            };
+            var comments = (await _commentManager.GetCommentsByBookId(bookId.Value)).ToList();
+
+            string userId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
+            CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), pageNum,
+                PageSizes.Comments, comments.Count(), comments);
 
             return View(bookComment);
-            
-            
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment([Required] string textComment, int? bookId)
+        public async Task<IActionResult> AddComment(CommentCreateModel model)
         {
-            if (ModelState.IsValid)
-            {
-                BookDTO book = new BookDTO();
-                if(bookId.HasValue && (book = await BookService.GetBookByIdAsync(bookId.Value)) != null)
-                {
-                    string userId = (await CurrentUser.GetCurrentUser(HttpContext)).Id;
-                    CommentDTO comment = new CommentDTO() { BookId = book.Id, Descriptions = textComment, AppUserId = userId };
-                    await CommentService.AddCommentAsync(comment);
-
-                    return RedirectToAction(nameof(IndexComments), new { bookId = bookId });
-                }                
-                return BadRequest("Некорректные данные в запросе");
+            if (!ModelState.IsValid)
+            {                                  
+                return View(model);
             }
-            return View(textComment);
+
+            await _commentManager.AddComment(model);
+
+            return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });
         }
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
         {
-            CommentDTO removeComment = new CommentDTO();
-            if(commentId.HasValue && (removeComment = await CommentService.GetCommentById(commentId.Value)) != null)
-            {
-                await CommentService.RemoveCommentAsync(removeComment.Id);
-            }
+            await _commentManager.RemoveComment(commentId.Value);
 
             return View(returnUrl);
-        }       
+        }
     }
 }

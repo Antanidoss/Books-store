@@ -7,6 +7,7 @@ using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Interfaces;
+using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.Index;
@@ -21,74 +22,35 @@ namespace BooksStore.Web.Controllers
 {
     public class BookController : Controller
     {
-        IBookService BookService { get; set; }
+        private readonly IBookManager _bookManager;
         IWebHostEnvironment AppEnvironment { get; set; }
         ICurrentUser CurrentUser { get; set; }
-        IMapper Mapper { get; set; }
 
-        public BookController(IBookService bookService, IWebHostEnvironment appEnvironment, ICurrentUser currentUser, IMapper mapper)
+        public BookController(IBookManager bookManager, IWebHostEnvironment appEnvironment, ICurrentUser currentUser)
         {
-            BookService = bookService;
+            _bookManager = bookManager;
             AppEnvironment = appEnvironment;
             CurrentUser = currentUser;
-            Mapper = mapper;
         }
 
-        public async Task<IActionResult> IndexBooks(int pageNum = 1, IndexViewModel<BookViewModel> indexBookModel = null)
-        {
-            if (pageNum >= 1)
+        public async Task<IActionResult> IndexBooks(int pageNum = 1, BookListViewModel bookList = null)
+        {           
+            if (bookList?.BookIndexModel?.Objects == null)
             {
-                if (indexBookModel?.Objects == null)
-                {
-                    int pageSize = PageSizes.Books;                                        
-                                            
-                    indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, await BookService.GetCountBooks(),
-                        Mapper.Map<IEnumerable<BookViewModel>>(await BookService.GetBooks((pageNum - 1) * pageSize , pageSize)));
-                }
+                bookList = new BookListViewModel(pageNum, PageSizes.Books, await _bookManager.GetCountAsync(), 
+                    await _bookManager.GetBooksAsync(pageNum));
+            }               
 
-                if (HttpContext.User.Identity.IsAuthenticated && indexBookModel.Objects != null && indexBookModel.Objects.Count() != 0)
-                {
-                    int basketId = (await CurrentUser.GetCurrentUser(HttpContext)).BasketId;
-
-                    foreach (var book in indexBookModel.Objects)
-                    {
-                        if (await BookService.IsBookInBasketAsync(basketId, book.Id))
-                        {
-                            book.IsAddToBasket = true;
-                        }
-                    }
-                }
-
-                return View(indexBookModel);
-            }
-
-            return BadRequest("Некорректные данные в запросе");
+            return View(bookList);                       
         }
-
 
         [HttpGet]
         public async Task<IActionResult> IndexBook(int? bookId)
-        {
-            if (!bookId.HasValue)
-            {
-                return NotFound();
-            }
-            var book = await BookService.GetBookByIdAsync(bookId.Value);
-                                
-            var bookViewModel = Mapper.Map<BookViewModel>(book);
+        {            
+            var book = await _bookManager.GetBookByIdAsync(bookId.Value);                                           
 
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                int basketId = (await CurrentUser.GetCurrentUser(HttpContext)).BasketId;
-                if (await BookService.IsBookInBasketAsync(basketId, bookId.Value))
-                {
-                    bookViewModel.IsAddToBasket = true;
-                }
-            }
-
-            return View(bookViewModel);                        
+            return View(book);                        
         }
-
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> IndexBooksAdmin(int pageNum = 1)
@@ -103,7 +65,7 @@ namespace BooksStore.Web.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> AddBook(BookCreateModel createModel, [Required(ErrorMessage = "Выберите изображения")] IFormFile uploadedFile)
+        public async Task<IActionResult> AddBook(BookCreateModel model, [Required(ErrorMessage = "Выберите изображения")] IFormFile uploadedFile)
         {
             if (ModelState.IsValid)
             {
@@ -113,13 +75,12 @@ namespace BooksStore.Web.Controllers
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                var book = Mapper.Map<BookDTO>(createModel);
-                book.ImgPath = path;
-                await BookService.AddBookAsync(book);
+                model.ImgPath = path;
+                await _bookManager.AddBookAsync(model);
 
                 return RedirectToAction(nameof(IndexBooksAdmin), "Book");
             }
-            return View(createModel);
+            return View(model);
         }
 
 
@@ -129,7 +90,7 @@ namespace BooksStore.Web.Controllers
         {
             if (bookId.HasValue)
             {
-                await BookService.RemoveBookAsync(bookId.Value);          
+                await _bookManager.RemoveBookAsync(bookId.Value);          
 
                 return RedirectToAction(nameof(IndexBooksAdmin), "Book");
             }
@@ -140,65 +101,36 @@ namespace BooksStore.Web.Controllers
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateBook(int? bookId)
-        {
-            BookDTO updateBook = new BookDTO();
-            if (bookId.HasValue && (updateBook = await BookService.GetBookByIdAsync(bookId.Value)) != null)
-            {
-                View(Mapper.Map<BookViewModel>(updateBook));
-            }
-            return NotFound();
+        {                       
+            return View(await _bookManager.GetBookByIdAsync(bookId.Value));            
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
         {
-            if (model != null)
-            {
-                BookDTO updateBook = await BookService.GetBookByIdAsync(model.Id);
-                if (updateBook != null)
-                {                   
-                    await BookService.UpdateBookAsync(Mapper.Map<BookDTO>(model));
-                }
-                return RedirectToAction("IndexBooksAdmin", "Book");
-            }
-
-            return NotFound();
+            await _bookManager.UpdateBookAsync(model);
+            return RedirectToAction("IndexBooksAdmin", "Book");           
         }
 
         [HttpGet]
         public async Task<IActionResult> IndexByCategory(int? categoryId, int pageNum = 1)
-        {
-            if (categoryId.HasValue && pageNum >= 1)
-            {
-                int pageSize = 6;
-                
-                var booksCategory = await BookService.GetBookByCategoryAsync(categoryId.Value);
-                                                  
-                IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, booksCategory.Count(),
-                    Mapper.Map<IEnumerable<BookViewModel>>(booksCategory));
+        {                     
+            var booksCategory = await _bookManager.GetBooksByCategoryAsync(pageNum, categoryId.Value);
+                                              
+            BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory);
 
-                return View(indexBookModel);
-            }
-
-            return NotFound();
+            return View(indexBookModel);            
         }
 
 
         public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
-        {
-            if(!string.IsNullOrEmpty(bookName) && pageNum >= 1)
-            {
-                int pageSize = 6;
-                var books = (await BookService.GetBooks((pageNum - 1) * pageSize, pageSize)).Where(p => p.Title == bookName);
+        {           
+            var books = await _bookManager.GetBooksByNameAsync(pageNum, bookName);
 
-                IndexViewModel<BookViewModel> indexBookModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, books.Count(),
-                    Mapper.Map<IEnumerable<BookViewModel>>(books));
+            BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books);
 
-                return View(indexBookModel);
-            }
-
-            return BadRequest("Некорректные данные в запросе");
+            return View(indexBookModel);           
         }        
     }
 }

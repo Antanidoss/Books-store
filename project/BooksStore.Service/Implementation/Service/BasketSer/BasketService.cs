@@ -30,15 +30,7 @@ namespace BooksStore.Service.BasketSer
             _bookRepository = bookRepository;
             _mapper = mapper;
             _cacheManager = cacheManager;
-        }
-
-        public async Task AddBasketAsync(BasketDTO basketDTO)
-        {
-            if(basketDTO != null && basketDTO != default)
-            {
-                await _basketRepository.AddBasketAsync(_mapper.Map<Basket>(basketDTO));
-            }
-        }
+        }       
 
         public async Task<BasketDTO> GetBasketByIdAsync(int basketId)
         {
@@ -61,39 +53,7 @@ namespace BooksStore.Service.BasketSer
 
             _cacheManager.Set<Basket>(CacheKeys.GetBasketKey(basket.Id), basket, CacheTimes.BasketCacheTime);
             return _mapper.Map<BasketDTO>(basket);
-        }
-
-        public async Task<IEnumerable<BasketDTO>> GetBaskets(int skip, int take)
-        {
-            if (skip >= 0 && take >= 1)
-            {
-                return _mapper.Map<IEnumerable<BasketDTO>>((await _basketRepository.GetBaskets(skip, take) ?? new List<Basket>()));
-            }
-            return new List<BasketDTO>();
-        }
-
-        public async Task RemoveBasketAsync(int basketId)
-        {
-            if (basketId >= 1)
-            {
-                var basket = await _basketRepository.GetBasketById(basketId);
-
-                if (basket != default)
-                {
-                    await _basketRepository.RemoveBasketAsync(basket);
-                    _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
-                }
-            }
-        }
-
-        public async Task UpdateBasketAsync(BasketDTO basketDTO)
-        {
-            if (basketDTO != null && basketDTO != default)
-            {
-                await _basketRepository.UpdateBasketAsync(_mapper.Map<Basket>(basketDTO));
-                _cacheManager.Remove(CacheKeys.GetBasketKey(basketDTO.Id));
-            }
-        }
+        }                  
 
         public async Task AddBasketBookAsync(int basketId, int bookId)
         {

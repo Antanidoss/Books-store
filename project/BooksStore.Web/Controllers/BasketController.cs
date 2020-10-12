@@ -5,6 +5,7 @@ using AutoMapper;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces;
 using BooksStore.Web.Interfaces;
+using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.Index;
 using BooksStore.Web.Models.ViewModel.ReadModel;
@@ -16,80 +17,36 @@ namespace BooksStore.Web.Controllers
     [Authorize]
     public class BasketController : Controller
     {
-        IBasketService BasketService { get; set; }
+        private readonly IBasketManager _basketManager;
         ICurrentUser CurrentUser { get; set; }
-        IBookService BookService { get; set; }
-        IMapper Mapper { get; set; }
 
-        public BasketController(IBasketService basketService, ICurrentUser currentUser, IMapper mapper)
+        public BasketController(IBasketManager basketManager, ICurrentUser currentUser)
         {
-            BasketService = basketService;
+            _basketManager = basketManager;
             CurrentUser = currentUser;
-            Mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> IndexBasket(int pageNum = 1)
-        {
-            if (pageNum <= 0)
-            {
-                return BadRequest("Некорректные данные в запросе");
-            }
-            AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
-            
-            BasketDTO curBasket = await BasketService.GetBasketByIdAsync(curUser.BasketId);
-                                                
-            int pageSize = PageSizes.Basket;
-
-            var books = Mapper.Map<IEnumerable<BookViewModel>>(curBasket.BasketBooks
-                ?.Skip((pageNum - 1) * pageSize)
-                .Take(pageSize));
-
-            var basketViewModel = new BasketViewModel()
-            {
-                BookIndexModel = new IndexViewModel<BookViewModel>(pageNum, pageSize, curBasket?.BasketBooks.Count() ?? 0, books)
-            };
-
-            return View(basketViewModel);                        
+        {            
+            return View(await _basketManager.GetBasketAsync(pageNum));                        
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> AddBasketBook(int? bookId , string returnUrl = "")
-        {
-            if (!bookId.HasValue)
-            {
-                return NotFound(); 
-            }
-            AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
-
-            await BasketService.AddBasketBookAsync(curUser.BasketId, bookId.Value);               
-
-            if(string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
+        public async Task<IActionResult> AddBasketBook(int? bookId)
+        {           
+            await _basketManager.AddBasketBookAsync(bookId.Value);               
+            
             return RedirectToAction("IndexBooks", "Book");            
         }
 
-
         [HttpGet]
         public async Task<IActionResult> RemoveBasketBook(int? bookId, string returnUrl = "")
-        {
-            if (bookId.HasValue)
-            {
-                AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
-
-                await BasketService.RemoveBasketBookAsync(curUser.BasketId, bookId.Value);
-            }
-
-            if (string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
-                return View(returnUrl);
-            }
+        {                       
+            await _basketManager.RemoveBasketBookAsync(bookId.Value);
+                       
             return RedirectToAction(nameof(IndexBasket));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> RemoveBasketBooks(IEnumerable<int> bookIds)
@@ -101,13 +58,12 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexBasket));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> RemoveAllBasketBooks()
         {
             AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
 
-            await BasketService.RemoveAllBasketBooksAsync(curUser.BasketId);
+            await _basketManager.RemoveAllBasketBooksAsync();
 
             return RedirectToAction(nameof(IndexBasket));
         }          

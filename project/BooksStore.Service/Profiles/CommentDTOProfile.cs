@@ -11,7 +11,8 @@ namespace BooksStore.Service.Profiles
     {
         public CommentDTOProfile()
         {
-            CreateMap<Comment, CategoryDTO>();
+            CreateMap<Comment, CommentDTO>()
+                .ForMember(dto => dto.AppUserName, conf => conf.MapFrom(o => o.AppUser.UserName));
             CreateMap<CommentDTO, Comment>();
         }        
     }

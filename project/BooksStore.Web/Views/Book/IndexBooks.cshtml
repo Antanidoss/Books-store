@@ -1,13 +1,13 @@
-﻿@model IndexViewModel<BookViewModel>
+﻿@model BookListViewModel
 
    
 @await Html.PartialAsync("SearchPartial")
 
-@if (Model.Objects != null && Model.Objects.Count() != 0)
+@if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
 {
     <div class="indexBooks-main">
         <div class="indexBooks-div">
-            @foreach (var book in Model.Objects)
+            @foreach (var book in Model.BookIndexModel.Objects)
             {
                 <div class="indexBooks-book-div">
 
@@ -69,15 +69,15 @@
         </div>
         <div class="indexBooks-pagination-div">
             <div>
-                @if (Model.PageInfo.PageNumber > 1)
+                @if (Model.BookIndexModel.PageInfo.PageNumber > 1)
                 {
-                    <a asp-action="IndexBooks" asp-controller="Book" asp-route-pageNum="@(Model.PageInfo.PageNumber - 1)">Назад</a>
+                    <a asp-action="IndexBooks" asp-controller="Book" asp-route-pageNum="@(Model.BookIndexModel.PageInfo.PageNumber - 1)">Назад</a>
                 }
             </div>
             <div>
-                @if (Model.PageInfo.TotalPage > Model.PageInfo.PageNumber)
+                @if (Model.BookIndexModel.PageInfo.TotalPage > Model.BookIndexModel.PageInfo.PageNumber)
                 {
-                    <a asp-action="IndexBooks" asp-controller="Book" asp-route-pageNum="@(Model.PageInfo.PageNumber + 1)">Вперед</a>
+                    <a asp-action="IndexBooks" asp-controller="Book" asp-route-pageNum="@(Model.BookIndexModel.PageInfo.PageNumber + 1)">Вперед</a>
                 }
             </div>
         </div>

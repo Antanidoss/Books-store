@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using BooksStore.Infrastructure;
+using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Service.DTO;
 using BooksStore.Service.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BooksStore.Service.Implementation.Identity
@@ -39,24 +41,21 @@ namespace BooksStore.Service.Implementation.Identity
             return Result.Failure(new string[] { "Некорректные входные данные" });
         }
 
-        public async Task<(Result Result, RoleDTO RoleDTO)> FindRoleByIdAsync(string roleId)
-        {
-            if (!string.IsNullOrEmpty(roleId))
-            {
-                var role = Mapper.Map<RoleDTO>(await RoleManager.FindByIdAsync(roleId));
-                if(role != null)
-                {
-                    return (Result.Success(), role);
-                }
+        public async Task<RoleDTO> FindRoleByIdAsync(string roleId)
+        {           
+            var role = Mapper.Map<RoleDTO>(await RoleManager.FindByIdAsync(roleId));
 
-                return (IdentityResultExtensions.RoleNotFound(), new RoleDTO());
+            if (role != null)
+            {
+                return (role);
             }
-            return (Result.Failure(new string[] { "Некорректные входные данные" }) , new RoleDTO());
+
+            throw new NotFoundException(nameof(role), roleId);          
         }
 
-        public async Task<IEnumerable<RoleDTO>> GetRolesAsync()
+        public async Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take)
         {
-            return Mapper.Map<IEnumerable<RoleDTO>>(await RoleManager.Roles.ToListAsync());
+            return Mapper.Map<IEnumerable<RoleDTO>>(await RoleManager.Roles.Skip(skip).Take(take).ToListAsync());
         }
     }
 }

@@ -26,15 +26,5 @@ namespace BooksStore.Infastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Img> Imgs { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Book>()
-            //    .HasOne(p => p.Category)
-            //    .WithMany(p => p.Books)
-            //    .OnDelete(DeleteBehavior.Cascade);
-
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }

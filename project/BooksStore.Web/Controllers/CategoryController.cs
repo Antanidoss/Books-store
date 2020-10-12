@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces;
+﻿using System.Threading.Tasks;
+using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.Index;
@@ -18,12 +13,10 @@ namespace BooksStore.Web.Controllers
     [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
-        ICategoryService CategoryService { get; set; }
-        IMapper Mapper { get; set; }
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        private readonly ICategoryManager _categoryManager;
+        public CategoryController(ICategoryManager categoryManager)
         {
-            CategoryService = categoryService;
-            Mapper = mapper;
+            _categoryManager = categoryManager;
         }
 
         [HttpGet]
@@ -31,13 +24,14 @@ namespace BooksStore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategory(CategoryCreateModel categoryCreateModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await CategoryService.AddCategoryAsync(Mapper.Map<CategoryDTO>(categoryCreateModel));
-
-                return RedirectToAction("IndexСategoriesAdmin", "Category");
+                return View(categoryCreateModel);
             }
-            return View(categoryCreateModel);
+
+            await _categoryManager.AddCategoryAsync(categoryCreateModel);
+
+            return RedirectToAction("IndexСategoriesAdmin", "Category");
         }
 
         [HttpGet]
@@ -50,52 +44,36 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexCategories(int pageNum = 1)
         {
-            if (pageNum >= 1)
-            {
-                int pageSize = PageSizes.Categories;
+            int pageSize = PageSizes.Categories;
 
-                var categories = (await CategoryService.GetCategories((pageNum - 1) * pageSize, pageSize)).ToList();
-                
-                IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, pageSize,
-                     await CategoryService.GetCountCategories(), Mapper.Map<IEnumerable<CategoryViewModel>>(categories));
+            var categories = await _categoryManager.GetCategories(pageNum);
+            
+            IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, pageSize,
+                 await _categoryManager.GetCountCategories(), categories);
 
-                return View(categoryIndexModel);
-            }
-            throw new ArgumentException();
+            return View(categoryIndexModel);
+            
         }       
 
         [HttpGet]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
-        {
-            CategoryDTO category = new CategoryDTO();
-            if (categoryId.HasValue && (category = await CategoryService.GetCategoryById(categoryId.Value)) != null)
-            {
-                await CategoryService.RemoveCategoryAsync(category.Id);
-                return RedirectToAction(nameof(IndexСategoriesAdmin));
-            }
-            return NotFound();
+        {        
+            await _categoryManager.RemoveCategoryAsync(categoryId.Value);
+
+            return RedirectToAction(nameof(IndexСategoriesAdmin));         
         }
 
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int? categoryId)
         {
-            CategoryDTO category = new CategoryDTO();
-            if (categoryId.HasValue && (category = await CategoryService.GetCategoryById(categoryId.Value)) != null)
-            {
-                return View(Mapper.Map<CategoryViewModel>(category));
-            }
-            return NotFound();
+            return View(await _categoryManager.GetCategoryById(categoryId.Value));
         }
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateModel model)
         {
-            CategoryDTO categoryDTO = new CategoryDTO();
-            if(model != null && (categoryDTO = await CategoryService.GetCategoryById(model.Id)) != null)
-            {
-                categoryDTO = Mapper.Map<CategoryDTO>(model);
-                await CategoryService.UpdateCategoryAsync(categoryDTO);
-            }
-            return NotFound();
+            await _categoryManager.UpdateCategoryAsync(model);
+
+            return RedirectToAction(nameof(IndexCategories));
         }
     }
 }

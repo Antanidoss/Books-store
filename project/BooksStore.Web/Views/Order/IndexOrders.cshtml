@@ -1,11 +1,11 @@
-﻿@model IndexViewModel<OrderViewModel>
+﻿@model OrderListViewModel
 
 
     <div class="indexOrder-main">
-        @if (Model.Objects != null && Model.Objects.Count() != 0)
+        @if (Model.OrderIndexModel.Objects != null && Model.OrderIndexModel.PageInfo.TotalItems != 0)
         {
             <div class="indexOrder-orders">
-                @foreach (var order in Model.Objects)
+                @foreach (var order in Model.OrderIndexModel.Objects)
                 {
                     <div class="indexOrder-order">
                         <div class="indexOrder-timeCreate">
@@ -56,15 +56,19 @@
 
                 <div class="indexOrder-pagination-div">
                     <div>
-                        @if (Model.PageInfo.PageNumber > 1)
+                        @if (Model.OrderIndexModel.PageInfo.PageNumber > 1)
                         {
-                            <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.PageInfo.PageNumber - 1)">Назад</a>
+                            <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.OrderIndexModel.PageInfo.PageNumber - 1)">
+                                Назад
+                            </a>
                         }
                     </div>
                     <div>
-                        @if (Model.PageInfo.TotalPage > Model.PageInfo.PageNumber)
+                        @if (Model.OrderIndexModel.PageInfo.TotalPage > Model.OrderIndexModel.PageInfo.PageNumber)
                         {
-                            <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.PageInfo.PageNumber + 1)">Вперед</a>
+                            <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.OrderIndexModel.PageInfo.PageNumber + 1)">
+                                Вперед
+                            </a>
                         }
                     </div>
                 </div>
