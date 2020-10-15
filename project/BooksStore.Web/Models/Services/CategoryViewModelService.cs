@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Models.Managers
 {
-    public class CategoryManager : ICategoryManager
+    public class CategoryViewModelService : ICategoryViewModelService
     {
         private readonly ICategoryService _categoryService;
 
         private readonly IMapper _mapper;
-        public CategoryManager(ICategoryService categoryService, IMapper mapper)
+        public CategoryViewModelService(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
             _mapper = mapper;

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Models.Managers
 {
-    public class BasketManager : IBasketManager
+    public class BasketViewModelService : IBasketViewModelService
     {
         private readonly IBasketService _basketService;
 
@@ -22,7 +22,7 @@ namespace BooksStore.Web.Models.Managers
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BasketManager(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
+        public BasketViewModelService(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
         {
             _basketService = basketService;
             _mapper = mapper;

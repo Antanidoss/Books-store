@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Models.Managers
 {
-    public class CommentManager : ICommentManager
+    public class CommentViewModelService : ICommentViewModelService
     {
         private readonly ICommentService _commentService;
 
@@ -25,7 +25,7 @@ namespace BooksStore.Web.Models.Managers
 
         private readonly IMapper _mapper;
 
-        public CommentManager(ICommentService commentService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser, 
+        public CommentViewModelService(ICommentService commentService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser, 
             IMapper mapper)
         {
             _commentService = commentService;

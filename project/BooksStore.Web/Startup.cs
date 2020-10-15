@@ -112,17 +112,17 @@ namespace BooksStore.Web
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICommentService, CommentService>();
-            services.AddScoped<IUserManagerService, UserManagerService>();
-            services.AddScoped<IRoleManagerService, RoleManagerService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             services.AddTransient<ICacheManager, MemoryCacheManager>();
 
-            services.AddScoped<IBookManager, BookManager>();
-            services.AddScoped<ICommentManager, CommentManager>();
-            services.AddScoped<IOrderManager, OrderManager>();
-            services.AddScoped<IBasketManager, BasketManager>();
-            services.AddScoped<ICategoryManager, CategoryManager>();
-            services.AddScoped<IRoleManager, RoleManager>();
+            services.AddScoped<IBookViewModelService, BookViewModelService>();
+            services.AddScoped<ICommentViewModelService, CommentViewModelService>();
+            services.AddScoped<IOrderViewModelService, OrderViewModelService>();
+            services.AddScoped<IBasketViewModelService, BasketViewModelService>();
+            services.AddScoped<ICategoryViewModelService, CategoryViewModelService>();
+            services.AddScoped<IRoleViewModelService, RoleViewModelService>();
         }
 
         

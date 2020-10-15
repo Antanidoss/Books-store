@@ -13,13 +13,13 @@ namespace BooksStore.Web.Controllers
 {
     public class CommentController : Controller
     {
-        private readonly ICommentManager _commentManager;
+        private readonly ICommentViewModelService _commentManager;
 
-        private readonly IBookManager _bookManager;
+        private readonly IBookViewModelService _bookManager;
 
         private readonly ICurrentUser _currentUser;
 
-        public CommentController(ICommentManager commentManager, ICurrentUser currentUser, IBookManager bookManager)
+        public CommentController(ICommentViewModelService commentManager, ICurrentUser currentUser, IBookViewModelService bookManager)
         {
             _currentUser = currentUser;
             _commentManager = commentManager;

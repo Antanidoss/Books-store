@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces;
-using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
-using BooksStore.Web.Models.ViewModel.Index;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 using BooksStore.Web.Models.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
@@ -22,15 +16,14 @@ namespace BooksStore.Web.Controllers
 {
     public class BookController : Controller
     {
-        private readonly IBookManager _bookManager;
-        IWebHostEnvironment AppEnvironment { get; set; }
-        ICurrentUser CurrentUser { get; set; }
+        private readonly IBookViewModelService _bookManager;
 
-        public BookController(IBookManager bookManager, IWebHostEnvironment appEnvironment, ICurrentUser currentUser)
+        private readonly IWebHostEnvironment _appEnvironment;
+
+        public BookController(IBookViewModelService bookManager, IWebHostEnvironment appEnvironment)
         {
             _bookManager = bookManager;
-            AppEnvironment = appEnvironment;
-            CurrentUser = currentUser;
+            _appEnvironment = appEnvironment;
         }
 
         public async Task<IActionResult> IndexBooks(int pageNum = 1, BookListViewModel bookList = null)
@@ -58,7 +51,6 @@ namespace BooksStore.Web.Controllers
             return await IndexBooks(pageNum);
         }
 
-
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult AddBook() => View();
@@ -70,7 +62,7 @@ namespace BooksStore.Web.Controllers
             if (ModelState.IsValid)
             {
                 string path = "/img/" + uploadedFile.FileName;
-                using (var fileStream = new FileStream(AppEnvironment.WebRootPath + path, FileMode.Create))
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
@@ -82,7 +74,6 @@ namespace BooksStore.Web.Controllers
             }
             return View(model);
         }
-
 
         [Authorize(Roles = "admin")]
         [HttpGet]
@@ -96,7 +87,6 @@ namespace BooksStore.Web.Controllers
             }
             return View(StatusCode(404));
         }
-
 
         [Authorize(Roles = "admin")]
         [HttpGet]
@@ -122,7 +112,6 @@ namespace BooksStore.Web.Controllers
 
             return View(indexBookModel);            
         }
-
 
         public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
         {           

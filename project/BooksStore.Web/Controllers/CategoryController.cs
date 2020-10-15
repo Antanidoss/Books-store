@@ -13,8 +13,9 @@ namespace BooksStore.Web.Controllers
     [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryManager _categoryManager;
-        public CategoryController(ICategoryManager categoryManager)
+        private readonly ICategoryViewModelService _categoryManager;
+
+        public CategoryController(ICategoryViewModelService categoryManager)
         {
             _categoryManager = categoryManager;
         }
@@ -44,11 +45,9 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexCategories(int pageNum = 1)
         {
-            int pageSize = PageSizes.Categories;
-
             var categories = await _categoryManager.GetCategories(pageNum);
             
-            IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, pageSize,
+            IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, PageSizes.Categories,
                  await _categoryManager.GetCountCategories(), categories);
 
             return View(categoryIndexModel);

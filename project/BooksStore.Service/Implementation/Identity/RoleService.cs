@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Service.Implementation.Identity
 {
-    public class RoleManagerService : IRoleManagerService
+    public class RoleService : IRoleService
     {
         RoleManager<IdentityRole> RoleManager { get; set; }
         IMapper Mapper { get; set; }
-        public RoleManagerService(RoleManager<IdentityRole> roleManager, IMapper mapper)
+        public RoleService(RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             RoleManager = roleManager;
             Mapper = mapper;
@@ -45,12 +45,12 @@ namespace BooksStore.Service.Implementation.Identity
         {           
             var role = Mapper.Map<RoleDTO>(await RoleManager.FindByIdAsync(roleId));
 
-            if (role != null)
+            if (role == null)
             {
-                return (role);
+                throw new NotFoundException(nameof(role), roleId);
             }
 
-            throw new NotFoundException(nameof(role), roleId);          
+            return (role);                    
         }
 
         public async Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers
 {
-    public interface IBasketManager
+    public interface IBasketViewModelService
     {
         Task AddBasketBookAsync(int bookId);
         Task<BasketViewModel> GetBasketAsync(int pageNum);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers
 {
-    public interface IBookManager
+    public interface IBookViewModelService
     {
         Task AddBookAsync(BookCreateModel bookCreateModel);
         Task<BookViewModel> GetBookByIdAsync(int bookId);

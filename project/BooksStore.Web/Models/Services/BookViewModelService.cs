@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Models.Managers
 {
-    public class BookManager : IBookManager
+    public class BookViewModelService : IBookViewModelService
     {
         private readonly IBookService _bookService;
 
@@ -25,7 +25,7 @@ namespace BooksStore.Web.Models.Managers
 
         private readonly ICurrentUser _currentUser;
 
-        public BookManager(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
+        public BookViewModelService(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
         {
             _bookService = bookService;
             _mapper = mapper;

@@ -13,11 +13,11 @@ namespace BooksStore.Web.Controllers
     [Authorize]
     public class OrderController : Controller
     {
-        private readonly IOrderManager _orderManager;
+        private readonly IOrderViewModelService _orderManager;
 
         private readonly ICurrentUser _currentUser;
 
-        public OrderController(IOrderManager orderManager, ICurrentUser currentUser)
+        public OrderController(IOrderViewModelService orderManager, ICurrentUser currentUser)
         {
             _orderManager = orderManager;
             _currentUser = currentUser;
@@ -47,7 +47,6 @@ namespace BooksStore.Web.Controllers
             
             return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = createModel.BookOrderIds });                      
         }
-
 
         [HttpGet]
         public async Task<IActionResult> RemoveOrder(int? orderId)

@@ -2,6 +2,7 @@
 using BooksStore.Service.DTO;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Models.ViewModel.UpdateModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers
 {
-    public interface IRoleManager
+    public interface IRoleViewModelService
     {
         Task<Result> CreateRoleAsync(RoleCreateModel model);
         Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum);
         Task<RoleViewModel> FindRoleByIdAsync(string roleId);
         Task<Result> DeleteAsync(RoleViewModel roleVM);
+        Task<Result> UpdateAsync(RoleUpdateModel model);
     }
 }

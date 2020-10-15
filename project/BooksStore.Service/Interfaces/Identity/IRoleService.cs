@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Service.Interfaces.Identity
 {
-    public interface IRoleManagerService
+    public interface IRoleService
     {
         Task<Result> CreateRoleAsync(string roleName);
         Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take);

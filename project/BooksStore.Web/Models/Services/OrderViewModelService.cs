@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Models.Managers
 {
-    public class OrderManager : IOrderManager
+    public class OrderViewModelService : IOrderViewModelService
     {
         private readonly IOrderService _orderService;
 
@@ -25,7 +25,7 @@ namespace BooksStore.Web.Models.Managers
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderManager(IOrderService orderService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
+        public OrderViewModelService(IOrderService orderService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
         {
             _orderService = orderService;
             _mapper = mapper;

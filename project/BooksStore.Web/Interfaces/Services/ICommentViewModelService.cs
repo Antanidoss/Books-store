@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers
 {
-    public interface ICommentManager
+    public interface ICommentViewModelService
     {
         Task AddComment(CommentCreateModel model);
         Task<CommentViewModel> GetCommentById(int commentId);

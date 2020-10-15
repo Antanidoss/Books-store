@@ -12,14 +12,19 @@ namespace BooksStore.Web.Controllers
 {
     public class AccountController : Controller
     {
-        ICurrentUser CurrentUser { get; set; }
-        IUserManagerService UserManagerService { get; set; }
-        IMapper Mapper { get; set; }
-        public AccountController(ICurrentUser currentUser, IUserManagerService userManagerService, IMapper mapper)
+        private readonly ICurrentUser _currentUser;
+
+        private readonly IUserService _userManagerService;
+
+        private readonly IMapper _mapper;
+
+        public IMapper Mapper => _mapper;
+
+        public AccountController(ICurrentUser currentUser, IUserService userManagerService, IMapper mapper)
         {
-            CurrentUser = currentUser;      
-            UserManagerService = userManagerService;
-            Mapper = mapper;
+            _currentUser = currentUser;      
+            _userManagerService = userManagerService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -33,7 +38,7 @@ namespace BooksStore.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var signInResult = await UserManagerService.PasswordSignInAsync(logModel.Email, logModel.Password, logModel.IsParsistent);
+                var signInResult = await _userManagerService.PasswordSignInAsync(logModel.Email, logModel.Password, logModel.IsParsistent);
                 if (signInResult.Succeeded)
                 {
                     return RedirectToAction("IndexBooks", "Book");
@@ -51,13 +56,13 @@ namespace BooksStore.Web.Controllers
         {
             if (ModelState.IsValid)
             {                
-                var result = await UserManagerService.CreateAppUserAsync(regModel.Name, regModel.Email, regModel.Password);
+                var result = await _userManagerService.CreateAppUserAsync(regModel.Name, regModel.Email, regModel.Password);
                 if (!result.Result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Result.ToString());
                     return View(regModel);
                 }
-                await UserManagerService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
+                await _userManagerService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
                 return RedirectToAction("IndexBooks", "Book");
             }
             return View(regModel);
@@ -67,7 +72,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await UserManagerService.SignOutAsync();
+            await _userManagerService.SignOutAsync();
             return RedirectToAction("IndexBooks", "Book");
         }
 
@@ -75,10 +80,10 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
-            var userViewModel = Mapper.Map<AppUserViewModel>(curUser);
+            AppUserDTO curUser = await _currentUser.GetCurrentUser(HttpContext);
+            var userViewModel = _mapper.Map<AppUserViewModel>(curUser);
 
-            userViewModel.RoleName = await UserManagerService.IsInRoleAsync(curUser , "admin") ? "admin" : "user";
+            userViewModel.RoleName = await _userManagerService.IsInRoleAsync(curUser , "admin") ? "admin" : "user";
 
             return View(userViewModel);
         }

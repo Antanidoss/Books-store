@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Service.Implementation.Identity
 {
-    public class UserManagerService : IUserManagerService
+    public class UserService : IUserService
     {
         UserManager<AppUser> UserManager { get; set; }
         SignInManager<AppUser> SignInManager { get; set; }
         IMapper Mapper { get; set; }
-        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper)
+        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -27,7 +27,7 @@ namespace BooksStore.Service.Implementation.Identity
             var user = await UserManager.FindByEmailAsync(email);
             if (user == null)
             {
-                user = new Core.AppUserModel.AppUser()
+                user = new AppUser()
                 {
                     UserName = userName,
                     Email = email

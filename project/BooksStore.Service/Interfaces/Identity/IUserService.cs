@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Service.Interfaces.Identity
 {
-    public interface IUserManagerService
+    public interface IUserService
     {
         Task<(Result Result, string AppUserId)> CreateAppUserAsync(string userName, string email, string password);
         Task<Result> SignInAsync(string appUserId, bool isParsistent);

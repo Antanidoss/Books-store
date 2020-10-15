@@ -28,8 +28,8 @@ namespace BooksStore.Service
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICommentService, CommentService>();
-            services.AddScoped<IUserManagerService, UserManagerService>();
-            services.AddScoped<IRoleManagerService, RoleManagerService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             return services;
         }

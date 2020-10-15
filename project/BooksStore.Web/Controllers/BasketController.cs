@@ -1,14 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
-using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModel.Index;
-using BooksStore.Web.Models.ViewModel.ReadModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,13 +10,14 @@ namespace BooksStore.Web.Controllers
     [Authorize]
     public class BasketController : Controller
     {
-        private readonly IBasketManager _basketManager;
-        ICurrentUser CurrentUser { get; set; }
+        private readonly IBasketViewModelService _basketManager;
 
-        public BasketController(IBasketManager basketManager, ICurrentUser currentUser)
+        private readonly ICurrentUser _currentUser;
+
+        public BasketController(IBasketViewModelService basketManager, ICurrentUser currentUser)
         {
             _basketManager = basketManager;
-            CurrentUser = currentUser;
+            _currentUser = currentUser;
         }
 
         [HttpGet]
@@ -55,14 +49,13 @@ namespace BooksStore.Web.Controllers
             {
                 await RemoveBasketBook(bookId);
             }
+
             return RedirectToAction(nameof(IndexBasket));
         }
 
         [HttpGet]
         public async Task<IActionResult> RemoveAllBasketBooks()
         {
-            AppUserDTO curUser = await CurrentUser.GetCurrentUser(HttpContext);
-
             await _basketManager.RemoveAllBasketBooksAsync();
 
             return RedirectToAction(nameof(IndexBasket));

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers
 {
-    public interface ICategoryManager 
+    public interface ICategoryViewModelService 
     {
         Task AddCategoryAsync(CategoryCreateModel categoryDTO);
         Task<CategoryViewModel> GetCategoryById(int categoryId);

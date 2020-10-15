@@ -11,11 +11,11 @@ namespace BooksStore.Web.Models.CurUser
 {
     public class CurrentUser : ICurrentUser
     {       
-        public CurrentUser(IUserManagerService userManagerService)
+        public CurrentUser(IUserService userManagerService)
         {
             UserManagerService = userManagerService;       
         }
-        IUserManagerService UserManagerService { get; set; }
+        IUserService UserManagerService { get; set; }
         public string AppUserId { get; set; }
         public bool IsAuthenticated { get; set; }
         public int BasketId { get; set; }

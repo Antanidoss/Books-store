@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers
 {
-    public interface IOrderManager
+    public interface IOrderViewModelService
     {
         Task AddOrderAsync(OrderCreateModel model);
         Task<OrderViewModel> GetOrderByIdAsync(int orderId);
