@@ -1,4 +1,8 @@
-﻿using BooksStore.Service.AuthorSer;
+﻿using AutoMapper;
+using BooksStore.Core.AppUserModel;
+using BooksStore.Infrastructure.Implementation.CacheManager;
+using BooksStore.Infrastructure.Interfaces;
+using BooksStore.Service.AuthorSer;
 using BooksStore.Service.BasketSer;
 using BooksStore.Service.BookSer;
 using BooksStore.Service.CategorySer;
@@ -7,6 +11,7 @@ using BooksStore.Service.Implementation.Identity;
 using BooksStore.Service.Interfaces;
 using BooksStore.Service.Interfaces.Identity;
 using BooksStore.Service.OrderSer;
+using BooksStore.Service.Profiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,11 +22,14 @@ namespace BooksStore.Service
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddServices(this IServiceCollection services)
+        public static IServiceCollection AddService(this IServiceCollection services)
         {
+            //MemoryCache configuration
             services.AddMemoryCache();
+            //CacheManager configuration
+            services.AddTransient<ICacheManager, MemoryCacheManager>();
 
-            //Repositories configuration 
+            //Services configuration 
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -31,6 +39,22 @@ namespace BooksStore.Service
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
 
+            // Auto mapper configuration
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                //DTO profiles
+                mc.AddProfile(new AuthorDTOProfile());
+                mc.AddProfile(new BookDTOProfile());
+                mc.AddProfile(new CategoryDTOProfile());
+                mc.AddProfile(new BasketDTOProfile());
+                mc.AddProfile(new OrderDTOProfile());
+                mc.AddProfile(new AppUserDTOProfile());
+                mc.AddProfile(new RoleDTOProfile());
+                mc.AddProfile(new CommentDTOProfile());                
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            
             return services;
         }
     }
