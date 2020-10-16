@@ -2353,6 +2353,7 @@
       "BooksStore.Infrastructure/1.0.0": {
         "dependencies": {
           "BooksStore.Core": "1.0.0",
+          "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5"
         },
