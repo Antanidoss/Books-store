@@ -38,22 +38,7 @@ namespace BooksStore.Service
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
-
-            // Auto mapper configuration
-            //var mappingConfig = new MapperConfiguration(mc =>
-            //{
-            //    //DTO profiles
-            //    mc.AddProfile(new AuthorDTOProfile());
-            //    mc.AddProfile(new BookDTOProfile());
-            //    mc.AddProfile(new CategoryDTOProfile());
-            //    mc.AddProfile(new BasketDTOProfile());
-            //    mc.AddProfile(new OrderDTOProfile());
-            //    mc.AddProfile(new AppUserDTOProfile());
-            //    mc.AddProfile(new RoleDTOProfile());
-            //    mc.AddProfile(new CommentDTOProfile());                
-            //});
-            //IMapper mapper = mappingConfig.CreateMapper();
-            //services.AddSingleton(mapper);
+           
             
             return services;
         }
