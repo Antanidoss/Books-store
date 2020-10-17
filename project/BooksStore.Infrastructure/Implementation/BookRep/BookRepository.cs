@@ -12,21 +12,21 @@ namespace BooksStore.Infastructure.BookRep
 {
     public class BookRepository : IBookRepository
     {
-        EFDbContext context { get; set; }
-        public BookRepository(EFDbContext context) => this.context = context;
+        private readonly EFDbContext _context;
+        public BookRepository(EFDbContext context) => this._context = context;
 
         public async Task AddBookAsync(Book book)
         {
             if(book != null && book != default)
             {
-                context.Books.Add(book);
-                await context.SaveChangesAsync();
+                _context.Books.Add(book);
+                await _context.SaveChangesAsync();
             }
         }
 
         public async Task<Book> GetBookByIdAsync(int bookId)
         {
-            var book = await context.Books
+            var book = await _context.Books
                 .Include(p => p.BookBaskets)
                 .Include(p => p.Author)
                 .Include(p => p.Category)
@@ -38,22 +38,22 @@ namespace BooksStore.Infastructure.BookRep
 
         public async Task RemoveBookAsync(Book book)
         {
-            context.Books.Remove(book);
-            await context.SaveChangesAsync();
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateBookAsync(Book book)
         {
             if(book != null && book != default)
             {
-                context.Books.Update(book);
-                await context.SaveChangesAsync();
+                _context.Books.Update(book);
+                await _context.SaveChangesAsync();
             }
         }
 
         public async Task<IEnumerable<Book>> GetBooks(int skip, int take)
         {
-            return await context.Books
+            return await _context.Books
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.Category)
@@ -64,12 +64,12 @@ namespace BooksStore.Infastructure.BookRep
 
         public async Task<int> GetCountBooks()
         {
-            return await context.Books.CountAsync();
+            return await _context.Books.CountAsync();
         }
 
         public async Task<IEnumerable<Book>> GetBooks(int skip, int take, Func<Book,bool> func)
         {
-            return context.Books             
+            return _context.Books             
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.Category)

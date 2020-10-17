@@ -13,19 +13,19 @@ namespace BooksStore.Infastructure.BasketRep
 {
     public class BasketRepository : IBasketRepository
     {
-        EFDbContext context { get; set; }
+        private readonly EFDbContext _context;
 
-        public BasketRepository(EFDbContext context) => this.context = context;
+        public BasketRepository(EFDbContext context) => this._context = context;
 
         public async Task AddBasketAsync(Basket basket)
         {
-            context.Baskets.Add(basket);
-            await context.SaveChangesAsync();
+            _context.Baskets.Add(basket);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Basket> GetBasketById(int basketId)
         {
-            var basket = await context.Baskets
+            var basket = await _context.Baskets
                 .Include(p => p.BasketBooks)
                 .ThenInclude(p => p.Book)
                 .ThenInclude(p => p.Img)
@@ -36,19 +36,19 @@ namespace BooksStore.Infastructure.BasketRep
 
         public async Task RemoveBasketAsync(Basket basket)
         {
-            context.Baskets.Remove(basket);
-            await context.SaveChangesAsync();
+            _context.Baskets.Remove(basket);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateBasketAsync(Basket basket)
         {
-            context.Baskets.Update(basket);
-            await context.SaveChangesAsync();
+            _context.Baskets.Update(basket);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Basket>> GetBaskets(int skip, int take)
         {
-            return await context.Baskets
+            return await _context.Baskets
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.BasketBooks)

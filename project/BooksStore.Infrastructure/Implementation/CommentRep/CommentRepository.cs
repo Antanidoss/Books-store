@@ -13,20 +13,20 @@ namespace BooksStore.Infastructure.CommentRep
 {
     public class CommentRepository : ICommentRepository
     {
-        EFDbContext context { get; set; }        
-        public CommentRepository(EFDbContext context) => this.context = context;
+        private readonly EFDbContext _context;        
+        public CommentRepository(EFDbContext context) => this._context = context;
 
-        public IEnumerable<Comment> Comments => context.Comments.Include(p => p.AppUser).ToArray();
+        public IEnumerable<Comment> Comments => _context.Comments.Include(p => p.AppUser).ToArray();
 
         public async Task AddCommentAsync(Comment comment)
         {
-            context.Comments.Add(comment);
-            await context.SaveChangesAsync();
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Comment> GetCommentById(int id)
         {
-            var comment = await context.Comments
+            var comment = await _context.Comments
                 .Include(p => p.AppUser)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
@@ -35,19 +35,19 @@ namespace BooksStore.Infastructure.CommentRep
        
         public async Task RemoveCommentAsync(Comment comment)
         {
-            context.Comments.Remove(comment);
-            await context.SaveChangesAsync();
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCommentAsync(Comment comment)
         {
-            context.Comments.Update(comment);
-            await context.SaveChangesAsync();
+            _context.Comments.Update(comment);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Comment>> GetComments(int skip, int take)
         {
-            return await context.Comments
+            return await _context.Comments
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.AppUser)
@@ -56,12 +56,12 @@ namespace BooksStore.Infastructure.CommentRep
 
         public async Task<IEnumerable<Comment>> GetCommentByBookId(int bookId)
         {
-            return await context.Comments.Where(p => p.BookId == bookId).ToListAsync();
+            return await _context.Comments.Where(p => p.BookId == bookId).ToListAsync();
         }
 
         public async Task<int> GetCountComments()
         {
-            return await context.Comments.CountAsync();
+            return await _context.Comments.CountAsync();
         }
     }
 }

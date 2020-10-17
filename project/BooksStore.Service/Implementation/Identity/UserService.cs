@@ -12,19 +12,21 @@ namespace BooksStore.Service.Implementation.Identity
 {
     public class UserService : IUserService
     {
-        UserManager<AppUser> UserManager { get; set; }
-        SignInManager<AppUser> SignInManager { get; set; }
-        IMapper Mapper { get; set; }
+        private readonly UserManager<AppUser> _userManager;
+
+        private readonly SignInManager<AppUser> SignInManager;
+
+        private readonly IMapper _mapper;
         public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper)
         {
-            UserManager = userManager;
+            _userManager = userManager;
             SignInManager = signInManager;
-            Mapper = mapper;
+            _mapper = mapper;
         }
 
         public async Task<(Result Result, string AppUserId)> CreateAppUserAsync(string userName, string email, string password)
         {
-            var user = await UserManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 user = new AppUser()
@@ -33,7 +35,7 @@ namespace BooksStore.Service.Implementation.Identity
                     Email = email
                 };
                 
-                var result = await UserManager.CreateAsync(user, password);
+                var result = await _userManager.CreateAsync(user, password);
                 
                 return (result.ToApplicationResult(), user.Id);
             }
@@ -42,19 +44,19 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<(Result Result, AppUserDTO AppUserDTO)> FindAppUserByEmailAsync(string email)
         {
-            var user = await UserManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             return user != null 
-                ? (Result.Success(), Mapper.Map<AppUserDTO>(user)) 
+                ? (Result.Success(), _mapper.Map<AppUserDTO>(user)) 
                 : (IdentityResultExtensions.AppUserNotFound(), new AppUserDTO());
         }
 
         public async Task<(Result Result, AppUserDTO AppUserDTO)> FindAppUserByIdAsync(string appUserId)
         {
-            var user = await UserManager.FindByIdAsync(appUserId);
+            var user = await _userManager.FindByIdAsync(appUserId);
 
             return user != null
-               ? (Result.Success(), Mapper.Map<AppUserDTO>(user))
+               ? (Result.Success(), _mapper.Map<AppUserDTO>(user))
                : (IdentityResultExtensions.AppUserNotFound(), new AppUserDTO());
         }
 
@@ -65,7 +67,7 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<Result> PasswordSignInAsync(string email, string password, bool isParsistent)
         {
-            var user = await UserManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
                 var result = await SignInManager.PasswordSignInAsync(user, password, isParsistent, false);
@@ -78,10 +80,10 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<Result> RemoveAppUserAsync(string appUserId)
         {
-            Core.AppUserModel.AppUser appUser = await UserManager.FindByIdAsync(appUserId);
+            Core.AppUserModel.AppUser appUser = await _userManager.FindByIdAsync(appUserId);
             if(appUser != null)
             {
-                var result = await UserManager.DeleteAsync(appUser);
+                var result = await _userManager.DeleteAsync(appUser);
                 return result.Succeeded ? Result.Success() : result.ToApplicationResult();
             }
 
@@ -90,7 +92,7 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<Result> SignInAsync(string appUserId, bool isPasrsistent)
         {
-            var user = await UserManager.FindByIdAsync(appUserId);
+            var user = await _userManager.FindByIdAsync(appUserId);
             if(user != null)
             {
                 await SignInManager.SignInAsync(user, isPasrsistent);
@@ -101,14 +103,14 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<bool> IsInRoleAsync(AppUserDTO appUserDTO, string roleName)
         {
-            return await UserManager.IsInRoleAsync(Mapper.Map<AppUser>(appUserDTO), roleName);
+            return await _userManager.IsInRoleAsync(_mapper.Map<AppUser>(appUserDTO), roleName);
         }
 
         public async Task<Result> RemoveFromRoleAsync(AppUserDTO appUserDTO, string roleName)
         {
             if(appUserDTO != null && appUserDTO != default && !string.IsNullOrEmpty(roleName))
             {
-                var result = await UserManager.RemoveFromRoleAsync(Mapper.Map<AppUser>(appUserDTO), roleName);
+                var result = await _userManager.RemoveFromRoleAsync(_mapper.Map<AppUser>(appUserDTO), roleName);
                 return result.Succeeded ? Result.Success() : result.ToApplicationResult();
             }
             return Result.Failure(new string[] { "Некорректные входные данные" });
@@ -116,7 +118,7 @@ namespace BooksStore.Service.Implementation.Identity
 
         public IEnumerable<AppUserDTO> GetAppUsers()
         {
-            return Mapper.Map<IEnumerable<AppUserDTO>>(UserManager.Users);
+            return _mapper.Map<IEnumerable<AppUserDTO>>(_userManager.Users);
         }
 
         public Task<Result> AddToRoleAsync(AppUserDTO appUserDTO, string roleName)

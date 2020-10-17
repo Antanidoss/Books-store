@@ -12,40 +12,40 @@ namespace BooksStore.Infastructure.AuthorRep
 {
     public class AuthorRepository : IAuthorRepository
     {
-        EFDbContext context { get; set; }
-        public AuthorRepository(EFDbContext context) => this.context = context;
+        private readonly EFDbContext _context;
+        public AuthorRepository(EFDbContext context) => this._context = context;
         public async Task AddAuthorAsync(Author author)
         {
-            context.Authors.Add(author);
-            await context.SaveChangesAsync();
+            _context.Authors.Add(author);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Author> GetAuthorById(int id)
         {
-            var author = await context.Authors.FirstOrDefaultAsync(p => p.Id == id);
+            var author = await _context.Authors.FirstOrDefaultAsync(p => p.Id == id);
             return author != default ? author : null;
         }       
 
         public async Task RemoveAuthorAsync(Author author)
         {
-            context.Remove(author);
-            await context.SaveChangesAsync();
+            _context.Remove(author);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAuthorAsync(Author author)
         {
-            context.Update(author);
-            await context.SaveChangesAsync();
+            _context.Update(author);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Author>> GetAuthorsAsync(int skip, int take)
         {
-            return await context.Authors.Skip(skip).Take(take).ToListAsync();
+            return await _context.Authors.Skip(skip).Take(take).ToListAsync();
         }
 
         public async Task<IEnumerable<Author>> GetAuthors(int skip, int take)
         {
-            return await context.Authors
+            return await _context.Authors
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
@@ -53,7 +53,7 @@ namespace BooksStore.Infastructure.AuthorRep
 
         public async Task<Author> GetAuthorByName(string firstName, string surname)
         {
-            var author = await context.Authors
+            var author = await _context.Authors
                 .FirstOrDefaultAsync(p => p.Firstname == firstName);
 
             return author != default ? author : null;
@@ -61,7 +61,7 @@ namespace BooksStore.Infastructure.AuthorRep
 
         public async Task<int> GetCountAuthors()
         {
-            return await context.Authors.CountAsync();
+            return await _context.Authors.CountAsync();
         }
     }
 }
