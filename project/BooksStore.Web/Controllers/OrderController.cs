@@ -13,13 +13,13 @@ namespace BooksStore.Web.Controllers
     [Authorize]
     public class OrderController : Controller
     {
-        private readonly IOrderViewModelService _orderManager;
+        private readonly IOrderViewModelService _orderService;
 
         private readonly ICurrentUser _currentUser;
 
-        public OrderController(IOrderViewModelService orderManager, ICurrentUser currentUser)
+        public OrderController(IOrderViewModelService orderService, ICurrentUser currentUser)
         {
-            _orderManager = orderManager;
+            _orderService = orderService;
             _currentUser = currentUser;
         }
 
@@ -28,7 +28,7 @@ namespace BooksStore.Web.Controllers
         {
             string curUserId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
             
-            var orders = (await _orderManager.GetOrdersByAppUserId(curUserId)).ToList();                                    
+            var orders = (await _orderService.GetOrdersByAppUserId(curUserId)).ToList();                                    
 
             var orderListViewModel = new OrderListViewModel(pageNum, PageSizes.Orders, orders.Count(), orders);            
 
@@ -43,7 +43,7 @@ namespace BooksStore.Web.Controllers
                 return View(createModel);
             }
                         
-            await _orderManager.AddOrderAsync(createModel);
+            await _orderService.AddOrderAsync(createModel);
             
             return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = createModel.BookOrderIds });                      
         }
@@ -51,7 +51,12 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveOrder(int? orderId)
         {
-            await _orderManager.RemoveOrderAsync(orderId.Value);
+            if (!orderId.HasValue)
+            {
+                return View(StatusCode(404));
+            }
+
+            await _orderService.RemoveOrderAsync(orderId.Value);
 
             return RedirectToAction(nameof(IndexOrders));
         }
@@ -59,7 +64,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveCompleteOrders()
         {
-            await _orderManager.RemoveCompleteOrderAsync();
+            await _orderService.RemoveCompleteOrderAsync();
 
             return RedirectToAction(nameof(IndexOrders));
         }

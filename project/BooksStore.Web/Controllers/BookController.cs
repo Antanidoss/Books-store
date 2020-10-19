@@ -16,13 +16,13 @@ namespace BooksStore.Web.Controllers
 {
     public class BookController : Controller
     {
-        private readonly IBookViewModelService _bookManager;
+        private readonly IBookViewModelService _bookService;
 
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public BookController(IBookViewModelService bookManager, IWebHostEnvironment appEnvironment)
+        public BookController(IBookViewModelService bookService, IWebHostEnvironment appEnvironment)
         {
-            _bookManager = bookManager;
+            _bookService = bookService;
             _appEnvironment = appEnvironment;
         }
 
@@ -30,8 +30,8 @@ namespace BooksStore.Web.Controllers
         {           
             if (bookList?.BookIndexModel?.Objects == null)
             {
-                bookList = new BookListViewModel(pageNum, PageSizes.Books, await _bookManager.GetCountAsync(), 
-                    await _bookManager.GetBooksAsync(pageNum));
+                bookList = new BookListViewModel(pageNum, PageSizes.Books, await _bookService.GetCountAsync(), 
+                    await _bookService.GetBooksAsync(pageNum));
             }               
 
             return View(bookList);                       
@@ -40,7 +40,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexBook(int? bookId)
         {            
-            var book = await _bookManager.GetBookByIdAsync(bookId.Value);                                           
+            var book = await _bookService.GetBookByIdAsync(bookId.Value);                                           
 
             return View(book);                        
         }
@@ -61,52 +61,70 @@ namespace BooksStore.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                string path = "/img/" + uploadedFile.FileName;
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                {
-                    await uploadedFile.CopyToAsync(fileStream);
-                }
-
-                model.ImgPath = path;
-                await _bookManager.AddBookAsync(model);
-
-                return RedirectToAction(nameof(IndexBooksAdmin), "Book");
+                return View(model);
             }
-            return View(model);
+
+            string path = "/img/" + uploadedFile.FileName;
+            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+            {
+                await uploadedFile.CopyToAsync(fileStream);
+            }
+
+            model.ImgPath = path;
+            await _bookService.AddBookAsync(model);
+
+            return RedirectToAction(nameof(IndexBooksAdmin), "Book");                       
         }
 
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> RemoveBook(int? bookId)
         {
-            if (bookId.HasValue)
+            if (!bookId.HasValue)
             {
-                await _bookManager.RemoveBookAsync(bookId.Value);          
-
-                return RedirectToAction(nameof(IndexBooksAdmin), "Book");
+                return View(StatusCode(404));
             }
-            return View(StatusCode(404));
+
+            await _bookService.RemoveBookAsync(bookId.Value);          
+
+            return RedirectToAction(nameof(IndexBooksAdmin), "Book");                       
         }
 
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateBook(int? bookId)
-        {                       
-            return View(await _bookManager.GetBookByIdAsync(bookId.Value));            
+        {
+            if (!bookId.HasValue)
+            {
+                return View(StatusCode(404));
+            }
+
+            return View(await _bookService.GetBookByIdAsync(bookId.Value));            
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
         {
-            await _bookManager.UpdateBookAsync(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _bookService.UpdateBookAsync(model);
+
             return RedirectToAction("IndexBooksAdmin", "Book");           
         }
 
         [HttpGet]
         public async Task<IActionResult> IndexByCategory(int? categoryId, int pageNum = 1)
-        {                     
-            var booksCategory = await _bookManager.GetBooksByCategoryAsync(pageNum, categoryId.Value);
+        {
+            if (!categoryId.HasValue)
+            {
+                return View(StatusCode(404));
+            }
+
+            var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);
                                               
             BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory);
 
@@ -115,7 +133,7 @@ namespace BooksStore.Web.Controllers
 
         public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
         {           
-            var books = await _bookManager.GetBooksByNameAsync(pageNum, bookName);
+            var books = await _bookService.GetBooksByNameAsync(pageNum, bookName);
 
             BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books);
 

@@ -22,10 +22,11 @@ namespace BooksStore.Web.Models.Managers
 
         private readonly IMapper _mapper;
         
-        public RoleViewModelService(IRoleService roleManagerService, IMapper mapper)
+        public RoleViewModelService(IRoleService roleManagerService, IMapper mapper, IUserService userService)
         {
             _roleManagerService = roleManagerService;
             _mapper = mapper;
+            _userService = userService;
         }
 
         public async Task<Result> CreateRoleAsync(RoleCreateModel model)
@@ -45,6 +46,11 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum)
         {
+            if (pageNum <= 0)
+            {
+                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
+            }
+
             int pageSize = PageSizes.Roles;
 
             var roles = await _roleManagerService.GetRolesAsync((pageNum - 1) * pageNum, pageSize);

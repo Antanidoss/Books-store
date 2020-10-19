@@ -89,6 +89,11 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task RemoveOrderAsync(int orderId)
         {
+            if (orderId <= 0)
+            {
+                throw new ArgumentException("Id не может быть равен или меньше нуля");
+            }
+
             await _orderService.RemoveOrderAsync(orderId);
         }
 

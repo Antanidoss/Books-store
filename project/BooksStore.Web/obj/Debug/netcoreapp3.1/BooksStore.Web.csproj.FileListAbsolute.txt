@@ -1207,7 +1207,6 @@ C:\IT\c#\Проекты\store\project\BooksStore.Web\bin\Debug\netcoreapp3.1\Boo
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.csprojAssemblyReference.cache
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.AssemblyInfoInputs.cache
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.AssemblyInfo.cs
-C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.RazorAssemblyInfo.cache
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.RazorAssemblyInfo.cs
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.TagHelpers.input.cache
@@ -1254,3 +1253,4 @@ C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Boo
 C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.pdb
 C:\IT\c#\Проекты\store\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
 C:\IT\c#\Проекты\store\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
+C:\IT\c#\Проекты\store\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.MvcApplicationPartsAssemblyInfo.cache

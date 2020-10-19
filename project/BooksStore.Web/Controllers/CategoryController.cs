@@ -13,24 +13,24 @@ namespace BooksStore.Web.Controllers
     [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryViewModelService _categoryManager;
+        private readonly ICategoryViewModelService _categoryService;
 
-        public CategoryController(ICategoryViewModelService categoryManager)
+        public CategoryController(ICategoryViewModelService categoryService)
         {
-            _categoryManager = categoryManager;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
         public IActionResult AddCategory() => View();
         [HttpPost]
-        public async Task<IActionResult> AddCategory(CategoryCreateModel categoryCreateModel)
+        public async Task<IActionResult> AddCategory(CategoryCreateModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(categoryCreateModel);
+                return View(model);
             }
 
-            await _categoryManager.AddCategoryAsync(categoryCreateModel);
+            await _categoryService.AddCategoryAsync(model);
 
             return RedirectToAction("IndexСategoriesAdmin", "Category");
         }
@@ -45,10 +45,10 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexCategories(int pageNum = 1)
         {
-            var categories = await _categoryManager.GetCategories(pageNum);
+            var categories = await _categoryService.GetCategories(pageNum);
             
             IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, PageSizes.Categories,
-                 await _categoryManager.GetCountCategories(), categories);
+                 await _categoryService.GetCountCategories(), categories);
 
             return View(categoryIndexModel);
             
@@ -57,7 +57,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
         {        
-            await _categoryManager.RemoveCategoryAsync(categoryId.Value);
+            await _categoryService.RemoveCategoryAsync(categoryId.Value);
 
             return RedirectToAction(nameof(IndexСategoriesAdmin));         
         }
@@ -65,12 +65,12 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int? categoryId)
         {
-            return View(await _categoryManager.GetCategoryById(categoryId.Value));
+            return View(await _categoryService.GetCategoryById(categoryId.Value));
         }
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateModel model)
         {
-            await _categoryManager.UpdateCategoryAsync(model);
+            await _categoryService.UpdateCategoryAsync(model);
 
             return RedirectToAction(nameof(IndexCategories));
         }

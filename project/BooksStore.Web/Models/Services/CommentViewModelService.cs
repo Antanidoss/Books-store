@@ -56,6 +56,11 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<CommentViewModel>> GetComments(int pageNum)
         {
+            if (pageNum <= 0)
+            {
+                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
+            }
+
             int pageSize = PageSizes.Comments;
             return _mapper.Map<IEnumerable<CommentViewModel>>(await _commentService.GetComments((pageNum - 1) * pageSize, pageSize));
         }
@@ -72,6 +77,11 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<int> GetCountComments(int bookId)
         {
+            if (bookId <= 0)
+            {
+                throw new ArgumentException("Id не может быть равен или меньше нуля");
+            }
+
             return await _commentService.GetCountComments();
         }
 

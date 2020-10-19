@@ -14,11 +14,11 @@ namespace BooksStore.Web.Controllers
     [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
-        private readonly IRoleViewModelService _roleViewModelService;
+        private readonly IRoleViewModelService _roleService;
 
-        public RoleController(IRoleViewModelService roleViewModelService)
+        public RoleController(IRoleViewModelService roleService)
         {
-            _roleViewModelService = roleViewModelService;
+            _roleService = roleService;
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace BooksStore.Web.Controllers
                 return View(model);
             }
 
-            await _roleViewModelService.CreateRoleAsync(model);
+            await _roleService.CreateRoleAsync(model);
 
             return RedirectToAction("IndexRole", "Role");
         }
@@ -39,7 +39,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexRole(int pageNum = 1)
         {                     
-            var roles = await _roleViewModelService.GetRolesAsync(pageNum);
+            var roles = await _roleService.GetRolesAsync(pageNum);
 
             var indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(), roles);
 
@@ -49,22 +49,22 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string roleId)
         {           
-            return View(await _roleViewModelService.FindRoleByIdAsync(roleId));                  
+            return View(await _roleService.FindRoleByIdAsync(roleId));                  
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(RoleUpdateModel updateModel)
+        public async Task<IActionResult> Edit(RoleUpdateModel model)
         {
             if (!ModelState.IsValid)
             {
-                return await Edit(updateModel.Id);
+                return await Edit(model);
             }
 
-            var result = await _roleViewModelService.UpdateAsync(updateModel);
+            var result = await _roleService.UpdateAsync(model);
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(nameof(updateModel), result.Errors.ToString());
-                return View(updateModel);
+                ModelState.AddModelError(nameof(model), result.Errors.ToString());
+                return View(model);
             }
         
             return RedirectToAction("Index", "Role");                        
@@ -72,9 +72,9 @@ namespace BooksStore.Web.Controllers
 
         public async Task<IActionResult> Remove(string roleId)
         {
-            var role = await _roleViewModelService.FindRoleByIdAsync(roleId);
+            var role = await _roleService.FindRoleByIdAsync(roleId);
             
-            await _roleViewModelService.DeleteAsync(role);
+            await _roleService.DeleteAsync(role);
             
             return RedirectToAction("Index" , "Role");
         }       

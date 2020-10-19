@@ -97,6 +97,10 @@ namespace BooksStore.Web.Models.Managers
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
+            if (string.IsNullOrEmpty(bookName))
+            {
+                throw new ArgumentException("Имя книги пусто или равно null");
+            }
 
             int pageSize = PageSizes.Books;
             return _mapper.Map<IEnumerable<BookViewModel>>
@@ -108,6 +112,10 @@ namespace BooksStore.Web.Models.Managers
             if(pageNum <= 0)
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
+            }
+            if (categoryId <= 0)
+            {
+                throw new ArgumentException("Id не может быть равен или меньше нуля");
             }
 
             int pageSize = PageSizes.Books;

@@ -13,16 +13,16 @@ namespace BooksStore.Web.Controllers
 {
     public class CommentController : Controller
     {
-        private readonly ICommentViewModelService _commentManager;
+        private readonly ICommentViewModelService _commentService;
 
         private readonly IBookViewModelService _bookManager;
 
         private readonly ICurrentUser _currentUser;
 
-        public CommentController(ICommentViewModelService commentManager, ICurrentUser currentUser, IBookViewModelService bookManager)
+        public CommentController(ICommentViewModelService commentService, ICurrentUser currentUser, IBookViewModelService bookManager)
         {
             _currentUser = currentUser;
-            _commentManager = commentManager;
+            _commentService = commentService;
             _bookManager = bookManager;
         }
 
@@ -31,7 +31,7 @@ namespace BooksStore.Web.Controllers
         {
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
 
-            var comments = (await _commentManager.GetCommentsByBookId(bookId.Value)).ToList();
+            var comments = (await _commentService.GetCommentsByBookId(bookId.Value)).ToList();
 
             string userId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
             CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), pageNum,
@@ -48,7 +48,7 @@ namespace BooksStore.Web.Controllers
                 return View(model);
             }
 
-            await _commentManager.AddComment(model);
+            await _commentService.AddComment(model);
 
             return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });
         }
@@ -56,7 +56,7 @@ namespace BooksStore.Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
         {
-            await _commentManager.RemoveComment(commentId.Value);
+            await _commentService.RemoveComment(commentId.Value);
 
             return View(returnUrl);
         }
