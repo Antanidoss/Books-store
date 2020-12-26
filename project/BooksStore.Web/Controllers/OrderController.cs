@@ -25,10 +25,8 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         public async Task<IActionResult> IndexOrders(int pageNum = 1)
-        {
-            string curUserId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
-            
-            var orders = (await _orderService.GetOrdersByAppUserId(curUserId)).ToList();                                    
+        {           
+            var orders = (await _orderService.GetOrdersAsync(pageNum)).ToList();                                    
 
             var orderListViewModel = new OrderListViewModel(pageNum, PageSizes.Orders, orders.Count(), orders);            
 

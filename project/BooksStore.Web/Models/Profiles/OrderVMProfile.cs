@@ -9,7 +9,7 @@ namespace BooksStore.Web.Profiles
         public OrderVMProfile()
         {
             CreateMap<OrderDTO, OrderViewModel>()
-                    .ForMember(p => p.BooksViewModel, conf => conf.MapFrom(o => o.BooksOrder));
+                    .ForMember(p => p.BooksViewModel, conf => conf.MapFrom(o => o.OrderBooks));
         }
     }
 }

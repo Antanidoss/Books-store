@@ -31,7 +31,7 @@ namespace BooksStore.Web.Controllers
         {
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
 
-            var comments = (await _commentService.GetCommentsByBookId(bookId.Value)).ToList();
+            var comments = (await _commentService.GetCommentsByBookIdAsync(bookId.Value)).ToList();
 
             string userId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
             CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), pageNum,
@@ -48,7 +48,7 @@ namespace BooksStore.Web.Controllers
                 return View(model);
             }
 
-            await _commentService.AddComment(model);
+            await _commentService.AddCommentAsync(model);
 
             return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });
         }
@@ -56,7 +56,7 @@ namespace BooksStore.Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
         {
-            await _commentService.RemoveComment(commentId.Value);
+            await _commentService.RemoveCommentAsync(commentId.Value);
 
             return View(returnUrl);
         }

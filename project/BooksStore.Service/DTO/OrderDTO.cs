@@ -8,7 +8,7 @@ namespace BooksStore.Services.DTO
     {
         public int Id { get; set; }
         public string AppUserId { get; set; }
-        public IEnumerable<BookDTO> BooksOrder { get; set; }
+        public IEnumerable<BookDTO> OrderBooks { get; set; }
         public DateTime TimeOfCreate { get; set; }
         public DateTime TimeOfDelivery { get; set; }
     }

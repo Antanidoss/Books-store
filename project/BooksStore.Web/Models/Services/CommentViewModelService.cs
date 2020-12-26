@@ -34,7 +34,7 @@ namespace BooksStore.Web.Models.Managers
             _mapper = mapper;
         }
 
-        public async Task AddComment(CommentCreateModel model)
+        public async Task AddCommentAsync(CommentCreateModel model)
         {
             await _commentService.AddCommentAsync(new CommentDTO()
             {
@@ -44,7 +44,7 @@ namespace BooksStore.Web.Models.Managers
             });
         }
 
-        public async Task<CommentViewModel> GetCommentById(int commentId)
+        public async Task<CommentViewModel> GetCommentByIdAsync(int commentId)
         {
             if(commentId <= 0)
             {
@@ -54,7 +54,7 @@ namespace BooksStore.Web.Models.Managers
             return _mapper.Map<CommentViewModel>(await  _commentService.GetCommentById(commentId));
         }
 
-        public async Task<IEnumerable<CommentViewModel>> GetComments(int pageNum)
+        public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum)
         {
             if (pageNum <= 0)
             {
@@ -65,7 +65,7 @@ namespace BooksStore.Web.Models.Managers
             return _mapper.Map<IEnumerable<CommentViewModel>>(await _commentService.GetComments((pageNum - 1) * pageSize, pageSize));
         }
 
-        public async Task<IEnumerable<CommentViewModel>> GetCommentsByBookId(int bookId)
+        public async Task<IEnumerable<CommentViewModel>> GetCommentsByBookIdAsync(int bookId)
         {
             if (bookId <= 0)
             {
@@ -75,7 +75,7 @@ namespace BooksStore.Web.Models.Managers
             return _mapper.Map<IEnumerable<CommentViewModel>>(await _commentService.GetCommentsByBookId(bookId));
         }
 
-        public async Task<int> GetCountComments(int bookId)
+        public async Task<int> GetCountCommentsAsync(int bookId)
         {
             if (bookId <= 0)
             {
@@ -85,7 +85,7 @@ namespace BooksStore.Web.Models.Managers
             return await _commentService.GetCountComments();
         }
 
-        public async Task RemoveComment(int commentId)
+        public async Task RemoveCommentAsync(int commentId)
         {
             if (commentId <= 0)
             {
@@ -95,7 +95,7 @@ namespace BooksStore.Web.Models.Managers
             await _commentService.RemoveCommentAsync(commentId);
         }
 
-        public async Task UpdateComment(CommentUpdateModel model)
+        public async Task UpdateCommentAsync(CommentUpdateModel model)
         {
             await _commentService.UpdateCommentAsync(_mapper.Map<CommentDTO>(model));
         }

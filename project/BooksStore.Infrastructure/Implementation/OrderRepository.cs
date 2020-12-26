@@ -47,27 +47,22 @@ namespace BooksStore.Infastructure
             await _context.SaveChangesAsync();         
         }
 
-        public async Task<IEnumerable<Order>> GetOrders(int skip, int take)
+        public async Task<int> GetCountOrders(string appUserId)
         {
             return await _context.Orders
+                .Where(o => o.AppUserId == appUserId)
+                .CountAsync();
+        }
+
+        public async Task<IEnumerable<Order>> GetOrders(string appUserId, int skip, int take)
+        {
+            return await _context.Orders
+                .Include(p => p.OrderBooks)
+                .ThenInclude(p => p.Book)
+                .Where(p => p.AppUserId == appUserId)
                 .Skip(skip)
                 .Take(take)
-                .Include(p => p.OrderBooks)
-                .ThenInclude(p => p.Book)
                 .ToListAsync();
-        }
-
-        public async Task<int> GetCountOrders()
-        {
-            return await _context.Orders.CountAsync();
-        }
-
-        public async Task<IEnumerable<Order>> GetOrdersByAppUserId(string appUserId)
-        {
-            return await _context.Orders
-                .Include(p => p.OrderBooks)
-                .ThenInclude(p => p.Book)
-                .Where(p => p.AppUserId == appUserId).ToListAsync();
         }
     }
 }

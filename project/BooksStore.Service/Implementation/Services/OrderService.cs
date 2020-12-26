@@ -8,6 +8,7 @@ using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BooksStore.Services
@@ -33,7 +34,13 @@ namespace BooksStore.Services
             {
                 throw new ArgumentNullException(nameof(OrderDTO));
             }
-            await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderDTO));
+
+            var order = new Order()
+            {
+                AppUserId = orderDTO.AppUserId,
+                OrderBooks = _mapper.Map<IEnumerable<BookOrderJunction>>(orderDTO.OrderBooks)
+            };           
+            await _orderRepository.AddOrderAsync(order);
         }
 
         public async Task<OrderDTO> GetOrderByIdAsync(int orderId)
@@ -59,13 +66,13 @@ namespace BooksStore.Services
             return _mapper.Map<OrderDTO>(order);
         }
 
-        public async Task<IEnumerable<OrderDTO>> GetOrders(int skip, int take)
+        public async Task<IEnumerable<OrderDTO>> GetOrders(string appUserId, int skip, int take)
         {
             if (skip < 0 && take <= 0)
             {
                 throw new ArgumentException("Некорректные аргументы skip и take");
             }
-            return _mapper.Map<IEnumerable<OrderDTO>>((await _orderRepository.GetOrders(skip, take) ?? new List<Order>()));
+            return _mapper.Map<IEnumerable<OrderDTO>>((await _orderRepository.GetOrders(appUserId, skip, take) ?? new List<Order>()));
         }
 
         public async Task RemoveOrderAsync(int orderId)
@@ -102,7 +109,9 @@ namespace BooksStore.Services
                 throw new ArgumentException("id не может быть равен null");
             }
 
-            foreach (var order in (await _orderRepository.GetOrdersByAppUserId(appUserId)))
+            int orderCount = await _orderRepository.GetCountOrders(appUserId);
+
+            foreach (var order in (await _orderRepository.GetOrders(appUserId, 0, orderCount)))
             {
                 if (order.TimeOfDelivery < DateTime.Now)
                 {
@@ -111,18 +120,9 @@ namespace BooksStore.Services
             }
         }
 
-        public async Task<int> GetCountOrders()
+        public async Task<int> GetCountOrders(string appUserId)
         {
-            return await _orderRepository.GetCountOrders();
-        }
-
-        public async Task<IEnumerable<OrderDTO>> GetOrdersByAppUserId(string appUserId)
-        {
-            if (string.IsNullOrEmpty(appUserId))
-            {
-                throw new ArgumentException("id не может быть равен null");
-            }
-            return _mapper.Map<IEnumerable<OrderDTO>>(await _orderRepository.GetOrdersByAppUserId(appUserId));
-        }
+            return await _orderRepository.GetCountOrders(appUserId);
+        }        
     }
 }

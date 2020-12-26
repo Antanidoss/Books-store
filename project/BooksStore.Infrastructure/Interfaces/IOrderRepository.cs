@@ -9,9 +9,8 @@ namespace BooksStore.Infastructure.Interfaces
         Task AddOrderAsync(Order order);
         Task<Order> GetOrderById(int id);
         Task RemoveOrderAsync(Order order);
-        Task<IEnumerable<Order>> GetOrders(int skip, int take);
         Task UpdateOrderAsync(Order order);
-        Task<IEnumerable<Order>> GetOrdersByAppUserId(string appUserId);
-        Task<int> GetCountOrders();
+        Task<IEnumerable<Order>> GetOrders(string appUserId, int skip, int take);
+        Task<int> GetCountOrders(string appUserId);
     }
 }

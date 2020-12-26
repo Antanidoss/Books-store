@@ -11,7 +11,8 @@ namespace BooksStore.Core.Entities
         public string AppUserId { get; set; }
         public Order() : base()
         {
-            OrderBooks = new List<BookOrderJunction>();           
+            OrderBooks = new List<BookOrderJunction>();
+            TimeOfDelivery = DateTime.Today.AddDays(3);
         }
     }
 }

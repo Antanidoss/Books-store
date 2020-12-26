@@ -44,7 +44,7 @@ namespace BooksStore.Web.Models.Managers
 
             await _orderService.AddOrderAsync(new OrderDTO() 
             {
-                BooksOrder =  booksOrder,
+                OrderBooks =  booksOrder,
                 AppUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id,
                 TimeOfDelivery = DateTime.Now.AddDays(3)
             });
@@ -67,19 +67,12 @@ namespace BooksStore.Web.Models.Managers
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
 
-            var pageSize = PageSizes.Orders;
-            return _mapper.Map<IEnumerable<OrderViewModel>>(await _orderService.GetOrders((pageNum - 1) * pageSize, pageSize));
-        }
+            int pageSize = PageSizes.Orders;
+            int skip = (pageNum - 1) * pageSize;
+            var curUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id;
 
-        public async Task<IEnumerable<OrderViewModel>> GetOrdersByAppUserId(string userId)
-        {
-            if (string.IsNullOrEmpty(userId))
-            {
-                throw new ArgumentException("Id не может быть равен null или пустой");
-            }
-
-            return _mapper.Map<IEnumerable<OrderViewModel>>(await _orderService.GetOrdersByAppUserId(userId));
-        }
+            return _mapper.Map<IEnumerable<OrderViewModel>>(await _orderService.GetOrders(curUserId, skip, pageSize));
+        }       
 
         public async Task RemoveCompleteOrderAsync()
         {

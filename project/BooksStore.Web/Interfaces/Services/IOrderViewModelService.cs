@@ -12,7 +12,6 @@ namespace BooksStore.Web.Interfaces.Managers
     {
         Task AddOrderAsync(OrderCreateModel model);
         Task<OrderViewModel> GetOrderByIdAsync(int orderId);
-        Task<IEnumerable<OrderViewModel>> GetOrdersByAppUserId(string userId);
         Task RemoveOrderAsync(int orderId);
         Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum);
         Task RemoveCompleteOrderAsync();
