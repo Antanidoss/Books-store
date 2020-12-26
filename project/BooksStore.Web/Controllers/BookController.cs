@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
@@ -9,7 +7,6 @@ using BooksStore.Web.Models.ViewModel.ReadModel;
 using BooksStore.Web.Models.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksStore.Web.Controllers
@@ -57,20 +54,13 @@ namespace BooksStore.Web.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> AddBook(BookCreateModel model, [Required(ErrorMessage = "Выберите изображения")] IFormFile uploadedFile)
+        public async Task<IActionResult> AddBook(BookCreateModel model)
         {
             if (ModelState.IsValid)
             {
                 return View(model);
             }
 
-            string path = "/img/" + uploadedFile.FileName;
-            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-            {
-                await uploadedFile.CopyToAsync(fileStream);
-            }
-
-            model.ImgPath = path;
             await _bookService.AddBookAsync(model);
 
             return RedirectToAction(nameof(IndexBooksAdmin), "Book");                       

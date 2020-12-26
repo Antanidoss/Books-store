@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using BooksStore.Core.CommentModel;
-using BooksStore.Service.DTO;
+using BooksStore.Core.Entities;
+using BooksStore.Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BooksStore.Service.Profiles
+namespace BooksStore.Services.Profiles
 {
     public class CommentDTOProfile : Profile
     {

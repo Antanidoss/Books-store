@@ -1,12 +1,6 @@
-﻿using BooksStore.Core.AppUserModel;
-using BooksStore.Infastructure.AuthorRep;
-using BooksStore.Infastructure.BasketRep;
-using BooksStore.Infastructure.BookRep;
-using BooksStore.Infastructure.CategoryRep;
-using BooksStore.Infastructure.CommentRep;
+﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces;
-using BooksStore.Infastructure.OrderRep;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

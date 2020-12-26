@@ -1,12 +1,9 @@
-﻿using BooksStore.Core.AppUserModel;
-using BooksStore.Infrastructure;
-using BooksStore.Service.DTO;
-using System;
+﻿using BooksStore.Infrastructure;
+using BooksStore.Services.DTO;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BooksStore.Service.Interfaces.Identity
+namespace BooksStore.Services.Interfaces.Identity
 {
     public interface IUserService
     {

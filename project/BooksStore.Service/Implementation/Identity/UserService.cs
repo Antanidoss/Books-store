@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using BooksStore.Core.AppUserModel;
+using BooksStore.Core.Entities;
 using BooksStore.Infrastructure;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces.Identity;
+using BooksStore.Services.DTO;
+using BooksStore.Services.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Service.Implementation.Identity
+namespace BooksStore.Services.Implementation.Identity
 {
     public class UserService : IUserService
     {
@@ -80,7 +80,7 @@ namespace BooksStore.Service.Implementation.Identity
 
         public async Task<Result> RemoveAppUserAsync(string appUserId)
         {
-            Core.AppUserModel.AppUser appUser = await _userManager.FindByIdAsync(appUserId);
+            AppUser appUser = await _userManager.FindByIdAsync(appUserId);
             if(appUser != null)
             {
                 var result = await _userManager.DeleteAsync(appUser);

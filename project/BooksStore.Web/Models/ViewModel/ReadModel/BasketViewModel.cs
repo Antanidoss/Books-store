@@ -1,4 +1,4 @@
-﻿using BooksStore.Service.DTO;
+﻿using BooksStore.Services.DTO;
 using BooksStore.Web.Models.ViewModel.Index;
 using System.Collections;
 using System.Collections.Generic;

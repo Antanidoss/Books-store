@@ -1,24 +1,12 @@
-﻿using AutoMapper;
-using BooksStore.Core.AppUserModel;
-using BooksStore.Infrastructure.Implementation.CacheManager;
+﻿using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
-using BooksStore.Service.AuthorSer;
-using BooksStore.Service.BasketSer;
-using BooksStore.Service.BookSer;
-using BooksStore.Service.CategorySer;
-using BooksStore.Service.CommentSer;
-using BooksStore.Service.Implementation.Identity;
-using BooksStore.Service.Interfaces;
-using BooksStore.Service.Interfaces.Identity;
-using BooksStore.Service.OrderSer;
-using BooksStore.Service.Profiles;
-using Microsoft.Extensions.Configuration;
+using BooksStore.Services.AuthorSer;
+using BooksStore.Services.Implementation.Identity;
+using BooksStore.Services.Interfaces;
+using BooksStore.Services.Interfaces.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BooksStore.Service
+namespace BooksStore.Services
 {
     public static class DependencyInjection
     {

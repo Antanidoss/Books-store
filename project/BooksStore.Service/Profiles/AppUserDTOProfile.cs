@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using BooksStore.Core.AppUserModel;
-using BooksStore.Service.DTO;
-using System.Collections.Generic;
+using BooksStore.Core.Entities;
+using BooksStore.Services.DTO;
 
-namespace BooksStore.Service.Profiles
+namespace BooksStore.Services.Profiles
 {
     public class AppUserDTOProfile : Profile
     {     

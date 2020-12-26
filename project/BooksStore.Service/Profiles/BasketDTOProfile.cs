@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
-using BooksStore.Core.BasketModel;
-using BooksStore.Core.BookBasketJunctionModel;
-using BooksStore.Core.BookModel;
-using BooksStore.Service.DTO;
-using System;
-using System.Collections.Generic;
+using BooksStore.Core.Entities;
+using BooksStore.Services.DTO;
 using System.Linq;
-using System.Text;
 
-namespace BooksStore.Service.Profiles
+namespace BooksStore.Services.Profiles
 {
     public class BasketDTOProfile : Profile
     {

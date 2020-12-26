@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BooksStore.Web.Models.ViewModel.CreateModel
@@ -28,6 +29,9 @@ namespace BooksStore.Web.Models.ViewModel.CreateModel
 
         [Required(ErrorMessage = "Введите фамилию автора книги")]
         public string AuthorSurname { get; set; }
+
+        [Required(ErrorMessage = "Выберите изображения")]
+        public IFormFile ImgFile { get; set; }
 
         public string ImgPath { get; set; }
     }

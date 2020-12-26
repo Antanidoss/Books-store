@@ -1,5 +1,5 @@
 ﻿using BooksStore.Infrastructure;
-using BooksStore.Service.DTO;
+using BooksStore.Services.DTO;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 using BooksStore.Web.Models.ViewModel.UpdateModel;
@@ -15,7 +15,6 @@ namespace BooksStore.Web.Interfaces.Managers
         Task<Result> CreateRoleAsync(RoleCreateModel model);
         Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum);
         Task<RoleViewModel> FindRoleByIdAsync(string roleId);
-        Task<Result> DeleteAsync(RoleViewModel roleVM);
-        Task<Result> UpdateAsync(RoleUpdateModel model);
+        Task<Result> DeleteAsync(string roleId);
     }
 }

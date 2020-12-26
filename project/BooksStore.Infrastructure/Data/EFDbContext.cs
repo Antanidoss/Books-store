@@ -1,13 +1,4 @@
-﻿using BooksStore.Core.AppUserModel;
-using BooksStore.Core.AuthorModel;
-using BooksStore.Core.BasketModel;
-using BooksStore.Core.BookBasketJunctionModel;
-using BooksStore.Core.BookModel;
-using BooksStore.Core.BookOrderJunctionModel;
-using BooksStore.Core.CategoryModel;
-using BooksStore.Core.CommentModel;
-using BooksStore.Core.ImageModel;
-using BooksStore.Core.OrderModel;
+﻿using BooksStore.Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

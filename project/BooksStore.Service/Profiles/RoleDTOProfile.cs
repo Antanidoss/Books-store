@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using BooksStore.Service.DTO;
+using BooksStore.Services.DTO;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BooksStore.Service.Profiles
+namespace BooksStore.Services.Profiles
 {
     public class RoleDTOProfile : Profile
     {

@@ -46,37 +46,11 @@ namespace BooksStore.Web.Controllers
             return View(indexViewModel);                       
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string roleId)
-        {           
-            return View(await _roleService.FindRoleByIdAsync(roleId));                  
-        }
-        [HttpPost]
-        public async Task<IActionResult> Edit(RoleUpdateModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return await Edit(model);
-            }
-
-            var result = await _roleService.UpdateAsync(model);
-
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(nameof(model), result.Errors.ToString());
-                return View(model);
-            }
-        
-            return RedirectToAction("Index", "Role");                        
-        }
-
         public async Task<IActionResult> Remove(string roleId)
-        {
-            var role = await _roleService.FindRoleByIdAsync(roleId);
+        {           
+            await _roleService.DeleteAsync(roleId);
             
-            await _roleService.DeleteAsync(role);
-            
-            return RedirectToAction("Index" , "Role");
+            return RedirectToAction("IndexRole" , "Role");
         }       
     }
 }

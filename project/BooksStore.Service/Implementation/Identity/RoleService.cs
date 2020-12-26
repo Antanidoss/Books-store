@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using BooksStore.Infrastructure;
 using BooksStore.Infrastructure.Exceptions;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces.Identity;
+using BooksStore.Services.DTO;
+using BooksStore.Services.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksStore.Service.Implementation.Identity
+namespace BooksStore.Services.Implementation.Identity
 {
     public class RoleService : IRoleService
     {
@@ -32,11 +32,12 @@ namespace BooksStore.Service.Implementation.Identity
             return Result.Failure(new string[] { "Некорректные входные данные" });
         }
 
-        public async Task<Result> DeleteAsync(RoleDTO roleDTO)
+        public async Task<Result> DeleteAsync(string roleId)
         {
-            if(roleDTO != null && roleDTO != default)
+            if(!string.IsNullOrEmpty(roleId))
             {
-                var result = await _roleManager.DeleteAsync(_mapper.Map<IdentityRole>(roleDTO));
+                var role = await _roleManager.FindByIdAsync(roleId);
+                var result = await _roleManager.DeleteAsync(role);
                 return result.ToApplicationResult();
             }
             return Result.Failure(new string[] { "Некорректные входные данные" });

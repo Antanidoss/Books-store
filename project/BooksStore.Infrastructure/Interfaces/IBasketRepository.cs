@@ -1,4 +1,4 @@
-﻿using BooksStore.Core.BasketModel;
+﻿using BooksStore.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

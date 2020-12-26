@@ -732,13 +732,15 @@ li.dws-li a:hover {
     width:700px;
 }
 .indexCategories-categoryName{
+    margin-left:400px;
+    margin-top:50px;
     font-size:19px;
     font-family: "Source Sans Pro", sans-serif;
 }
 .indexCategories-noneCategory{
     position:relative;
     text-align:center;
-    top:500px;
+    top:900px;
 }
 .indexCategories-addCategory {
     position:relative;

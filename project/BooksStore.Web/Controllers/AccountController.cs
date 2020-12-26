@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces.Identity;
+using BooksStore.Services.DTO;
+using BooksStore.Services.Interfaces.Identity;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;

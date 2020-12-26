@@ -1,7 +1,5 @@
-﻿using BooksStore.Core.OrderModel;
-using System;
+﻿using BooksStore.Core.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Interfaces

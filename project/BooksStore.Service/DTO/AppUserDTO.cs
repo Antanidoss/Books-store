@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BooksStore.Service.DTO
+namespace BooksStore.Services.DTO
 {
     public class AppUserDTO
     {

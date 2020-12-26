@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces;
+using BooksStore.Services.DTO;
+using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 using BooksStore.Web.Models.ViewModel.UpdateModel;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,16 +27,28 @@ namespace BooksStore.Web.Models.Managers
 
         private readonly ICurrentUser _currentUser;
 
-        public BookViewModelService(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
+        private readonly IWebHostEnvironment _appEnvironment;
+
+        public BookViewModelService(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, 
+            ICurrentUser currentUser, IWebHostEnvironment appEnvironment)
         {
             _bookService = bookService;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _currentUser = currentUser;
+            _appEnvironment = appEnvironment;
         }
 
         public async Task AddBookAsync(BookCreateModel bookCreateModel)
         {
+            string path = "/img/" + bookCreateModel.ImgFile.FileName;
+            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+            {
+                await bookCreateModel.ImgFile.CopyToAsync(fileStream);
+            }
+
+            bookCreateModel.ImgPath = path;
+
             await _bookService.AddBookAsync(_mapper.Map<BookDTO>(bookCreateModel));
         }
 

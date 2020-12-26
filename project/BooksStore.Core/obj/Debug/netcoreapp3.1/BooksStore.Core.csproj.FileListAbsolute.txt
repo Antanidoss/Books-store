@@ -55,3 +55,11 @@ C:\IT\c#\Проекты\store\project\BooksStore.Core\obj\Debug\netcoreapp3.1\Bo
 C:\IT\c#\Проекты\store\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.AssemblyInfo.cs
 C:\IT\c#\Проекты\store\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.dll
 C:\IT\c#\Проекты\store\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.pdb
+C:\IT\c#\BookStore\project\BooksStore.Core\bin\Debug\netcoreapp3.1\BooksStore.Core.deps.json
+C:\IT\c#\BookStore\project\BooksStore.Core\bin\Debug\netcoreapp3.1\BooksStore.Core.dll
+C:\IT\c#\BookStore\project\BooksStore.Core\bin\Debug\netcoreapp3.1\BooksStore.Core.pdb
+C:\IT\c#\BookStore\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.csprojAssemblyReference.cache
+C:\IT\c#\BookStore\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.AssemblyInfoInputs.cache
+C:\IT\c#\BookStore\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.AssemblyInfo.cs
+C:\IT\c#\BookStore\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.dll
+C:\IT\c#\BookStore\project\BooksStore.Core\obj\Debug\netcoreapp3.1\BooksStore.Core.pdb

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Service.DTO;
+using BooksStore.Services.DTO;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 
 namespace BooksStore.Web.Profiles
@@ -9,6 +9,7 @@ namespace BooksStore.Web.Profiles
         public RoleVMProfile()
         {
             CreateMap<RoleDTO, RoleViewModel>();
+            CreateMap<RoleViewModel, RoleDTO>();
         }
     }
 }

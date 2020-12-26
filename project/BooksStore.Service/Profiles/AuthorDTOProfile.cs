@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using BooksStore.Core.AuthorModel;
-using BooksStore.Service.DTO;
+using BooksStore.Core.Entities;
+using BooksStore.Services.DTO;
 using System.Collections.Generic;
 
-namespace BooksStore.Service.Profiles
+namespace BooksStore.Services.Profiles
 {
     public class AuthorDTOProfile: Profile
     {

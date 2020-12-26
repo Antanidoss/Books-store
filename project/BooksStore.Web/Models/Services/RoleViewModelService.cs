@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Infrastructure;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces.Identity;
+using BooksStore.Services.DTO;
+using BooksStore.Services.Interfaces.Identity;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -34,9 +34,9 @@ namespace BooksStore.Web.Models.Managers
             return await _roleManagerService.CreateRoleAsync(model.Name);
         }
 
-        public async Task<Result> DeleteAsync(RoleViewModel roleVM)
+        public async Task<Result> DeleteAsync(string roleId)
         {
-            return await _roleManagerService.DeleteAsync(_mapper.Map<RoleDTO>(roleVM));
+            return await _roleManagerService.DeleteAsync(roleId);
         }
 
         public async Task<RoleViewModel> FindRoleByIdAsync(string roleId)
@@ -56,30 +56,6 @@ namespace BooksStore.Web.Models.Managers
             var roles = await _roleManagerService.GetRolesAsync((pageNum - 1) * pageNum, pageSize);
 
             return _mapper.Map<IEnumerable<RoleViewModel>>(roles);
-        }
-
-        public async Task<Result> UpdateAsync(RoleUpdateModel model)
-        {
-            foreach (var userId in model.IdsToAdd)
-            {
-                var result = await _userService.FindAppUserByIdAsync(userId);
-                if (!result.Result.Succeeded)
-                {
-                    return result.Result;
-                }
-                await _userService.AddToRoleAsync(result.AppUserDTO, model.Name);
-            }
-
-            foreach (var userId in model.IdsToDelete)
-            {
-                var user = (await _userService.FindAppUserByIdAsync(userId)).AppUserDTO;
-                if (user != null)
-                {
-                    await _userService.RemoveFromRoleAsync(user, model.Name);
-                }
-            }
-
-            return Result.Success();
         }
     }
 }

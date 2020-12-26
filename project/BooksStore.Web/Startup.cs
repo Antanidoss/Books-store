@@ -1,7 +1,7 @@
 using AutoMapper;
 using BooksStore.Infastructure;
-using BooksStore.Service;
-using BooksStore.Service.Profiles;
+using BooksStore.Services;
+using BooksStore.Services.Profiles;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.CurUser;

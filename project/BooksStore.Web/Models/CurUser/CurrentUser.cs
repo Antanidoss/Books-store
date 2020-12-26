@@ -1,9 +1,7 @@
-﻿using BooksStore.Core.AppUserModel;
-using BooksStore.Service.DTO;
-using BooksStore.Service.Interfaces.Identity;
+﻿using BooksStore.Services.DTO;
+using BooksStore.Services.Interfaces.Identity;
 using BooksStore.Web.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
