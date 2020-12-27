@@ -15,12 +15,9 @@ namespace BooksStore.Web.Controllers
     {
         private readonly IOrderViewModelService _orderService;
 
-        private readonly ICurrentUser _currentUser;
-
         public OrderController(IOrderViewModelService orderService, ICurrentUser currentUser)
         {
             _orderService = orderService;
-            _currentUser = currentUser;
         }
 
         [HttpGet]

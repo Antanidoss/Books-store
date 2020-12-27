@@ -69,13 +69,14 @@ namespace BooksStore.Infastructure
 
         public async Task<IEnumerable<Book>> GetBooks(int skip, int take, Func<Book,bool> func)
         {
-            return _context.Books             
-                .Skip(skip)
-                .Take(take)
+            var a = _context.Books             
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)
-                .Where(func);
+                .Where(func)
+                .Skip(skip)
+                .Take(take);
+            return a;
         }
     }
 }

@@ -8,7 +8,10 @@
             {
                 <div>
                     <div class="indexCategories-categoryName">
-                        <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@category.Id">@category.Name</a>
+                        <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@category.Id" 
+                           asp-route-categoryName="@category.Name">
+                            @category.Name
+                        </a>
                     </div>                    
                 </div>
             }

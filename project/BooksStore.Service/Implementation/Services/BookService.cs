@@ -155,7 +155,12 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<BookDTO>> GetBooksByNameAsync(int skip, int take, string bookName)
         {
-            return _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take, (b) => b.Title == bookName));
+            bookName = bookName.ToLower().Replace(" ", "");
+
+            var a =  _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take, (b) => 
+            b.Title.ToLower().Replace(" ", "") == bookName));
+
+            return a;
         }
     }
 }

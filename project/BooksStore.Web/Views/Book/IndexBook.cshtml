@@ -4,7 +4,7 @@
     <div class="indexBook-book">
         <div class="indexBook-flexDiv">
             <div class="indexBook-titleBook">
-                <h2>@Model.Title.</h2>
+                <h2>@Model.Title</h2>
             </div>
 
             <div class="indexBook-authorBook">
@@ -65,7 +65,8 @@
             </div>
 
             <div class="indexBook-categoryBook">
-                Категория: <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@Model.CategoryId">@Model.CategoryName</a>
+                Категория: <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@Model.CategoryId" 
+                              asp-route-categoryName="@Model.CategoryName">@Model.CategoryName</a>
             </div>
 
             <div class="indexBook-pageNumBook">

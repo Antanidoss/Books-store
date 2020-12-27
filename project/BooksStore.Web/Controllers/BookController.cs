@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 using BooksStore.Web.Models.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksStore.Web.Controllers
@@ -15,12 +15,12 @@ namespace BooksStore.Web.Controllers
     {
         private readonly IBookViewModelService _bookService;
 
-        private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IMapper _mapper;
 
-        public BookController(IBookViewModelService bookService, IWebHostEnvironment appEnvironment)
+        public BookController(IBookViewModelService bookService, IMapper mapper)
         {
             _bookService = bookService;
-            _appEnvironment = appEnvironment;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> IndexBooks(int pageNum = 1, BookListViewModel bookList = null)
@@ -63,7 +63,7 @@ namespace BooksStore.Web.Controllers
 
             await _bookService.AddBookAsync(model);
 
-            return RedirectToAction(nameof(IndexBooksAdmin), "Book");                       
+            return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
         [Authorize(Roles = "admin")]
@@ -77,7 +77,7 @@ namespace BooksStore.Web.Controllers
 
             await _bookService.RemoveBookAsync(bookId.Value);          
 
-            return RedirectToAction(nameof(IndexBooksAdmin), "Book");                       
+            return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
         [Authorize(Roles = "admin")]
@@ -89,7 +89,9 @@ namespace BooksStore.Web.Controllers
                 return View(StatusCode(404));
             }
 
-            return View(await _bookService.GetBookByIdAsync(bookId.Value));            
+            var book = await _bookService.GetBookByIdAsync(bookId.Value);
+
+            return View(_mapper.Map<BookUpdateModel>(book));            
         }
 
         [Authorize(Roles = "admin")]
@@ -103,31 +105,41 @@ namespace BooksStore.Web.Controllers
 
             await _bookService.UpdateBookAsync(model);
 
-            return RedirectToAction("IndexBooksAdmin", "Book");           
+            return RedirectToAction(nameof(IndexBooksAdmin));           
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexByCategory(int? categoryId, int pageNum = 1)
+        public async Task<IActionResult> IndexByCategory(int? categoryId, string categoryName, int pageNum = 1)
         {
             if (!categoryId.HasValue)
             {
                 return View(StatusCode(404));
             }
 
-            var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);
-                                              
+            var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);    
+            
+            if (booksCategory.Count() == 0)
+            {
+                return View("NotFoundBook", new NotFountBookModel("Не удалось найти книгу по категории", categoryName));
+            }
+
             BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory);
 
-            return View(indexBookModel);            
+            return View(nameof(IndexBooks), indexBookModel);
         }
 
         public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
         {           
             var books = await _bookService.GetBooksByNameAsync(pageNum, bookName);
 
+            if (books.Count() == 0)
+            {
+                return View("NotFoundBook", new NotFountBookModel("Не удалось найти книгу по названию", bookName));
+            }
+
             BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books);
 
-            return View(indexBookModel);           
+            return View(nameof(IndexBooks), indexBookModel);           
         }        
     }
 }

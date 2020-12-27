@@ -1,0 +1,6 @@
+﻿@model NotFountBookModel
+
+@await Html.PartialAsync("SearchPartial")
+<div class="notFountBookByName">
+    <h3>@Model.ErrorMassage: @Model.Value</h3>
+</div>

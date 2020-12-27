@@ -12,12 +12,9 @@ namespace BooksStore.Web.Controllers
     {
         private readonly IBasketViewModelService _basketService;
 
-        private readonly ICurrentUser _currentUser;
-
-        public BasketController(IBasketViewModelService basketService, ICurrentUser currentUser)
+        public BasketController(IBasketViewModelService basketService)
         {
             _basketService = basketService;
-            _currentUser = currentUser;
         }
 
         [HttpGet]

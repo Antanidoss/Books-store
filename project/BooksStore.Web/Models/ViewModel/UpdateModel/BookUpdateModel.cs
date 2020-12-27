@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BooksStore.Web.Models.ViewModel.UpdateModel
+﻿namespace BooksStore.Web.Models.ViewModel.UpdateModel
 {
     public class BookUpdateModel
     { 
@@ -15,6 +10,5 @@ namespace BooksStore.Web.Models.ViewModel.UpdateModel
         public bool InStock { get; set; }
         public string CategoryName { get; set; }
         public string ImgPath { get; set; }
-        public bool IsAddToBasket { get; set; }
     }
 }

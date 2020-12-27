@@ -1405,8 +1405,6 @@ C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Bo
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\IndexBook.cshtml.g.cs
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\IndexBooks.cshtml.g.cs
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\IndexBooksAdmin.cshtml.g.cs
-C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\IndexBooksByName.cshtml.g.cs
-C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\IndexByCategory.cshtml.g.cs
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\UpdateBook.cshtml.g.cs
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Category\AddCategory.cshtml.g.cs
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Category\IndexCategories.cshtml.g.cs
@@ -1434,3 +1432,4 @@ C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.csproj.CopyComplete
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.dll
 C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.pdb
+C:\IT\c#\BookStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Book\NotFoundBook.cshtml.g.cs
