@@ -110,7 +110,7 @@ namespace BooksStore.Services
 
         public async Task UpdateBookAsync(BookDTO bookDTO)
         {
-            if(bookDTO != null)
+            if(bookDTO == null)
             {
                 throw new ArgumentNullException(nameof(BookDTO));
             }

@@ -43,12 +43,18 @@ namespace BooksStore.Infastructure
         }
 
         public async Task UpdateBookAsync(Book book)
-        {
-            if(book != null && book != default)
-            {
-                _context.Books.Update(book);
-                await _context.SaveChangesAsync();
-            }
+        {           
+             var updateBook = await _context.Books.FirstOrDefaultAsync(p => p.Id == book.Id);
+
+            updateBook.Title = book.Title;
+            updateBook.Descriptions = book.Descriptions;
+            updateBook.Price = book.Price;
+            updateBook.UpdateTime = DateTime.Now;
+            updateBook.NumberOfPages = book.NumberOfPages;
+            updateBook.InStock = book.InStock;
+
+            _context.Books.Update(updateBook);
+            await _context.SaveChangesAsync();       
         }
 
         public async Task<IEnumerable<Book>> GetBooks(int skip, int take)
@@ -69,14 +75,13 @@ namespace BooksStore.Infastructure
 
         public async Task<IEnumerable<Book>> GetBooks(int skip, int take, Func<Book,bool> func)
         {
-            var a = _context.Books             
+            return _context.Books             
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)
                 .Where(func)
                 .Skip(skip)
                 .Take(take);
-            return a;
         }
     }
 }
