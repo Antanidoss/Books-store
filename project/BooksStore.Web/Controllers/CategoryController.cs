@@ -41,8 +41,8 @@ namespace BooksStore.Web.Controllers
             return await IndexCategories(pageNum);
         }
 
-        [AllowAnonymous]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> IndexCategories(int pageNum = 1)
         {
             var categories = await _categoryService.GetCategories(pageNum);
@@ -56,7 +56,12 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
-        {        
+        {
+            if (!categoryId.HasValue)
+            {
+                return StatusCode(404);
+            }
+
             await _categoryService.RemoveCategoryAsync(categoryId.Value);
 
             return RedirectToAction(nameof(IndexСategoriesAdmin));         
@@ -65,6 +70,11 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int? categoryId)
         {
+            if (!categoryId.HasValue)
+            {
+                return StatusCode(404);
+            }
+
             return View(await _categoryService.GetCategoryById(categoryId.Value));
         }
         [HttpPost]

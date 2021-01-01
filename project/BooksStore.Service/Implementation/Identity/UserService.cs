@@ -27,19 +27,20 @@ namespace BooksStore.Services.Implementation.Identity
         public async Task<(Result Result, string AppUserId)> CreateAppUserAsync(string userName, string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
+
+            if (user != null)
             {
-                user = new AppUser()
-                {
-                    UserName = userName,
-                    Email = email
-                };
-                
-                var result = await _userManager.CreateAsync(user, password);
-                
-                return (result.ToApplicationResult(), user.Id);
+                return (IdentityResultExtensions.EmailAreadyUse(), "");
             }
-            return (IdentityResultExtensions.EmailAreadyUse(), "");
+            
+            user = new AppUser()
+            {
+                UserName = userName,
+                Email = email
+            };
+            var result = await _userManager.CreateAsync(user, password);
+
+            return (result.ToApplicationResult(), user.Id);
         }
 
         public async Task<(Result Result, AppUserDTO AppUserDTO)> FindAppUserByEmailAsync(string email)

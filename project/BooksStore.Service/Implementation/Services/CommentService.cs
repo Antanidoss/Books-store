@@ -27,11 +27,7 @@ namespace BooksStore.Services
         }
 
         public async Task AddCommentAsync(CommentDTO commentDTO)
-        {
-            if(commentDTO == null)
-            {
-                throw new ArgumentNullException(nameof(CommentDTO));
-            }
+        {           
             await _commentRepository.AddCommentAsync(_mapper.Map<Comment>(commentDTO));
         }
 
@@ -40,16 +36,11 @@ namespace BooksStore.Services
             if (_cacheManager.IsSet(CacheKeys.GetCommentKey(commentId)))
             {
                 return _mapper.Map<CommentDTO>(_cacheManager.Get<Comment>(CacheKeys.GetCommentKey(commentId)));
-            }
-
-            if (commentId <= 0)
-            {
-                throw new ArgumentException("id не может быть равен или меньше нуля");
-            }
+            }            
 
             var comment = await _commentRepository.GetCommentById(commentId);
 
-            if(comment == null)
+            if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));
             }
@@ -59,45 +50,34 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<CommentDTO>> GetComments(int skip, int take)
         {
-            if (skip < 0 && take <= 0)
-            {
-                throw new ArgumentException("Некорректные аргументы skip и take");
-            }
-            return _mapper.Map<IEnumerable<CommentDTO>>(await _commentRepository.GetComments(skip, take));
+            var comments = await _commentRepository.GetComments(skip, take);
+
+            return _mapper.Map<IEnumerable<CommentDTO>>(comments);
         }
 
         public async Task RemoveCommentAsync(int commentId)
         {
-            if (commentId <= 0)
-            {
-                throw new ArgumentException("id не может быть равен или меньше нуля");
-            }
-
             var comment = await _commentRepository.GetCommentById(commentId);
 
-            if (comment != default)
+            if (comment == null)
             {
-                await _commentRepository.RemoveCommentAsync(comment);
+                throw new ArgumentNullException(nameof(Comment));              
             }
+
+            await _commentRepository.RemoveCommentAsync(comment);
         }
 
         public async Task UpdateCommentAsync(CommentDTO commentDTO)
         {
-            if (commentDTO == null)
-            {
-                throw new ArgumentNullException(nameof(CommentDTO));
-            }
             await _commentRepository.UpdateCommentAsync(_mapper.Map<Comment>(commentDTO));
             _cacheManager.Remove(CacheKeys.GetCommentKey(commentDTO.Id));
         }
 
         public async Task<IEnumerable<CommentDTO>> GetCommentsByBookId(int bookId)
         {
-            if (bookId <= 0)
-            {
-                throw new ArgumentNullException(nameof(CommentDTO));
-            }
-            return _mapper.Map<IEnumerable<CommentDTO>>((await _commentRepository.GetCommentByBookId(bookId) ?? new List<Comment>()));
+            var comments = await _commentRepository.GetCommentByBookId(bookId) ?? new List<Comment>();
+
+            return _mapper.Map<IEnumerable<CommentDTO>>(comments);
         }
 
         public async Task<int> GetCountComments()

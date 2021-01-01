@@ -29,6 +29,11 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexComments(int? bookId, int pageNum = 1)
         {
+            if (!bookId.HasValue)
+            {
+                return StatusCode(404);
+            }
+
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
 
             var comments = (await _commentService.GetCommentsByBookIdAsync(bookId.Value)).ToList();
@@ -41,6 +46,7 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddComment(CommentCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -53,9 +59,15 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });
         }
 
+        [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
         {
+            if (!commentId.HasValue)
+            {
+                return StatusCode(404);
+            }
+
             await _commentService.RemoveCommentAsync(commentId.Value);
 
             return View(returnUrl);

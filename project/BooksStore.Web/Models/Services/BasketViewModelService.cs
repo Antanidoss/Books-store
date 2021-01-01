@@ -31,12 +31,7 @@ namespace BooksStore.Web.Models.Managers
         }
 
         public async Task AddBasketBookAsync(int bookId)
-        {
-            if (bookId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
+        {   
             var curUser = await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext);
 
             await _basketService.AddBasketBookAsync(curUser.BasketId, bookId);
@@ -44,7 +39,7 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<BasketViewModel> GetBasketAsync(int pageNum)
         {
-            if(pageNum <= 0)
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
@@ -68,12 +63,7 @@ namespace BooksStore.Web.Models.Managers
         }
 
         public async Task RemoveBasketBookAsync(int bookId)
-        {
-            if(bookId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
+        {            
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
 
             await _basketService.RemoveBasketBookAsync(basketId, bookId);

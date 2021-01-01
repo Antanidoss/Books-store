@@ -37,19 +37,14 @@ namespace BooksStore.Services.AuthorSer
 
         public async Task<AuthorDTO> GetAuthorByIdAsync(int authorId)
         {
-            if(_cacheManager.IsSet(CacheKeys.GetAuthorKey(authorId)))
+            if (_cacheManager.IsSet(CacheKeys.GetAuthorKey(authorId)))
             {
                 return _mapper.Map<AuthorDTO>(_cacheManager.Get<Author>(CacheKeys.GetAuthorKey(authorId)));
             }
 
-            if (authorId <= 0)
-            {
-                return null;
-            }
-
             var author = await _authorRepository.GetAuthorById(authorId);
 
-            if(author == null)
+            if (author == null)
             {
                 throw new NotFoundException(nameof(Author), author);
             }
@@ -60,10 +55,6 @@ namespace BooksStore.Services.AuthorSer
 
         public async Task<IEnumerable<AuthorDTO>> GetAuthors(int skip , int take)
         {
-            if (skip < 0 && take <= 0)
-            {
-                throw new ArgumentException("Некорректные аргументы skip и take");
-            }
             return _mapper.Map<IEnumerable<AuthorDTO>>(await _authorRepository.GetAuthors(skip, take));
         }
 

@@ -91,3 +91,16 @@ C:\IT\c#\BookStore\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\Boo
 C:\IT\c#\BookStore\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.csproj.CopyComplete
 C:\IT\c#\BookStore\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.dll
 C:\IT\c#\BookStore\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.pdb
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.deps.json
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.runtimeconfig.json
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.runtimeconfig.dev.json
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.dll
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.pdb
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Core.dll
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\bin\Debug\netcoreapp3.1\BooksStore.Core.pdb
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.csprojAssemblyReference.cache
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.AssemblyInfoInputs.cache
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.AssemblyInfo.cs
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.csproj.CopyComplete
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.dll
+C:\IT\c#\Проекты\project\BooksStore.Infrastructure\obj\Debug\netcoreapp3.1\BooksStore.Infrastructure.pdb

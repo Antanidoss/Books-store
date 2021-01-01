@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces;
@@ -27,57 +28,35 @@ namespace BooksStore.Services
         }
 
         public async Task AddCategoryAsync(CategoryDTO categoryDTO)
-        {
-            if(categoryDTO == null)
-            {
-                throw new ArgumentNullException(nameof(CategoryDTO));
-            }
-
+        {            
             await _categoryRepository.AddCategoryAsync(_mapper.Map<Category>(categoryDTO));
         }
                               
         public async Task<CategoryDTO> GetCategoryById(int categoryId)
-        {
-            if (categoryId <= 0)
-            {
-                throw new ArgumentException("id не может быть равен или меньше нуля");
-            }
-
+        {           
             return _mapper.Map<CategoryDTO>(await _categoryRepository.GetCategoryByIdAsync(categoryId));
         }
 
         public async Task<IEnumerable<CategoryDTO>> GetCategories(int skip, int take)
         {
-            if (skip < 0 && take <= 0)
-            {
-                throw new ArgumentException("Некорректные аргументы skip и take");
-            }
             return _mapper.Map<IEnumerable<CategoryDTO>>(await _categoryRepository.GetCategories(skip, take));
         }
 
         public async Task RemoveCategoryAsync(int categoryId)
-        {
-            if (categoryId <= 0)
-            {
-                throw new ArgumentException("id не может быть равен или меньше нуля");
-            }
-
+        {            
             var category = await _categoryRepository.GetCategoryByIdAsync(categoryId);
 
-            if (category != default)
+            if (category == null)
             {
-                await _categoryRepository.RemoveCategoryAsync(category);
-                _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryId));
+                throw new NotFoundException(nameof(Category), category);
             }
+
+            await _categoryRepository.RemoveCategoryAsync(category);
+            _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryId));
         }
 
         public async Task UpdateCategoryAsync(CategoryDTO categoryDTO)
-        {
-            if (categoryDTO != null)
-            {
-                throw new ArgumentNullException(nameof(CategoryDTO));
-            }
-
+        {           
             await _categoryRepository.UpdateCategoryAsync(_mapper.Map<Category>(categoryDTO));
             _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryDTO.Id));
         }

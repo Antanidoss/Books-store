@@ -31,7 +31,7 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<CategoryViewModel>> GetCategories(int pageNum)
         {
-            if(pageNum <= 0)
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
@@ -41,12 +41,7 @@ namespace BooksStore.Web.Models.Managers
         }
 
         public async Task<CategoryViewModel> GetCategoryById(int categoryId)
-        {
-            if (categoryId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
+        { 
             return _mapper.Map<CategoryViewModel>(await _categoryService.GetCategoryById(categoryId));
         }
 
@@ -57,11 +52,6 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task RemoveCategoryAsync(int categoryId)
         {
-            if (categoryId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
             await _categoryService.RemoveCategoryAsync(categoryId);
         }
 

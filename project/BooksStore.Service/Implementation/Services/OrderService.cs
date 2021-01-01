@@ -30,11 +30,6 @@ namespace BooksStore.Services
 
         public async Task AddOrderAsync(OrderDTO orderDTO)
         {
-            if(orderDTO == null)
-            {
-                throw new ArgumentNullException(nameof(OrderDTO));
-            }
-
             var order = new Order()
             {
                 AppUserId = orderDTO.AppUserId,
@@ -50,11 +45,6 @@ namespace BooksStore.Services
                 return _mapper.Map<OrderDTO>(_cacheManager.Get<Order>(CacheKeys.GetOrderKey(orderId)));
             }
 
-            if (orderId <= 0)
-            {
-                throw new ArgumentException("id не может быть равен или меньше нуля");
-            }
-
             var order = await _orderRepository.GetOrderById(orderId);
 
             if(order == null)
@@ -68,20 +58,20 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<OrderDTO>> GetOrders(string appUserId, int skip, int take)
         {
-            if (skip < 0 && take <= 0)
+            var orders = new List<Order>(); 
+
+            if (_cacheManager.IsSet(CacheKeys.GetOrdersKey(appUserId)))
             {
-                throw new ArgumentException("Некорректные аргументы skip и take");
+                orders = _cacheManager.Get<IEnumerable<Order>>(CacheKeys.GetOrdersKey(appUserId)).ToList();
+                return _mapper.Map<IEnumerable<OrderDTO>>(orders);
             }
-            return _mapper.Map<IEnumerable<OrderDTO>>((await _orderRepository.GetOrders(appUserId, skip, take) ?? new List<Order>()));
+
+            orders = (await _orderRepository.GetOrders(appUserId, skip, take)).ToList() ?? new List<Order>();
+            return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            if (orderId <= 0)
-            {
-                throw new ArgumentException("id не может быть равен или меньше нуля");
-            }
-
             var order = await _orderRepository.GetOrderById(orderId);
 
             if (order == null)
@@ -95,29 +85,24 @@ namespace BooksStore.Services
 
         public async Task UpdateOrderAsync(OrderDTO orderDTO)
         {
-            if (orderDTO == null)
-            {
-                throw new ArgumentNullException(nameof(OrderDTO));
-            }
-            await _orderRepository.UpdateOrderAsync(_mapper.Map<Order>(orderDTO));
+            var order = _mapper.Map<Order>(orderDTO);
+            await _orderRepository.UpdateOrderAsync(order);
         }
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
-            if (!string.IsNullOrEmpty(appUserId))
-            {
-                throw new ArgumentException("id не может быть равен null");
-            }
-
             int orderCount = await _orderRepository.GetCountOrders(appUserId);
+            var orders = await _orderRepository.GetOrders(appUserId, 0, orderCount);
 
-            foreach (var order in (await _orderRepository.GetOrders(appUserId, 0, orderCount)))
+            foreach (var order in orders)
             {
                 if (order.TimeOfDelivery < DateTime.Now)
                 {
                     await _orderRepository.RemoveOrderAsync(order);
                 }
             }
+
+            _cacheManager.Remove(CacheKeys.GetOrdersKey(appUserId));
         }
 
         public async Task<int> GetCountOrders(string appUserId)

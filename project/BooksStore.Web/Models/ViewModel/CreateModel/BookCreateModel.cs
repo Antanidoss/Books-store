@@ -14,10 +14,12 @@ namespace BooksStore.Web.Models.ViewModel.CreateModel
         [StringLength(1500, MinimumLength = 200, ErrorMessage = "Описания может быть от 20 до 400 символов")]
         public string Descriptions { get; set; }
 
-        [Range(1 , 600)]
+        [Required(ErrorMessage = "Введите цену книги")]
+        [Range(50, 100000, ErrorMessage = "Цена может быть от 5 до 1000000 рублей")]
         public decimal Price { get; set; }
 
-        [Range(1, 3000)]
+        [Required(ErrorMessage = "Введите количество страниц книги")]
+        [Range(5, 4000, ErrorMessage = "Количесво страниц может быть от 5 до 4000")]
         public int NumberOfPages { get; set; }
         public bool InStock { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Services.DTO;
+using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
 
 namespace BooksStore.Web.Profiles
@@ -9,6 +10,7 @@ namespace BooksStore.Web.Profiles
         public CommentVMProfile()
         {
             CreateMap<CommentDTO, CommentViewModel>();
+            CreateMap<CommentCreateModel, CommentDTO>();
         }
     }
 }

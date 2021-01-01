@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BooksStore.Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class BookController : Controller
     {
         private readonly IBookViewModelService _bookService;
@@ -23,18 +24,16 @@ namespace BooksStore.Web.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> IndexBooks(int pageNum = 1, BookListViewModel bookList = null)
-        {           
-            if (bookList?.BookIndexModel?.Objects == null)
-            {
-                bookList = new BookListViewModel(pageNum, PageSizes.Books, await _bookService.GetCountAsync(), 
+        public async Task<IActionResult> IndexBooks(int pageNum = 1)
+        {                       
+            var bookList = new BookListViewModel(pageNum, PageSizes.Books, await _bookService.GetCountAsync(), 
                     await _bookService.GetBooksAsync(pageNum));
-            }               
-
+                         
             return View(bookList);                       
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> IndexBook(int? bookId)
         {            
             var book = await _bookService.GetBookByIdAsync(bookId.Value);                                           
@@ -42,21 +41,18 @@ namespace BooksStore.Web.Controllers
             return View(book);                        
         }
 
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> IndexBooksAdmin(int pageNum = 1)
         {
             return await IndexBooks(pageNum);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult AddBook() => View();
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> AddBook(BookCreateModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -66,8 +62,7 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> RemoveBook(int? bookId)
         {
             if (!bookId.HasValue)
@@ -80,7 +75,6 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
-        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateBook(int? bookId)
         {
@@ -93,9 +87,7 @@ namespace BooksStore.Web.Controllers
 
             return View(_mapper.Map<BookUpdateModel>(book));            
         }
-
-        [Authorize(Roles = "admin")]
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
         {
             if (!ModelState.IsValid)
@@ -109,9 +101,10 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> IndexByCategory(int? categoryId, string categoryName, int pageNum = 1)
         {
-            if (!categoryId.HasValue)
+            if (!categoryId.HasValue && string.IsNullOrEmpty(categoryName))
             {
                 return View(StatusCode(404));
             }
@@ -128,6 +121,8 @@ namespace BooksStore.Web.Controllers
             return View(nameof(IndexBooks), indexBookModel);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
         {           
             var books = await _bookService.GetBooksByNameAsync(pageNum, bookName);

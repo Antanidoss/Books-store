@@ -23,41 +23,37 @@ namespace BooksStore.Services.Implementation.Identity
         }
 
         public async Task<Result> CreateRoleAsync(string roleName)
-        {
-            if (!string.IsNullOrEmpty(roleName))
-            {
-                var result = await _roleManager.CreateAsync(new IdentityRole() { Name = roleName });
-                return result.ToApplicationResult();
-            }
-            return Result.Failure(new string[] { "Некорректные входные данные" });
+        {          
+            var result = await _roleManager.CreateAsync(new IdentityRole() { Name = roleName });
+
+            return result.ToApplicationResult();           
         }
 
         public async Task<Result> DeleteAsync(string roleId)
-        {
-            if(!string.IsNullOrEmpty(roleId))
-            {
-                var role = await _roleManager.FindByIdAsync(roleId);
-                var result = await _roleManager.DeleteAsync(role);
-                return result.ToApplicationResult();
-            }
-            return Result.Failure(new string[] { "Некорректные входные данные" });
+        {          
+            var role = await _roleManager.FindByIdAsync(roleId);
+            var result = await _roleManager.DeleteAsync(role);
+
+            return result.ToApplicationResult();
         }
 
         public async Task<RoleDTO> FindRoleByIdAsync(string roleId)
         {           
-            var role = _mapper.Map<RoleDTO>(await _roleManager.FindByIdAsync(roleId));
+            var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
                 throw new NotFoundException(nameof(role), roleId);
             }
 
-            return (role);                    
+            return (_mapper.Map<RoleDTO>(role));                    
         }
 
         public async Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take)
         {
-            return _mapper.Map<IEnumerable<RoleDTO>>(await _roleManager.Roles.Skip(skip).Take(take).ToListAsync());
+            var roles = await _roleManager.Roles.Skip(skip).Take(take).ToListAsync();
+
+            return _mapper.Map<IEnumerable<RoleDTO>>(roles);
         }
     }
 }

@@ -34,12 +34,7 @@ namespace BooksStore.Services
             if (_cacheManager.IsSet(CacheKeys.GetBasketKey(basketId)))
             {
                 return _mapper.Map<BasketDTO>(_cacheManager.Get<Basket>(CacheKeys.GetBasketKey(basketId)));
-            }
-
-            if (basketId <= 0)
-            {
-                return null;
-            }
+            }           
 
             var basket = await _basketRepository.GetBasketById(basketId);
 

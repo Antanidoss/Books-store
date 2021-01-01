@@ -9111,11 +9111,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\IT\\c#\\BookStore\\project\\BooksStore.Web\\BooksStore.Web.csproj",
+      "projectUniqueName": "C:\\IT\\c#\\Проекты\\project\\BooksStore.Web\\BooksStore.Web.csproj",
       "projectName": "BooksStore.Web",
-      "projectPath": "C:\\IT\\c#\\BookStore\\project\\BooksStore.Web\\BooksStore.Web.csproj",
+      "projectPath": "C:\\IT\\c#\\Проекты\\project\\BooksStore.Web\\BooksStore.Web.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\IT\\c#\\BookStore\\project\\BooksStore.Web\\obj\\",
+      "outputPath": "C:\\IT\\c#\\Проекты\\project\\BooksStore.Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9131,11 +9131,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\IT\\c#\\BookStore\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj": {
-              "projectPath": "C:\\IT\\c#\\BookStore\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj"
+            "C:\\IT\\c#\\Проекты\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj": {
+              "projectPath": "C:\\IT\\c#\\Проекты\\project\\BooksStore.Infrastructure\\BooksStore.Infrastructure.csproj"
             },
-            "C:\\IT\\c#\\BookStore\\project\\BooksStore.Service\\BooksStore.Service.csproj": {
-              "projectPath": "C:\\IT\\c#\\BookStore\\project\\BooksStore.Service\\BooksStore.Service.csproj"
+            "C:\\IT\\c#\\Проекты\\project\\BooksStore.Service\\BooksStore.Service.csproj": {
+              "projectPath": "C:\\IT\\c#\\Проекты\\project\\BooksStore.Service\\BooksStore.Service.csproj"
             }
           }
         }

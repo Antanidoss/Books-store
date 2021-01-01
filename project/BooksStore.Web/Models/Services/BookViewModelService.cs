@@ -53,20 +53,16 @@ namespace BooksStore.Web.Models.Managers
         }
 
         public async Task<BookViewModel> GetBookByIdAsync(int bookId)
-        {
-            if (bookId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
+        {           
             var book = _mapper.Map<BookViewModel>(await _bookService.GetBookByIdAsync(bookId));
             await BookInBasketAsync(book);
+
             return book;
         }
 
         public async Task<IEnumerable<BookViewModel>> GetBooksAsync(int pageNum)
         {
-            if(pageNum <= 0)
+            if(!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
@@ -107,7 +103,7 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<BookViewModel>> GetBooksByNameAsync(int pageNum, string bookName)
         {
-            if (pageNum <= 0)
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
@@ -123,14 +119,10 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<BookViewModel>> GetBooksByCategoryAsync(int pageNum, int categoryId)
         {
-            if(pageNum <= 0)
+            if(!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-            if (categoryId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
+            }            
 
             int pageSize = PageSizes.Books;
             return _mapper.Map<IEnumerable<BookViewModel>>(

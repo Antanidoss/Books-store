@@ -5,7 +5,6 @@ using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.Index;
 using BooksStore.Web.Models.ViewModel.ReadModel;
-using BooksStore.Web.Models.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +32,7 @@ namespace BooksStore.Web.Controllers
 
             await _roleService.CreateRoleAsync(model);
 
-            return RedirectToAction("IndexRole", "Role");
+            return RedirectToAction(nameof(IndexRole));
         }
 
         [HttpGet]
@@ -46,11 +45,17 @@ namespace BooksStore.Web.Controllers
             return View(indexViewModel);                       
         }
 
-        public async Task<IActionResult> Remove(string roleId)
+        [HttpGet]
+        public async Task<IActionResult> RemoveRole(string roleId)
         {           
+            if(string.IsNullOrEmpty(roleId))
+            {
+                return StatusCode(404);
+            }
+
             await _roleService.DeleteAsync(roleId);
             
-            return RedirectToAction("IndexRole" , "Role");
+            return RedirectToAction(nameof(IndexRole));
         }       
     }
 }

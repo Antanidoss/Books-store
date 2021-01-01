@@ -36,27 +36,20 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task AddCommentAsync(CommentCreateModel model)
         {
-            await _commentService.AddCommentAsync(new CommentDTO()
-            {
-                AppUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id,
-                Descriptions = model.Descriptions,
-                BookId = model.BookId
-            });
+            var commentDto = _mapper.Map<CommentDTO>(model);
+            commentDto.AppUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id;
+
+            await _commentService.AddCommentAsync(commentDto);
         }
 
         public async Task<CommentViewModel> GetCommentByIdAsync(int commentId)
-        {
-            if(commentId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
+        {         
             return _mapper.Map<CommentViewModel>(await  _commentService.GetCommentById(commentId));
         }
 
         public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum)
         {
-            if (pageNum <= 0)
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
@@ -67,31 +60,16 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<CommentViewModel>> GetCommentsByBookIdAsync(int bookId)
         {
-            if (bookId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
             return _mapper.Map<IEnumerable<CommentViewModel>>(await _commentService.GetCommentsByBookId(bookId));
         }
 
         public async Task<int> GetCountCommentsAsync(int bookId)
         {
-            if (bookId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
             return await _commentService.GetCountComments();
         }
 
         public async Task RemoveCommentAsync(int commentId)
         {
-            if (commentId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
             await _commentService.RemoveCommentAsync(commentId);
         }
 

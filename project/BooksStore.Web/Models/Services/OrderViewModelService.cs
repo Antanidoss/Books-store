@@ -52,26 +52,21 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<OrderViewModel> GetOrderByIdAsync(int orderId)
         {
-            if (orderId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
             return _mapper.Map<OrderViewModel>(await _orderService.GetOrderByIdAsync(orderId));
         }
 
         public async Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum)
         {
-            if (pageNum <= 0)
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
 
             int pageSize = PageSizes.Orders;
-            int skip = (pageNum - 1) * pageSize;
             var curUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id;
+            var orders = await _orderService.GetOrders(curUserId, (pageNum - 1) * pageSize, pageSize);
 
-            return _mapper.Map<IEnumerable<OrderViewModel>>(await _orderService.GetOrders(curUserId, skip, pageSize));
+            return _mapper.Map<IEnumerable<OrderViewModel>>(orders);
         }       
 
         public async Task RemoveCompleteOrderAsync()
@@ -82,11 +77,6 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            if (orderId <= 0)
-            {
-                throw new ArgumentException("Id не может быть равен или меньше нуля");
-            }
-
             await _orderService.RemoveOrderAsync(orderId);
         }
 

@@ -15,6 +15,9 @@ namespace BooksStore.Web.Models.Pagination
             get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
         }
 
-
+        public static bool PageNumberIsValid(int pageNumber)
+        {
+            return pageNumber >= 1;
+        }
     }
 }
