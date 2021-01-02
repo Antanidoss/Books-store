@@ -38,7 +38,7 @@ namespace BooksStore.Services
 
             var basket = await _basketRepository.GetBasketById(basketId);
 
-            if(basket == null)
+            if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
@@ -56,7 +56,6 @@ namespace BooksStore.Services
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
-
             if((book = await _bookRepository.GetBookByIdAsync(bookId)) == null)
             {
                 throw new NotFoundException(nameof(Book), book);
@@ -79,7 +78,6 @@ namespace BooksStore.Services
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
-
             if ((book = await _bookRepository.GetBookByIdAsync(bookId)) == null)
             {
                 throw new NotFoundException(nameof(Book), book);
@@ -88,7 +86,7 @@ namespace BooksStore.Services
             var bookBasket = basket.BasketBooks.ToList();
             BookBasketJunction bookBasketJunction = bookBasket.FirstOrDefault(p => p.BookId == bookId);
 
-            if(bookBasketJunction != default)
+            if (bookBasketJunction != default)
             {
                 bookBasket.Remove(bookBasketJunction);
                 basket.BasketBooks = bookBasket;

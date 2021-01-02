@@ -27,8 +27,14 @@ namespace BooksStore.Services
         }
 
         public async Task AddCommentAsync(CommentDTO commentDTO)
-        {           
-            await _commentRepository.AddCommentAsync(_mapper.Map<Comment>(commentDTO));
+        {
+            var comment = new Comment()
+            {
+                Descriptions = commentDTO.Descriptions,
+                BookId = commentDTO.BookId,
+                AppUserId = commentDTO.AppUserId
+            };
+            await _commentRepository.AddCommentAsync(comment);
         }
 
         public async Task<CommentDTO> GetCommentById(int commentId)

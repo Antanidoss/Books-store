@@ -28,18 +28,28 @@ namespace BooksStore.Services
         }
 
         public async Task AddCategoryAsync(CategoryDTO categoryDTO)
-        {            
-            await _categoryRepository.AddCategoryAsync(_mapper.Map<Category>(categoryDTO));
+        {
+            var category = new Category() { Name = categoryDTO.Name };
+            await _categoryRepository.AddCategoryAsync(category);
         }
                               
         public async Task<CategoryDTO> GetCategoryById(int categoryId)
-        {           
-            return _mapper.Map<CategoryDTO>(await _categoryRepository.GetCategoryByIdAsync(categoryId));
+        {
+            var category = await _categoryRepository.GetCategoryByIdAsync(categoryId);
+
+            if (category == null)
+            {
+                throw new NotFoundException(nameof(Category), category);
+            }
+
+            return _mapper.Map<CategoryDTO>(category);
         }
 
         public async Task<IEnumerable<CategoryDTO>> GetCategories(int skip, int take)
         {
-            return _mapper.Map<IEnumerable<CategoryDTO>>(await _categoryRepository.GetCategories(skip, take));
+            var categories = await _categoryRepository.GetCategories(skip, take);
+
+            return _mapper.Map<IEnumerable<CategoryDTO>>(categories);
         }
 
         public async Task RemoveCategoryAsync(int categoryId)

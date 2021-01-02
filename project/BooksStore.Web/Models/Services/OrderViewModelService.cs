@@ -78,11 +78,6 @@ namespace BooksStore.Web.Models.Managers
         public async Task RemoveOrderAsync(int orderId)
         {
             await _orderService.RemoveOrderAsync(orderId);
-        }
-
-        public async Task UpdateOrderAsync(OrderUpdateModel model)
-        {
-            await _orderService.UpdateOrderAsync(_mapper.Map<OrderDTO>(model));
-        }
+        }        
     }
 }

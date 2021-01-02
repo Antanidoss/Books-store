@@ -62,7 +62,7 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<IEnumerable<BookViewModel>> GetBooksAsync(int pageNum)
         {
-            if(!PageInfo.PageNumberIsValid(pageNum))
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
@@ -70,7 +70,7 @@ namespace BooksStore.Web.Models.Managers
             int pageSize = PageSizes.Books;
             var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooks((pageNum - 1) * pageSize, pageSize));
 
-            foreach(var book in books)
+            foreach (var book in books)
             {
                 await BookInBasketAsync(book);
             }
@@ -113,20 +113,24 @@ namespace BooksStore.Web.Models.Managers
             }
 
             int pageSize = PageSizes.Books;
-            return _mapper.Map<IEnumerable<BookViewModel>>
-                (await _bookService.GetBooksByNameAsync((pageNum - 1) * pageSize, pageSize, bookName));
+            int take = (pageNum - 1) * pageSize;
+            var books = await _bookService.GetBooksByNameAsync(take, pageSize, bookName);
+
+            return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
 
         public async Task<IEnumerable<BookViewModel>> GetBooksByCategoryAsync(int pageNum, int categoryId)
         {
-            if(!PageInfo.PageNumberIsValid(pageNum))
+            if (!PageInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }            
 
             int pageSize = PageSizes.Books;
-            return _mapper.Map<IEnumerable<BookViewModel>>(
-                await _bookService.GetBooksByCategoryAsync((pageNum - 1) * pageSize, pageSize, categoryId));
+            int take = (pageNum - 1) * pageSize;
+            var books = await _bookService.GetBooksByCategoryAsync(take, pageSize, categoryId);
+
+            return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
 
         public async Task<int> GetCountAsync()

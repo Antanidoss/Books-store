@@ -37,7 +37,15 @@ namespace BooksStore.Services
 
         public async Task AddBookAsync(BookDTO bookDTO)
         {            
-            Book book = _mapper.Map<Book>(bookDTO);
+            Book book = new Book() 
+            {
+                Title = bookDTO.Title,
+                Price = bookDTO.Price,
+                InStock = bookDTO.InStock,
+                NumberOfPages = bookDTO.NumberOfPages,
+                Descriptions = bookDTO.Descriptions,
+                Img = new Img() { Path = bookDTO.ImgPath },
+            };
 
             Category category = await _categoryRepository.GetCategoryByName(bookDTO.CategoryName);
             if (category == null)
@@ -45,7 +53,7 @@ namespace BooksStore.Services
                 category = new Category() { Name = bookDTO.CategoryName };                
             }           
 
-            Author author = await _authorRepository.GetAuthorByName(book.Author.Firstname, book.Author.Surname);
+            Author author = await _authorRepository.GetAuthorByName(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
             if (author == null)
             {
                 author = new Author() { Firstname = bookDTO.AuthorFirstname, Surname = bookDTO.AuthorSurname };              

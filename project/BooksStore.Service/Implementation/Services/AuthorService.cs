@@ -29,7 +29,7 @@ namespace BooksStore.Services.AuthorSer
 
         public async Task AddAuthorAsync(AuthorDTO authorDTO)
         {
-            if(authorDTO != null && authorDTO != default)
+            if (authorDTO != null && authorDTO != default)
             {
                 await _authorRepository.AddAuthorAsync(_mapper.Map<Author>(authorDTO));
             }

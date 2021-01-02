@@ -81,13 +81,7 @@ namespace BooksStore.Services
 
             await _orderRepository.RemoveOrderAsync(order);
             _cacheManager.Remove(CacheKeys.GetOrdersKey(order.AppUserId));
-        }
-
-        public async Task UpdateOrderAsync(OrderDTO orderDTO)
-        {
-            var order = _mapper.Map<Order>(orderDTO);
-            await _orderRepository.UpdateOrderAsync(order);
-        }
+        }        
 
         public async Task RemoveCompleteOrder(string appUserId)
         {

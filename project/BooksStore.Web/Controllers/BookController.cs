@@ -41,6 +41,7 @@ namespace BooksStore.Web.Controllers
             return View(book);                        
         }
 
+        [HttpGet]
         public async Task<IActionResult> IndexBooksAdmin(int pageNum = 1)
         {
             return await IndexBooks(pageNum);
@@ -48,7 +49,6 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         public IActionResult AddBook() => View();
-
         [HttpPost]
         public async Task<IActionResult> AddBook(BookCreateModel model)
         {
@@ -62,7 +62,7 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> RemoveBook(int? bookId)
         {
             if (!bookId.HasValue)
@@ -87,7 +87,7 @@ namespace BooksStore.Web.Controllers
 
             return View(_mapper.Map<BookUpdateModel>(book));            
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
         {
             if (!ModelState.IsValid)

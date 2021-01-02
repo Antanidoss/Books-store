@@ -15,6 +15,5 @@ namespace BooksStore.Web.Interfaces.Managers
         Task RemoveOrderAsync(int orderId);
         Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum);
         Task RemoveCompleteOrderAsync();
-        Task UpdateOrderAsync(OrderUpdateModel model);
     }
 }

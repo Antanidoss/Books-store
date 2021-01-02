@@ -10,7 +10,6 @@ namespace BooksStore.Services.Interfaces
         Task<OrderDTO> GetOrderByIdAsync(int orderId);
         Task RemoveOrderAsync(int orderId);
         Task<IEnumerable<OrderDTO>> GetOrders(string appUserId, int skip, int take);
-        Task UpdateOrderAsync(OrderDTO orderDTO);
         Task RemoveCompleteOrder(string userId);
         Task<int> GetCountOrders(string appUserId);
     }

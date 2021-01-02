@@ -33,7 +33,6 @@ namespace BooksStore.Web.Models.Managers
         public async Task AddBasketBookAsync(int bookId)
         {   
             var curUser = await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext);
-
             await _basketService.AddBasketBookAsync(curUser.BasketId, bookId);
         }
 
@@ -45,11 +44,8 @@ namespace BooksStore.Web.Models.Managers
             }
 
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
-
             var basket = await _basketService.GetBasketByIdAsync(basketId);
-
             var pageSize = PageSizes.Basket;
-
             var books = _mapper.Map<IEnumerable<BookViewModel>>(basket.BasketBooks);
 
             return new BasketViewModel(pageNum, pageSize, basket.BasketBooks.Count(), basketId, books);
@@ -58,14 +54,12 @@ namespace BooksStore.Web.Models.Managers
         public async Task RemoveAllBasketBooksAsync()
         {
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
-
             await _basketService.RemoveAllBasketBooksAsync(basketId);
         }
 
         public async Task RemoveBasketBookAsync(int bookId)
         {            
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
-
             await _basketService.RemoveBasketBookAsync(basketId, bookId);
         }
     }

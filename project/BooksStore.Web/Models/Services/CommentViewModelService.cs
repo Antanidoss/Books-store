@@ -44,7 +44,7 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task<CommentViewModel> GetCommentByIdAsync(int commentId)
         {         
-            return _mapper.Map<CommentViewModel>(await  _commentService.GetCommentById(commentId));
+            return _mapper.Map<CommentViewModel>(await _commentService.GetCommentById(commentId));
         }
 
         public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum)
@@ -55,7 +55,9 @@ namespace BooksStore.Web.Models.Managers
             }
 
             int pageSize = PageSizes.Comments;
-            return _mapper.Map<IEnumerable<CommentViewModel>>(await _commentService.GetComments((pageNum - 1) * pageSize, pageSize));
+            var comments = await _commentService.GetComments((pageNum - 1) * pageSize, pageSize);
+
+            return _mapper.Map<IEnumerable<CommentViewModel>>(comments);
         }
 
         public async Task<IEnumerable<CommentViewModel>> GetCommentsByBookIdAsync(int bookId)
