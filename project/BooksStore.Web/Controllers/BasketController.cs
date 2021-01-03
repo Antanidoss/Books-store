@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +35,8 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction("IndexBooks", "Book");            
         }
 
-        [HttpGet]
-        public async Task<IActionResult> RemoveBasketBook(int? bookId, string returnUrl = "")
+        [HttpPost]
+        public async Task<IActionResult> RemoveBasketBook(int? bookId)
         {
             if (!bookId.HasValue)
             {
@@ -49,18 +48,18 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexBasket));
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveBasketBooks(IEnumerable<int> bookIds)
         {
             foreach(int bookId in bookIds)
             {
-                await RemoveBasketBook(bookId);
+                await _basketService.RemoveBasketBookAsync(bookId);
             }
 
             return RedirectToAction(nameof(IndexBasket));
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveAllBasketBooks()
         {
             await _basketService.RemoveAllBasketBooksAsync();

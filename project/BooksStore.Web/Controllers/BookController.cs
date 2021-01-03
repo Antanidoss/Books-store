@@ -62,7 +62,7 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveBook(int? bookId)
         {
             if (!bookId.HasValue)

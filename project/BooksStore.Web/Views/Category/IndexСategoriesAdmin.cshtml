@@ -11,7 +11,7 @@
                             <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@category.Id">@category.Name</a>
                         </div>
                         <div>
-                            <form asp-action="RemoveCategory" asp-controller="Category" method="get">
+                            <form asp-action="RemoveCategory" asp-controller="Category" method="post">
                                 <input name="categoryId" type="hidden" value="@category.Id" />
                                 <input type="submit" value="Удалить" class="button" />
                             </form>

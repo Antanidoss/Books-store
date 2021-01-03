@@ -37,7 +37,7 @@
                     <div class="indexBookAdmin-lowPanel">
 
                         <div class="indexBooks-removeBook-div">
-                            <form asp-action="RemoveBook" asp-controller="Book" method="get">
+                            <form asp-action="RemoveBook" asp-controller="Book" method="post">
                                 <input type="hidden" value="@book.Id" name="bookId" />
                                 <input class="indexAdmin-removeBook-button button " value="Удалить" type="submit" />
                             </form>

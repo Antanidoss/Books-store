@@ -45,7 +45,7 @@ namespace BooksStore.Web.Controllers
             return View(indexViewModel);                       
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveRole(string roleId)
         {           
             if(string.IsNullOrEmpty(roleId))

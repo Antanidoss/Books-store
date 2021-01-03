@@ -28,7 +28,7 @@
                                 <text>
                                     Заказ сделан
                                 </text>
-                                <form asp-action="RemoveOrder" asp-controller="Order" method="get">
+                                <form asp-action="RemoveOrder" asp-controller="Order" method="post">
                                     <input name="orderId" value="@order.Id" type="hidden" />
                                     <input type="submit" value="Удалить" class="button" />
                                 </form>
@@ -38,7 +38,7 @@
                                 <text>
                                     Заказ будет сделан @order.TimeOfDelivery.ToString("D")
                                 </text>
-                                <form asp-action="RemoveOrder" asp-controller="Order" method="get">
+                                <form asp-action="RemoveOrder" asp-controller="Order" method="post">
                                     <input name="orderId" value="@order.Id" type="hidden" />
                                     <input type="submit" value="Отменить заказ" class="button" />
                                 </form>
@@ -49,7 +49,7 @@
             </div>
             <div class="removeAndPaginationOrder-div">
                 <div class="removeCompleteOrders-div">
-                    <form asp-action="RemoveCompleteOrders" asp-controller="Order" method="get">
+                    <form asp-action="RemoveCompleteOrders" asp-controller="Order" method="post">
                         <input class="button" type="submit" value="Убрать выполненные заказы" />
                     </form>
                 </div>

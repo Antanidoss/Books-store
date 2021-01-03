@@ -19,18 +19,22 @@ namespace BooksStore.Web.Models.Managers
     {
         private readonly IOrderService _orderService;
 
+        private readonly IBasketService _basketService;
+
         private readonly IMapper _mapper;
 
         private readonly ICurrentUser _currentUser;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderViewModelService(IOrderService orderService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
+        public OrderViewModelService(IOrderService orderService, IMapper mapper, ICurrentUser currentUser, 
+            IHttpContextAccessor httpContextAccessor, IBasketService basketService)
         {
             _orderService = orderService;
             _mapper = mapper;
             _currentUser = currentUser;
             _httpContextAccessor = httpContextAccessor;
+            _basketService = basketService;
         }
 
         public async Task AddOrderAsync(OrderCreateModel model)
@@ -48,11 +52,19 @@ namespace BooksStore.Web.Models.Managers
                 AppUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id,
                 TimeOfDelivery = DateTime.Now.AddDays(3)
             });
+
+            var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
+            foreach (var bookId in model.BookOrderIds)
+            {
+                await _basketService.RemoveBasketBookAsync(basketId, bookId);
+            }           
         }       
 
         public async Task<OrderViewModel> GetOrderByIdAsync(int orderId)
         {
-            return _mapper.Map<OrderViewModel>(await _orderService.GetOrderByIdAsync(orderId));
+            var order = await _orderService.GetOrderByIdAsync(orderId);
+
+            return _mapper.Map<OrderViewModel>(order);
         }
 
         public async Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum)

@@ -59,7 +59,7 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
         {

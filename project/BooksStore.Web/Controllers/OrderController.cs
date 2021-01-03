@@ -33,17 +33,17 @@ namespace BooksStore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddOrder(OrderCreateModel createModel)
         {
-            if (!ModelState.IsValid)
+            if (createModel?.BookOrderIds == null | createModel.BookOrderIds.Count() == 0)
             {
-                return View(createModel);
+                return StatusCode(404);
             }
                         
             await _orderService.AddOrderAsync(createModel);
             
-            return RedirectToAction("RemoveBasketBooks", "Basket", new { bookIds = createModel.BookOrderIds });                      
+            return RedirectToAction("IndexBooks", "Book");                      
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveOrder(int? orderId)
         {
             if (!orderId.HasValue)
@@ -56,7 +56,7 @@ namespace BooksStore.Web.Controllers
             return RedirectToAction(nameof(IndexOrders));
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveCompleteOrders()
         {
             await _orderService.RemoveCompleteOrderAsync();

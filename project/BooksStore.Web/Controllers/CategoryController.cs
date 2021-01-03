@@ -54,7 +54,7 @@ namespace BooksStore.Web.Controllers
             
         }       
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
         {
             if (!categoryId.HasValue)

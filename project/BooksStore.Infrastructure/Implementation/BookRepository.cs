@@ -73,7 +73,7 @@ namespace BooksStore.Infastructure
             return await _context.Books.CountAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetBooks(int skip, int take, Func<Book,bool> func)
+        public async Task<IEnumerable<Book>> GetBooks(int skip, int take, Func<Book, bool> func)
         {
             return _context.Books             
                 .Include(p => p.Category)

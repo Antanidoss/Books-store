@@ -35,6 +35,12 @@ namespace BooksStore.Services
             _cacheManager = cacheManager;
         }
 
+        public BookService(IBookRepository bookRepository, IMapper mapper)
+        {
+            _bookRepository = bookRepository;
+            _mapper = mapper;
+        }
+
         public async Task AddBookAsync(BookDTO bookDTO)
         {            
             Book book = new Book() 
@@ -83,7 +89,9 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<BookDTO>> GetBooks(int skip , int take)
         {
-            return _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take));
+            var books = await _bookRepository.GetBooks(skip, take);
+
+            return _mapper.Map<IEnumerable<BookDTO>>(books);
         }
 
         public async Task RemoveBookAsync(int bookId)
@@ -106,6 +114,7 @@ namespace BooksStore.Services
         public async Task<bool> IsBookInBasketAsync(int basketId, int bookId)
         {
             Book book = new Book();
+
             return (book = await _bookRepository.GetBookByIdAsync(bookId)) != null &&
                 (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default
                 ? true
@@ -131,11 +140,9 @@ namespace BooksStore.Services
         public async Task<IEnumerable<BookDTO>> GetBooksByNameAsync(int skip, int take, string bookName)
         {
             bookName = bookName.ToLower().Replace(" ", "");
+            var books = await _bookRepository.GetBooks(skip, take, (b) =>b.Title.ToLower().Replace(" ", "") == bookName);
 
-            var a =  _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take, (b) => 
-            b.Title.ToLower().Replace(" ", "") == bookName));
-
-            return a;
+            return _mapper.Map<IEnumerable<BookDTO>>(books);
         }
     }
 }
