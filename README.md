@@ -5,6 +5,9 @@
 - NET Core 3
 - ASP.NET Core 3
 - Entity Framework Core 3
+- Identity
+- AutoMapper
+- MediatoR
 
 # **How it looks**
 
