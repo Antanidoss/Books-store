@@ -13,5 +13,6 @@ namespace BooksStore.Services.Interfaces
         Task<BasketDTO> GetBasketByIdAsync(int basketId);
         Task RemoveBasketBookAsync(int basketId, int bookId);
         Task RemoveAllBasketBooksAsync(int basketId);
+        Task<int> GetBasketBookCount(int basketId);
     }
 }

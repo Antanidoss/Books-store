@@ -112,5 +112,10 @@ namespace BooksStore.Services
             await _basketRepository.UpdateBasketAsync(basket);
             _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
         }
+
+        public async Task<int> GetBasketBookCount(int basketId)
+        {
+            return await _basketRepository.GetBasketBookCount(basketId);
+        }
     }
 }

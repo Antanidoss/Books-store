@@ -13,5 +13,6 @@ namespace BooksStore.Infastructure.Interfaces
         Task RemoveBasketAsync(Basket basket);
         Task<IEnumerable<Basket>> GetBaskets(int skip, int take);
         Task UpdateBasketAsync(Basket basket);
+        Task<int> GetBasketBookCount(int basketId);
     }
 }

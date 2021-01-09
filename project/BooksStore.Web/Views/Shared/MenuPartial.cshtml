@@ -3,12 +3,11 @@
         <ul class="dws-ul">
             <li class="dws-li">
                 <a asp-action="IndexBooks" asp-controller="Book"><i class="fas fa-home" aria-hidden="true"></i>Главная</a>
-            </li>
-            @*<li class="dws-li">
-                <a asp-action="IndexBooks" asp-controller="Book" ><i class="fas fa-book" aria-hidden="true"></i>Книги</a>
-            </li>*@
+            </li>           
             <li class="dws-li">
-                <a asp-action="IndexBasket" asp-controller="Basket" ><i class="fas fa-shopping-basket" aria-hidden="true"></i>Корзина</a>
+                <a asp-action="IndexBasket" asp-controller="Basket" ><i class="fas fa-shopping-basket" aria-hidden="true"></i>
+                    Корзина (<text class="basketBookCount">@await Component.InvokeAsync("BasketBookCount")</text>)
+                </a>
             </li>
             <li class="dws-li">
                 <a href="#"><i class="fas fa-phone-square-alt" aria-hidden="true"></i>Контакты</a>

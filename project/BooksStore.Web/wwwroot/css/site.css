@@ -126,14 +126,17 @@ li.dws-li:hover a::after {
 li.dws-li a:hover {
   color: red;
 }
+.basketBookCount{
+    color:#ac3f3f;
+}
 
 /*                                                                Footer                                                        */
 
 .mainFooter {
-  position: relative;
-  background-color: #508998;
-  height: 100px;
-  width: 1800px;
+    position: relative;
+    background-color: #508998;
+    height: 100px;
+    width: 1800px;
 }
 .footer-socials-div a {
   margin-left: 50px;
