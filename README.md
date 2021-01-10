@@ -7,7 +7,6 @@
 - Entity Framework Core 3
 - Identity
 - AutoMapper
-- MediatoR
 
 # **How it looks**
 
