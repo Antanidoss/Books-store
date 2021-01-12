@@ -42,19 +42,15 @@ namespace BooksStore.Infastructure
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Comment>> GetComments(int skip, int take)
+        public async Task<IEnumerable<Comment>> GetComments(int skip, int take, int bookId)
         {
             return await _context.Comments
+                .Where(c => c.BookId == bookId)
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.AppUser)
                 .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Comment>> GetCommentByBookId(int bookId)
-        {
-            return await _context.Comments.Where(p => p.BookId == bookId).ToListAsync();
-        }
+        }        
 
         public async Task<int> GetCountComments()
         {

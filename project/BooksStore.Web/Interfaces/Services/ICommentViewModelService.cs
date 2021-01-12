@@ -12,10 +12,9 @@ namespace BooksStore.Web.Interfaces.Managers
     {
         Task AddCommentAsync(CommentCreateModel model);
         Task<CommentViewModel> GetCommentByIdAsync(int commentId);
-        Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum);
+        Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum, int bookId);
         Task RemoveCommentAsync(int commentId);
         Task UpdateCommentAsync(CommentUpdateModel model);
-        Task<IEnumerable<CommentViewModel>> GetCommentsByBookIdAsync(int bookId);
         Task<int> GetCountCommentsAsync(int bookId);
     }
 }

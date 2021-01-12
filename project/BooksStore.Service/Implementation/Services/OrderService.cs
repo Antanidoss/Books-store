@@ -45,7 +45,7 @@ namespace BooksStore.Services
                 return _mapper.Map<OrderDTO>(_cacheManager.Get<Order>(CacheKeys.GetOrderKey(orderId)));
             }
 
-            var order = await _orderRepository.GetOrderById(orderId);
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
 
             if(order == null)
             {
@@ -66,13 +66,13 @@ namespace BooksStore.Services
                 return _mapper.Map<IEnumerable<OrderDTO>>(orders);
             }
 
-            orders = (await _orderRepository.GetOrders(appUserId, skip, take)).ToList() ?? new List<Order>();
+            orders = (await _orderRepository.GetOrdersAsync(appUserId, skip, take)).ToList() ?? new List<Order>();
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            var order = await _orderRepository.GetOrderById(orderId);
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
 
             if (order == null)
             {
@@ -85,8 +85,8 @@ namespace BooksStore.Services
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
-            int orderCount = await _orderRepository.GetCountOrders(appUserId);
-            var orders = await _orderRepository.GetOrders(appUserId, 0, orderCount);
+            int orderCount = await _orderRepository.GetCountOrdersAsync(appUserId);
+            var orders = await _orderRepository.GetOrdersAsync(appUserId, 0, orderCount);
 
             foreach (var order in orders)
             {
@@ -101,7 +101,7 @@ namespace BooksStore.Services
 
         public async Task<int> GetCountOrders(string appUserId)
         {
-            return await _orderRepository.GetCountOrders(appUserId);
+            return await _orderRepository.GetCountOrdersAsync(appUserId);
         }        
     }
 }

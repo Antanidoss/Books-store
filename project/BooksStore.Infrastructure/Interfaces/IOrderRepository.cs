@@ -7,10 +7,10 @@ namespace BooksStore.Infastructure.Interfaces
     public interface IOrderRepository
     {
         Task AddOrderAsync(Order order);
-        Task<Order> GetOrderById(int id);
+        Task<Order> GetOrderByIdAsync(int id);
         Task RemoveOrderAsync(Order order);
         Task UpdateOrderAsync(Order order);
-        Task<IEnumerable<Order>> GetOrders(string appUserId, int skip, int take);
-        Task<int> GetCountOrders(string appUserId);
+        Task<IEnumerable<Order>> GetOrdersAsync(string appUserId, int skip, int take);
+        Task<int> GetCountOrdersAsync(string appUserId);
     }
 }

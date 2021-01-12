@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
@@ -35,12 +34,11 @@ namespace BooksStore.Web.Controllers
             }
 
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
-
-            var comments = (await _commentService.GetCommentsByBookIdAsync(bookId.Value)).ToList();
+            var comments = (await _commentService.GetCommentsAsync(pageNum, bookId.Value)).ToList();
 
             string userId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
-            CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), pageNum,
-                PageSizes.Comments, comments.Count(), comments);
+            CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), 
+                pageNum, PageSizes.Comments, comments.Count(), comments);
 
             return View(bookComment);
         }
@@ -51,7 +49,7 @@ namespace BooksStore.Web.Controllers
         {
             if (!ModelState.IsValid)
             {                                  
-                return View(model);
+                return View(nameof(IndexComments), model);
             }
 
             await _commentService.AddCommentAsync(model);

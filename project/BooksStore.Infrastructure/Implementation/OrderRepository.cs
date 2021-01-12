@@ -19,7 +19,7 @@ namespace BooksStore.Infastructure
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Order> GetOrderById(int id)
+        public async Task<Order> GetOrderByIdAsync(int id)
         {
             Order order = await _context.Orders
                 .Include(p => p.OrderBooks)
@@ -41,27 +41,27 @@ namespace BooksStore.Infastructure
             await _context.SaveChangesAsync();            
         }
 
-        public async Task RemoveRange(IEnumerable<Order> orders)
+        public async Task RemoveOrdersAsync(IEnumerable<Order> orders)
         {
             _context.Orders.RemoveRange(orders);
             await _context.SaveChangesAsync();         
         }
 
-        public async Task<int> GetCountOrders(string appUserId)
+        public async Task<int> GetCountOrdersAsync(string appUserId)
         {
             return await _context.Orders
                 .Where(o => o.AppUserId == appUserId)
                 .CountAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetOrders(string appUserId, int skip, int take)
+        public async Task<IEnumerable<Order>> GetOrdersAsync(string appUserId, int skip, int take)
         {
             return await _context.Orders
-                .Include(p => p.OrderBooks)
-                .ThenInclude(p => p.Book)
                 .Where(p => p.AppUserId == appUserId)
                 .Skip(skip)
                 .Take(take)
+                .Include(p => p.OrderBooks)
+                .ThenInclude(p => p.Book)                                
                 .ToListAsync();
         }
     }

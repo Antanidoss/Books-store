@@ -66,8 +66,9 @@ namespace BooksStore.Services
         }
 
         public async Task UpdateCategoryAsync(CategoryDTO categoryDTO)
-        {           
-            await _categoryRepository.UpdateCategoryAsync(_mapper.Map<Category>(categoryDTO));
+        {
+            var category = _mapper.Map<Category>(categoryDTO);
+            await _categoryRepository.UpdateCategoryAsync(category);
             _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryDTO.Id));
         }
 

@@ -24,7 +24,9 @@ namespace BooksStore.Web.ViewComponents
         {
             int basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;           
 
-            return Content((await _basketService.GetBasketBookCount(basketId)).ToString());
+            var  a = (await _basketService.GetBasketBookCount(basketId)).ToString();
+
+            return Content(a);
         }
     }
 }

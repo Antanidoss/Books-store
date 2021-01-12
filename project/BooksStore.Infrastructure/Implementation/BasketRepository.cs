@@ -55,9 +55,11 @@ namespace BooksStore.Infastructure
 
         public async Task<int> GetBasketBookCount(int basketId)
         {
-            return (await _context.Baskets.Include(b => b.BasketBooks)
-                .FirstOrDefaultAsync(b => b.Id == basketId))
-                .BasketBooks.Count();
+            var basket = await _context.Baskets
+                .Include(b => b.BasketBooks)
+                .FirstOrDefaultAsync(b => b.Id == basketId);
+                            
+            return basket == null ? default : basket.BasketBooks.Count();
         }
     }
 }

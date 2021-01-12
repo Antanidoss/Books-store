@@ -805,14 +805,23 @@ li.dws-li a:hover {
     border-radius: 10px;
     border-color: #5477cb;
 }
-.addRole-form .button{
-
+.indexRole-link {
+    margin-left: 850px;
+    margin-top: 200px;
+}
+.addRole-submit {
+    margin-top: 100px;
+    margin-left: 150px;
+}
+.addRole-submit input{
+    width: 120px;
+    height: 35px;
 }
 
 /*                                                                   Показ ролей                                               */
 
-.indexRoles-main{
-    position:relative;
+.indexRoles-main {
+    position: relative;
 }
 .indexRoles-roles{
     display:flex;

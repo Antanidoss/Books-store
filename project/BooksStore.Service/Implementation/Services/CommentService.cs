@@ -45,7 +45,6 @@ namespace BooksStore.Services
             }            
 
             var comment = await _commentRepository.GetCommentById(commentId);
-
             if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));
@@ -54,9 +53,9 @@ namespace BooksStore.Services
             return _mapper.Map<CommentDTO>(comment);
         }
 
-        public async Task<IEnumerable<CommentDTO>> GetComments(int skip, int take)
+        public async Task<IEnumerable<CommentDTO>> GetComments(int skip, int take, int bookId)
         {
-            var comments = await _commentRepository.GetComments(skip, take);
+            var comments = await _commentRepository.GetComments(skip, take, bookId);
 
             return _mapper.Map<IEnumerable<CommentDTO>>(comments);
         }
@@ -77,14 +76,7 @@ namespace BooksStore.Services
         {
             await _commentRepository.UpdateCommentAsync(_mapper.Map<Comment>(commentDTO));
             _cacheManager.Remove(CacheKeys.GetCommentKey(commentDTO.Id));
-        }
-
-        public async Task<IEnumerable<CommentDTO>> GetCommentsByBookId(int bookId)
-        {
-            var comments = await _commentRepository.GetCommentByBookId(bookId) ?? new List<Comment>();
-
-            return _mapper.Map<IEnumerable<CommentDTO>>(comments);
-        }
+        }        
 
         public async Task<int> GetCountComments()
         {

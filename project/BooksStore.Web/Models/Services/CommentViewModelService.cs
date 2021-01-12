@@ -43,11 +43,13 @@ namespace BooksStore.Web.Models.Managers
         }
 
         public async Task<CommentViewModel> GetCommentByIdAsync(int commentId)
-        {         
-            return _mapper.Map<CommentViewModel>(await _commentService.GetCommentById(commentId));
+        {
+            var comment = await _commentService.GetCommentById(commentId);
+
+            return _mapper.Map<CommentViewModel>(comment);
         }
 
-        public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum)
+        public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum, int bookId)
         {
             if (!PageInfo.PageNumberIsValid(pageNum))
             {
@@ -55,15 +57,11 @@ namespace BooksStore.Web.Models.Managers
             }
 
             int pageSize = PageSizes.Comments;
-            var comments = await _commentService.GetComments((pageNum - 1) * pageSize, pageSize);
+            int skip = (pageNum - 1) * pageSize;
+            var comments = await _commentService.GetComments(skip, pageSize, bookId);
 
             return _mapper.Map<IEnumerable<CommentViewModel>>(comments);
-        }
-
-        public async Task<IEnumerable<CommentViewModel>> GetCommentsByBookIdAsync(int bookId)
-        {
-            return _mapper.Map<IEnumerable<CommentViewModel>>(await _commentService.GetCommentsByBookId(bookId));
-        }
+        }        
 
         public async Task<int> GetCountCommentsAsync(int bookId)
         {
@@ -77,7 +75,8 @@ namespace BooksStore.Web.Models.Managers
 
         public async Task UpdateCommentAsync(CommentUpdateModel model)
         {
-            await _commentService.UpdateCommentAsync(_mapper.Map<CommentDTO>(model));
+            var commentDTO = _mapper.Map<CommentDTO>(model);
+            await _commentService.UpdateCommentAsync(commentDTO);
         }
     }
 }
