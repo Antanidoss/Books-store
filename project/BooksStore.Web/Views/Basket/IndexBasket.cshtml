@@ -29,8 +29,8 @@
 
                     <div class="indexBasket-lowPanel">
                         <div class="basketIndex-buy">
-                            <form asp-action="AddOrder" asp-controller="Order" method="post">
-                                <input name="createModel.BookOrderIds" value="@book.Id" type="hidden" />
+                            <form asp-action="AddOrder" asp-controller="Order" method="get">
+                                <input name="booksIds" value="@book.Id" type="hidden" />
                                 <div>
                                     <input type="submit" value="Купить" class="basketIndex-buy-dutton button" />
                                 </div>
@@ -57,7 +57,7 @@
                 <form asp-action="AddOrder" asp-controller="Order" method="post">
                     @for (int i = 0; i < Model.BookIndexModel.Objects.Count(); i++)
                     {
-                        <input name="createModel.BookOrderIds[@i]" value="@Model.BookIndexModel.Objects[i].Id" type="hidden" />
+                        <input name="booksIds[@i]" value="@Model.BookIndexModel.Objects[i].Id" type="hidden" />
                     }
                     <div>
                         <input type="submit" value="Купить все @Model.TotalPrice.ToString("c")" class="basketIndex-buyAll-dutton button" />

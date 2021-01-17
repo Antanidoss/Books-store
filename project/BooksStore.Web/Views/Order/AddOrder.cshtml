@@ -1,0 +1,28 @@
+﻿@model IEnumerable<BookViewModel>
+
+<div class="ordering">
+    <div class="ordering-text">
+        <h2>Оформление заказа</h2>
+    </div>
+    <form asp-action="AddOrder" asp-controller="Order" method="post" class="ordering-form">        
+        <div class="ordering-list-text">
+            <h4>Список заказа</h4>
+        </div>
+        <div>
+            @foreach (var book in Model)
+            {
+                <input type="hidden" value="@book.Id" name="createModel.BookOrderIds" />
+                <div class="ordering-form-book">
+                    <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a> - 
+                    <text>@book.Price.ToString("c")</text>
+                </div>
+            }
+            <div class="ordering-form-totalPrice">
+                <h5>Итого: @Model.Sum(b => b.Price).ToString("c")</h5>
+            </div>
+        </div>
+        <div class="ordering-form-button">
+            <input class="button" type="submit" value="Оформить заказ " />
+        </div>
+    </form>
+</div>

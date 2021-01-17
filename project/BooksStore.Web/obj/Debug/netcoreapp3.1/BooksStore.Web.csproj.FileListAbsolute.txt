@@ -1791,3 +1791,4 @@ C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.csproj.CopyComplete
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.pdb
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Order\AddOrder.cshtml.g.cs

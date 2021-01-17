@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -15,9 +15,12 @@ namespace BooksStore.Web.Controllers
     {
         private readonly IOrderViewModelService _orderService;
 
-        public OrderController(IOrderViewModelService orderService, ICurrentUser currentUser)
+        private readonly IBookViewModelService _bookService;
+
+        public OrderController(IOrderViewModelService orderService, IBookViewModelService bookService)
         {
             _orderService = orderService;
+            _bookService = bookService;
         }
 
         [HttpGet]
@@ -30,14 +33,25 @@ namespace BooksStore.Web.Controllers
             return View(orderListViewModel);                      
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddOrder(OrderCreateModel createModel)
+        [HttpGet]
+        public async Task<IActionResult> AddOrder(List<int> booksIds)
         {
-            if (createModel?.BookOrderIds == null | createModel.BookOrderIds.Count() == 0)
+            if (booksIds == null | booksIds.Count() == 0)
             {
                 return StatusCode(404);
             }
-                        
+
+            var books = new List<BookViewModel>();
+            foreach(var bookId in booksIds)
+            {
+                books.Add(await _bookService.GetBookByIdAsync(bookId));
+            }
+
+            return View(books);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddOrder(OrderCreateModel createModel)
+        {               
             await _orderService.AddOrderAsync(createModel);
             
             return RedirectToAction("IndexBooks", "Book");                      
