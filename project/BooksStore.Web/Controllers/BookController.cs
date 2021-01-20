@@ -24,12 +24,14 @@ namespace BooksStore.Web.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> IndexBooks(int pageNum = 1)
-        {                       
-            var bookList = new BookListViewModel(pageNum, PageSizes.Books, await _bookService.GetCountAsync(), 
-                    await _bookService.GetBooksAsync(pageNum));
+        {
+            int booksCount = await _bookService.GetCountAsync();
+            var books = await _bookService.GetBooksAsync(pageNum);
                          
-            return View(bookList);                       
+            return View(new BookListViewModel(pageNum, PageSizes.Books, booksCount, books));                       
         }
 
         [HttpGet]

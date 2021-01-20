@@ -1675,7 +1675,6 @@ C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll
@@ -1736,7 +1735,6 @@ C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\BooksStore.Core.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\BooksStore.Infrastructure.dll
@@ -1792,3 +1790,5 @@ C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\BooksStore.Web.pdb
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\obj\Debug\netcoreapp3.1\Razor\Views\Order\AddOrder.cshtml.g.cs
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll

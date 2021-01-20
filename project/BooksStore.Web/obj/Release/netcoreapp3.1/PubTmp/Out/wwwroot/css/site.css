@@ -1,0 +1,168 @@
+﻿body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.wrapper {
+  width: 1800px;
+  min-height: 100%;
+  display:flex;
+  flex-direction:column;
+  margin: 0 auto;
+  box-shadow: 0 0 10px;
+}
+.content{
+    flex:1 1 auto;
+    z-index:5;
+}
+.vailidate-div {
+    color: red;
+    font-size: 17px;
+    font-family: "Roboto", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Roboto", sans-serif;
+}
+
+a:hover {
+  text-decoration: none;
+}
+/*                                                        Общие стили для кнопок                                                         */
+.button {
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #0071f0;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: "Spectral", serif;
+  font-size: 18px;
+}
+.button:focus,
+.button:hover {
+  background-color: rgba(0, 113, 240, 0.7);
+}
+/*                                                       Общие стили для показа товаров                                           */
+.indexBooks-div {
+  display:flex;
+  justify-content: start;
+  width: 100%;
+  flex-wrap: wrap;
+  flex-shrink:1;
+  flex-grow:1;
+}
+/*                                                                   Меню                                                          */
+.dws-menu {
+  background-color: #508998;
+  width: 1800px;
+  height: 80px;
+  margin: 0 auto;
+  position: relative;
+}
+ul.dws-ul {
+  display: flex;
+  padding: 0;
+  justify-content: space-between;
+}
+li.dws-li {
+  list-style: none;
+  padding: 10px;
+}
+li.dws-li a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
+  position: relative;
+  padding: 40px;
+}
+li.dws-li a i {
+  margin-right: 10px;
+}
+li.dws-li a::before {
+  content: "";
+  width: 0;
+  height: 3px;
+  background-color: #0024ff;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transition: 0.5s;
+  mix-blend-mode: multiply;
+}
+li.dws-li a::after {
+  content: "";
+  width: 0;
+  height: 3px;
+  background-color: #ff2117;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  transition: 0.5s;
+  mix-blend-mode: multiply;
+}
+li.dws-li:hover {
+  background-color: #e5eae8;
+}
+li.dws-li:hover a::before {
+  width: 50%;
+  transform: translateX(100%);
+}
+li.dws-li:hover a::after {
+  width: 50%;
+  transform: translateX(-100%);
+}
+li.dws-li a:hover {
+  color: red;
+}
+.basketBookCount {
+    color: #ac3f3f;
+}
+/*                                                                Footer                                                        */
+.mainFooter {
+    position: relative;
+    background-color: #508998;
+    height: 100px;
+    width: 1800px;
+}
+.footer-socials-div a {
+  margin-left: 50px;
+}
+.socials-inst-div a img {
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+}
+.socials-vk-div a img {
+  width: 35px;
+  height: 35px;
+  margin-top: 20px;
+}
+.footer-phoneNum-div {
+  position: absolute;
+  left: 1200px;
+  bottom: 50px;
+  color: white;
+}
+/*                                                           Поисковая часть                                                           */
+.search {
+    position: absolute;
+    width: 280px;
+    left: 70px;
+    padding-top: 50px;
+}
+.serchByCategory {
+  margin-top: 70px;
+  font-size: 17px;
+}
+.serchByName input[type="search"] {
+  border-color: #5477cb;
+  border-radius: 5px;
+}
+

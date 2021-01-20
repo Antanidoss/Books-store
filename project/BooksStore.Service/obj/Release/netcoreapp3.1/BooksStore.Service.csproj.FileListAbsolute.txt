@@ -1,0 +1,13 @@
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Service.deps.json
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Service.dll
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Service.pdb
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Core.dll
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Infrastructure.dll
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Core.pdb
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\bin\Release\netcoreapp3.1\BooksStore.Infrastructure.pdb
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Release\netcoreapp3.1\BooksStore.Service.csprojAssemblyReference.cache
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Release\netcoreapp3.1\BooksStore.Service.AssemblyInfoInputs.cache
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Release\netcoreapp3.1\BooksStore.Service.AssemblyInfo.cs
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Release\netcoreapp3.1\BooksStore.Service.csproj.CopyComplete
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Release\netcoreapp3.1\BooksStore.Service.dll
+C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Release\netcoreapp3.1\BooksStore.Service.pdb

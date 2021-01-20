@@ -1,0 +1,69 @@
+﻿.indexComments-bookName {
+    text-align: center;
+}
+.indexComments-div {
+    display: flex;
+    position:relative;
+    flex-direction: column;
+    justify-content:center;
+    margin-left:800px;
+    padding-bottom:50px;
+}
+.addCommnet-div{
+    position:relative;
+    width:330px;
+    left:300px;
+    top:130px;
+}
+.indexComments-comment {
+    position:relative;
+    border: 2px solid #5477cb;
+    width:700px;
+    min-height:400px;
+    margin-top:50px;
+}
+#addCommnet-form {
+    position: absolute;
+    right:80px;
+    top:50px;
+}
+#addCommnet-form textarea {
+    width: 330px;
+    height: 200px;
+    border: 2px solid #5477cb;
+    resize: none;
+}
+#hideCommnetForm {
+    position: relative;
+}
+.indexBook-indexCommentsHref-div {
+    position: relative;
+}
+.noComment-div {
+    text-align: center;
+    padding-top: 300px;
+    font-family: "Source Sans Pro", sans-serif;
+}
+.hideAddComment-div{
+    display:flex;
+    justify-content:space-around;
+}
+.indexComments-userName-div {
+    padding-left:100px;
+    padding-top: 30px;
+    font-size: 18px;
+    overflow:initial;
+    font-family: "Source Sans Pro", sans-serif;
+}
+.indexComments-timeCrate-div {
+    position: absolute;
+    left: 500px;
+    font-size: 16px;
+    top: 30px;
+}
+.indexComments-descriptions-div {
+    position: relative;
+    text-align: center;
+    overflow: initial;
+    top: 50px;
+}
