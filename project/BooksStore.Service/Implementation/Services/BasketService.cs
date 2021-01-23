@@ -62,7 +62,7 @@ namespace BooksStore.Services
             }
 
             var bookBasket = basket.BasketBooks.ToList();
-            bookBasket.Add(new BookBasketJunction() { BasketId = basketId, BookId = bookId });
+            bookBasket.Add(new BookBasketJunction(basketId, bookId));
             basket.BasketBooks = bookBasket;
 
             await _basketRepository.UpdateBasketAsync(basket);

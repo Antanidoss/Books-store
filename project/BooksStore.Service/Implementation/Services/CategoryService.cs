@@ -29,7 +29,7 @@ namespace BooksStore.Services
 
         public async Task AddCategoryAsync(CategoryDTO categoryDTO)
         {
-            var category = new Category() { Name = categoryDTO.Name };
+            var category = new Category(categoryDTO.Name);
             await _categoryRepository.AddCategoryAsync(category);
         }
                               

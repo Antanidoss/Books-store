@@ -116,4 +116,3 @@ C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Debug\netcorea
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.csproj.CopyComplete
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.dll
 C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.pdb
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Service\obj\Debug\netcoreapp3.1\BooksStore.Service.csproj.CoreCompileInputs.cache

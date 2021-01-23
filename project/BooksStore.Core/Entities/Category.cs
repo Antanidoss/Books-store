@@ -14,5 +14,21 @@ namespace BooksStore.Core.Entities
         {
             Books = new List<Book>();
         }
+
+        public Category(string name) : base()
+        {
+            ValidateArgumentConstructor(name);       
+
+            Name = name;
+            Books = new List<Book>();
+        }
+
+        private void ValidateArgumentConstructor(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Названия категории не может быть равна null либо пустой", nameof(name));
+            }
+        }
     }
 }

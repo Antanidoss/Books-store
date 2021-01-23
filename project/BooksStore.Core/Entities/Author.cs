@@ -16,6 +16,27 @@ namespace BooksStore.Core.Entities
         {
             Books = new List<Book>();
         }
+
+        public Author(string firstname, string surname)
+        {
+            ValidateArgumentConstructor(firstname, surname);
+
+            Firstname = firstname;
+            Surname = surname;
+        }
+
+        private void ValidateArgumentConstructor(string firstname, string surname)
+        {
+            if (string.IsNullOrEmpty(firstname))
+            {
+                throw new ArgumentException("Имя автора не может быть пустой либо равен null", nameof(firstname));
+            }
+            if (string.IsNullOrEmpty(surname))
+            {
+                throw new ArgumentException("Фамилия автора не может быть пустой либо равен null", nameof(surname));
+            }
+        }
+
         public override string ToString()
         {
             return Firstname + " " + Surname;

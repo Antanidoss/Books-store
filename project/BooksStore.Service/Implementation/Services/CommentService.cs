@@ -28,12 +28,7 @@ namespace BooksStore.Services
 
         public async Task AddCommentAsync(CommentDTO commentDTO)
         {
-            var comment = new Comment()
-            {
-                Descriptions = commentDTO.Descriptions,
-                BookId = commentDTO.BookId,
-                AppUserId = commentDTO.AppUserId
-            };
+            var comment = new Comment(commentDTO.Descriptions, commentDTO.BookId, commentDTO.AppUserId);           
             await _commentRepository.AddCommentAsync(comment);
         }
 

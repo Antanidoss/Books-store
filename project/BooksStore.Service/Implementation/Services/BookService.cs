@@ -43,16 +43,6 @@ namespace BooksStore.Services
 
         public async Task AddBookAsync(BookDTO bookDTO)
         {            
-            Book book = new Book() 
-            {
-                Title = bookDTO.Title,
-                Price = bookDTO.Price,
-                InStock = bookDTO.InStock,
-                NumberOfPages = bookDTO.NumberOfPages,
-                Descriptions = bookDTO.Descriptions,
-                Img = new Img() { Path = bookDTO.ImgPath },
-            };
-
             Category category = await _categoryRepository.GetCategoryByName(bookDTO.CategoryName);
             if (category == null)
             {
@@ -65,8 +55,16 @@ namespace BooksStore.Services
                 author = new Author() { Firstname = bookDTO.AuthorFirstname, Surname = bookDTO.AuthorSurname };              
             }
           
-            book.Category = category;
-            book.Author = author;
+            Book book = new Book(
+                title: bookDTO.Title,
+                price: bookDTO.Price,
+                inStock: bookDTO.InStock,
+                numberOfPages: bookDTO.NumberOfPages,
+                descriptions: bookDTO.Descriptions,
+                img: new Img() { Path = bookDTO.ImgPath },
+                author: author,
+                category: category
+            );
             await _bookRepository.AddBookAsync(book);
         }
 
@@ -79,7 +77,7 @@ namespace BooksStore.Services
 
             var book = await _bookRepository.GetBookByIdAsync(bookId);
 
-            if(book == null)
+            if (book == null)
             {
                 throw new NotFoundException(nameof(Book), book);
             }
