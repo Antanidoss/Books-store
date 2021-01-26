@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -52,6 +53,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public IActionResult AddBook() => View();
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> AddBook(BookCreateModel model)
         {
             if (!ModelState.IsValid)
@@ -90,6 +92,7 @@ namespace BooksStore.Web.Controllers
             return View(_mapper.Map<BookUpdateModel>(book));            
         }
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
         {
             if (!ModelState.IsValid)

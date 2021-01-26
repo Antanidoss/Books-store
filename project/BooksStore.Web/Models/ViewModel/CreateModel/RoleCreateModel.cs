@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BooksStore.Web.Models.ViewModel.CreateModel
 {
     public class RoleCreateModel
     {
+        [Required(ErrorMessage = "Введите названия")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Длина имени должна быть от 4 до 50 символов")]
         public string Name { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -23,6 +24,7 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public IActionResult AddRole() => View();
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> AddRole(RoleCreateModel model)
         {
             if (!ModelState.IsValid)

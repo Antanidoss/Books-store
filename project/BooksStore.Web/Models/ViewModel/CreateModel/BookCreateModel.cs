@@ -34,7 +34,6 @@ namespace BooksStore.Web.Models.ViewModel.CreateModel
 
         [Required(ErrorMessage = "Выберите изображения")]
         public IFormFile ImgFile { get; set; }
-
         public string ImgPath { get; set; }
     }
 }

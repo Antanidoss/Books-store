@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
@@ -45,13 +46,9 @@ namespace BooksStore.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> AddComment(CommentCreateModel model)
-        {
-            if (!ModelState.IsValid)
-            {                                  
-                return View(nameof(IndexComments), model);
-            }
-
+        {            
             await _commentService.AddCommentAsync(model);
 
             return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });

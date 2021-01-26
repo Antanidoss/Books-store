@@ -2,6 +2,7 @@
 using AutoMapper;
 using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces.Identity;
+using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Models.ViewModel.CreateModel;
 using BooksStore.Web.Models.ViewModel.ReadModel;
@@ -32,38 +33,33 @@ namespace BooksStore.Web.Controllers
             return View();
         }
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> Login(LoginModel logModel)
         {
-            if (ModelState.IsValid)
+            var signInResult = await _userService.PasswordSignInAsync(logModel.Email, logModel.Password, logModel.IsParsistent);
+            if (signInResult.Succeeded)
             {
-                var signInResult = await _userService.PasswordSignInAsync(logModel.Email, logModel.Password, logModel.IsParsistent);
-                if (signInResult.Succeeded)
-                {
-                    return RedirectToAction("IndexBooks", "Book");
-                }
-
-                ModelState.AddModelError("", signInResult.ToString());
+                return RedirectToAction("IndexBooks", "Book");
             }
+               
             return View(logModel);
         }
 
         [HttpGet]
         public IActionResult Registration() => View();
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> Registration(RegistrationModel regModel)
-        {
-            if (ModelState.IsValid)
-            {                
-                var result = await _userService.CreateAppUserAsync(regModel.Name, regModel.Email, regModel.Password);
-                if (!result.Result.Succeeded)
-                {
-                    ModelState.AddModelError("", result.Result.ToString());
-                    return View(regModel);
-                }
-                await _userService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
-                return RedirectToAction("IndexBooks", "Book");
+        {                        
+            var result = await _userService.CreateAppUserAsync(regModel.Name, regModel.Email, regModel.Password);
+            if (!result.Result.Succeeded)
+            {
+                ModelState.AddModelError("", result.Result.ToString());
+                return View(regModel);
             }
-            return View(regModel);
+            await _userService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
+
+            return RedirectToAction("IndexBooks", "Book");          
         }
 
         [Authorize]

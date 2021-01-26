@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -23,13 +24,9 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         public IActionResult AddCategory() => View();
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> AddCategory(CategoryCreateModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
+        {            
             await _categoryService.AddCategoryAsync(model);
 
             return RedirectToAction("IndexСategoriesAdmin", "Category");
@@ -78,6 +75,7 @@ namespace BooksStore.Web.Controllers
             return View(await _categoryService.GetCategoryById(categoryId.Value));
         }
         [HttpPost]
+        [ModelStateValidationFilter]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateModel model)
         {
             await _categoryService.UpdateCategoryAsync(model);
