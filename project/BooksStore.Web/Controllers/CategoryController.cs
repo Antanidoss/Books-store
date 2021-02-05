@@ -52,26 +52,18 @@ namespace BooksStore.Web.Controllers
         }       
 
         [HttpPost]
+        [IdValidationFilter("categoryId")]
         public async Task<IActionResult> RemoveCategory(int? categoryId)
-        {
-            if (!categoryId.HasValue)
-            {
-                return StatusCode(404);
-            }
-
+        {            
             await _categoryService.RemoveCategoryAsync(categoryId.Value);
 
             return RedirectToAction(nameof(IndexСategoriesAdmin));         
         }
 
         [HttpGet]
+        [IdValidationFilter("categoryId")]
         public async Task<IActionResult> UpdateCategory(int? categoryId)
-        {
-            if (!categoryId.HasValue)
-            {
-                return StatusCode(404);
-            }
-
+        {           
             return View(await _categoryService.GetCategoryById(categoryId.Value));
         }
         [HttpPost]

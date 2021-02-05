@@ -37,6 +37,7 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [IdValidationFilter("bookId")]
         public async Task<IActionResult> IndexBook(int? bookId)
         {            
             var book = await _bookService.GetBookByIdAsync(bookId.Value);                                           
@@ -55,38 +56,25 @@ namespace BooksStore.Web.Controllers
         [HttpPost]
         [ModelStateValidationFilter]
         public async Task<IActionResult> AddBook(BookCreateModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
+        {          
             await _bookService.AddBookAsync(model);
 
             return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
         [HttpPost]
+        [IdValidationFilter("bookId")]
         public async Task<IActionResult> RemoveBook(int? bookId)
-        {
-            if (!bookId.HasValue)
-            {
-                return View(StatusCode(404));
-            }
-
+        {           
             await _bookService.RemoveBookAsync(bookId.Value);          
 
             return RedirectToAction(nameof(IndexBooksAdmin));                       
         }
 
         [HttpGet]
+        [IdValidationFilter("bookId")]
         public async Task<IActionResult> UpdateBook(int? bookId)
-        {
-            if (!bookId.HasValue)
-            {
-                return View(StatusCode(404));
-            }
-
+        {          
             var book = await _bookService.GetBookByIdAsync(bookId.Value);
 
             return View(_mapper.Map<BookUpdateModel>(book));            
@@ -94,12 +82,7 @@ namespace BooksStore.Web.Controllers
         [HttpPost]
         [ModelStateValidationFilter]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
+        {           
             await _bookService.UpdateBookAsync(model);
 
             return RedirectToAction(nameof(IndexBooksAdmin));           
@@ -107,9 +90,10 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [IdValidationFilter("categoryId")]
         public async Task<IActionResult> IndexByCategory(int? categoryId, string categoryName, int pageNum = 1)
         {
-            if (!categoryId.HasValue && string.IsNullOrEmpty(categoryName))
+            if (!string.IsNullOrEmpty(categoryName))
             {
                 return View(StatusCode(404));
             }
@@ -128,7 +112,7 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
+        public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1) //TODO:
         {           
             var books = await _bookService.GetBooksByNameAsync(pageNum, bookName);
 

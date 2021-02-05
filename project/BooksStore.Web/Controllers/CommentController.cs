@@ -27,13 +27,9 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [IdValidationFilter("bookId")]
         public async Task<IActionResult> IndexComments(int? bookId, int pageNum = 1)
-        {
-            if (!bookId.HasValue)
-            {
-                return StatusCode(404);
-            }
-
+        {            
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
             var comments = (await _commentService.GetCommentsAsync(pageNum, bookId.Value)).ToList();
 
@@ -56,13 +52,9 @@ namespace BooksStore.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = "admin")]
+        [IdValidationFilter("commentId")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
-        {
-            if (!commentId.HasValue)
-            {
-                return StatusCode(404);
-            }
-
+        {            
             await _commentService.RemoveCommentAsync(commentId.Value);
 
             return View(returnUrl);

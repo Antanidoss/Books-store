@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Models.Pagination;
 using BooksStore.Web.Models.ViewModel.CreateModel;
@@ -58,13 +59,9 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpPost]
+        [IdValidationFilter("orderId")]
         public async Task<IActionResult> RemoveOrder(int? orderId)
-        {
-            if (!orderId.HasValue)
-            {
-                return View(StatusCode(404));
-            }
-
+        {             
             await _orderService.RemoveOrderAsync(orderId.Value);
 
             return RedirectToAction(nameof(IndexOrders));

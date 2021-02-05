@@ -48,13 +48,9 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpPost]
+        [IdValidationFilter("roleId")]
         public async Task<IActionResult> RemoveRole(string roleId)
-        {           
-            if(string.IsNullOrEmpty(roleId))
-            {
-                return StatusCode(404);
-            }
-
+        {                       
             await _roleService.DeleteAsync(roleId);
             
             return RedirectToAction(nameof(IndexRole));
