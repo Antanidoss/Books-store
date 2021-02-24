@@ -21,41 +21,48 @@ using BooksStore.Web;
 #nullable disable
 #nullable restore
 #line 2 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models;
+using BooksStore.Web.Common;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.Index;
+using BooksStore.Web.Сommon.ViewModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.UpdateModel;
+using BooksStore.Web.Сommon.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d9cb5ee3cf37f18b42e772b097f58c924a4ebc04", @"/Views/Shared/SearchPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"23a95437b57fa1f82e40a1ec6de41642d36f86d0", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2197bf7b2a5e8d869c24075ea085ea7b4ffe4714", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_SearchPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "IndexBooksByName", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -87,7 +94,7 @@ using BooksStore.Web.Models.ViewModel.ReadModel;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             WriteLiteral("\n<div class=\"search\">\n    <div class=\"serchByName\">\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d9cb5ee3cf37f18b42e772b097f58c924a4ebc045059", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d9cb5ee3cf37f18b42e772b097f58c924a4ebc045256", async() => {
                 WriteLiteral("\n            <input type=\"search\" placeholder=\"Название\" name=\"bookName\" />\n            <input type=\"submit\" value=\"Поиск\" class=\"button\" />\n        ");
             }
             );

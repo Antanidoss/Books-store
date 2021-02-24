@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using BooksStore.Core.Entities;
-using BooksStore.Web.Models.Initializer;
+using BooksStore.Web.Ñommon.Initializer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

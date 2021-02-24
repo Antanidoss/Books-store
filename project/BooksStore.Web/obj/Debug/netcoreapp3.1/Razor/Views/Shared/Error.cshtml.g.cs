@@ -21,41 +21,48 @@ using BooksStore.Web;
 #nullable disable
 #nullable restore
 #line 2 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models;
+using BooksStore.Web.Common;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.Index;
+using BooksStore.Web.Сommon.ViewModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.UpdateModel;
+using BooksStore.Web.Сommon.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"4ecc4d2bcad30a6aee551879bc7e7094ebb4184d", @"/Views/Shared/Error.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"23a95437b57fa1f82e40a1ec6de41642d36f86d0", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2197bf7b2a5e8d869c24075ea085ea7b4ffe4714", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_Error : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ErrorViewModel>
     {
         #pragma warning disable 1998

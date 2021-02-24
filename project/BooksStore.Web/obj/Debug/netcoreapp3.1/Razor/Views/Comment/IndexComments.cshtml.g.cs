@@ -21,41 +21,48 @@ using BooksStore.Web;
 #nullable disable
 #nullable restore
 #line 2 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models;
+using BooksStore.Web.Common;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.Index;
+using BooksStore.Web.Сommon.ViewModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.UpdateModel;
+using BooksStore.Web.Сommon.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3d4950bb39bd3c89af9942a7b9e71b3362dabc49", @"/Views/Comment/IndexComments.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"23a95437b57fa1f82e40a1ec6de41642d36f86d0", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2197bf7b2a5e8d869c24075ea085ea7b4ffe4714", @"/Views/_ViewImports.cshtml")]
     public class Views_Comment_IndexComments : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<CommentListViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "AddComment", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -101,7 +108,7 @@ using BooksStore.Web.Models.ViewModel.ReadModel;
 #nullable disable
             WriteLiteral("                <button type=\"reset\" class=\"indexBook-clickAddCommentForm-button button\" onclick=\"showAddCommentForm()\">\n                    Добавить отзыв\n                </button>\n");
             WriteLiteral("                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d4950bb39bd3c89af9942a7b9e71b3362dabc496640", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d4950bb39bd3c89af9942a7b9e71b3362dabc496837", async() => {
                 WriteLiteral("\n                    <div class=\"addCommentTextarea-div\">\n                        <textarea name=\"model.Descriptions\" placeholder=\"Напишите ваш отзыв\"></textarea>\n                    </div>\n                    <input type=\"hidden\" name=\"model.BookId\"");
                 BeginWriteAttribute("value", " value=\"", 668, "\"", 689, 1);
 #nullable restore
@@ -163,7 +170,7 @@ WriteAttributeValue("", 676, Model.BookId, 676, 13, false);
 #line hidden
 #nullable disable
             WriteLiteral("        </div>\n        <div class=\"indexComments-bookName\">\n            <h4>Отзывы для книги: ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d4950bb39bd3c89af9942a7b9e71b3362dabc4910406", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3d4950bb39bd3c89af9942a7b9e71b3362dabc4910603", async() => {
 #nullable restore
 #line 36 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\Comment\IndexComments.cshtml"
                                                                                                               Write(Model.BookName);

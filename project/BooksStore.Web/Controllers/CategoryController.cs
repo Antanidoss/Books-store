@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Managers;
-using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModel.CreateModel;
-using BooksStore.Web.Models.ViewModel.Index;
-using BooksStore.Web.Models.ViewModel.ReadModel;
-using BooksStore.Web.Models.ViewModel.UpdateModel;
+using BooksStore.Web.Сommon.Pagination;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.Index;
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

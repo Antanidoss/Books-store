@@ -4,8 +4,8 @@ using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces.Identity;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces;
-using BooksStore.Web.Models.ViewModel.CreateModel;
-using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

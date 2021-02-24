@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BooksStore.Core.Entities
 {
@@ -7,10 +8,5 @@ namespace BooksStore.Core.Entities
         public int Id { get; set; }
         public DateTime TimeOfCreate { get; set; }
         public DateTime UpdateTime { get; set; }
-
-        public BaseEntity()
-        {
-            TimeOfCreate = DateTime.Now;
-        }
     }
 }

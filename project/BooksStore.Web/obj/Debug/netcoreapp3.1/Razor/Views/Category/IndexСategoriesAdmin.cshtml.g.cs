@@ -21,41 +21,48 @@ using BooksStore.Web;
 #nullable disable
 #nullable restore
 #line 2 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models;
+using BooksStore.Web.Common;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.Index;
+using BooksStore.Web.Сommon.ViewModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.UpdateModel;
+using BooksStore.Web.Сommon.ViewModel.Index;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
-using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\_ViewImports.cshtml"
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"fe4968fa9125c79c4667bb6bee7a20426c9e8eab", @"/Views/Category/IndexСategoriesAdmin.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"23a95437b57fa1f82e40a1ec6de41642d36f86d0", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2197bf7b2a5e8d869c24075ea085ea7b4ffe4714", @"/Views/_ViewImports.cshtml")]
     public class Views_Category_IndexСategoriesAdmin : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IndexViewModel<CategoryViewModel>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "IndexByCategory", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -112,7 +119,7 @@ using BooksStore.Web.Models.ViewModel.ReadModel;
 #line hidden
 #nullable disable
             WriteLiteral("                    <div class=\"indexCategories-category\">\n                        <div>\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab7819", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab8016", async() => {
 #nullable restore
 #line 11 "C:\IT\c#\Проекты\BooksStore\project\BooksStore.Web\Views\Category\IndexСategoriesAdmin.cshtml"
                                                                                                                  Write(category.Name);
@@ -151,7 +158,7 @@ using BooksStore.Web.Models.ViewModel.ReadModel;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\n                        </div>\n                        <div>\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab10636", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab10833", async() => {
                 WriteLiteral("\n                                <input name=\"categoryId\" type=\"hidden\"");
                 BeginWriteAttribute("value", " value=\"", 747, "\"", 767, 1);
 #nullable restore
@@ -183,7 +190,7 @@ WriteAttributeValue("", 755, category.Id, 755, 12, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\n                        </div>\n                        <div>\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab13147", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab13344", async() => {
                 WriteLiteral("\n                                <input name=\"categoryId\" type=\"hidden\"");
                 BeginWriteAttribute("value", " value=\"", 1128, "\"", 1148, 1);
 #nullable restore
@@ -232,7 +239,7 @@ WriteAttributeValue("", 1136, category.Id, 1136, 12, false);
 #line hidden
 #nullable disable
             WriteLiteral("                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab16267", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab16464", async() => {
                 WriteLiteral("Назад");
             }
             );
@@ -282,7 +289,7 @@ WriteAttributeValue("", 1136, category.Id, 1136, 12, false);
 #line hidden
 #nullable disable
             WriteLiteral("                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab19338", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab19535", async() => {
                 WriteLiteral("Вперед");
             }
             );
@@ -341,7 +348,7 @@ WriteAttributeValue("", 1136, category.Id, 1136, 12, false);
 #line hidden
 #nullable disable
             WriteLiteral("        <div class=\"indexCategories-addCategory\">\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab22721", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe4968fa9125c79c4667bb6bee7a20426c9e8eab22918", async() => {
                 WriteLiteral("Создать категорию");
             }
             );

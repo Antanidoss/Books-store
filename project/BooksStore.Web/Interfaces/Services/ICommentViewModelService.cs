@@ -1,9 +1,7 @@
-﻿using BooksStore.Web.Models.ViewModel.CreateModel;
-using BooksStore.Web.Models.ViewModel.ReadModel;
-using BooksStore.Web.Models.ViewModel.UpdateModel;
-using System;
+﻿using BooksStore.Web.Сommon.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BooksStore.Web.Interfaces.Managers

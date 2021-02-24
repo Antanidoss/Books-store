@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Managers;
-using BooksStore.Web.Models.Pagination;
-using BooksStore.Web.Models.ViewModel.CreateModel;
-using BooksStore.Web.Models.ViewModel.ReadModel;
+using BooksStore.Web.Сommon.Pagination;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
+using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
