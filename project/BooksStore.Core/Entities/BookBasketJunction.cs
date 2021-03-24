@@ -9,7 +9,7 @@ namespace BooksStore.Core.Entities
         public Book Book { get; set; }
         public int BookId { get; set; }
 
-        public BookBasketJunction() : base() { }
+        private BookBasketJunction() : base() { }
 
         public BookBasketJunction(int basketId, int bookId) : base()
         {

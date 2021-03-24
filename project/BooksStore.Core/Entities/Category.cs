@@ -10,7 +10,7 @@ namespace BooksStore.Core.Entities
         public string Name { get; set; }
         public IEnumerable<Book> Books { get; set; }
 
-        public Category() : base()
+        private Category() : base()
         {
             Books = new List<Book>();
         }

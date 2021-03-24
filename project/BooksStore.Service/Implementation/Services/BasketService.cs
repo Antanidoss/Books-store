@@ -49,14 +49,14 @@ namespace BooksStore.Services
 
         public async Task AddBasketBookAsync(int basketId, int bookId)
         {
-            Basket basket = new Basket();
-            Book book = new Book();
-
-            if ((basket = await _basketRepository.GetBasketById(basketId)) == null)
+            Basket basket = await _basketRepository.GetBasketById(basketId);           
+            if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
-            if((book = await _bookRepository.GetBookByIdAsync(bookId)) == null)
+
+            Book book = await _bookRepository.GetBookByIdAsync(bookId);
+            if (book == null)
             {
                 throw new NotFoundException(nameof(Book), book);
             }
@@ -71,14 +71,14 @@ namespace BooksStore.Services
 
         public async Task RemoveBasketBookAsync(int basketId, int bookId)
         {
-            Basket basket = new Basket();
-            Book book = new Book();
-
-            if ((basket = await _basketRepository.GetBasketById(basketId)) == null)
+            Basket basket = await _basketRepository.GetBasketById(basketId);
+            if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
-            if ((book = await _bookRepository.GetBookByIdAsync(bookId)) == null)
+
+            Book book = await _bookRepository.GetBookByIdAsync(bookId);
+            if (book == null)
             {
                 throw new NotFoundException(nameof(Book), book);
             }

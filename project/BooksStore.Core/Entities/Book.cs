@@ -19,7 +19,7 @@ namespace BooksStore.Core.Entities
         public int AuthorId { get; set; }
         public Img Img { get; set; }
 
-        public Book() : base()
+        private Book() : base()
         {
             Comments = new List<Comment>();
             BookOrders = new List<BookOrderJunction>();

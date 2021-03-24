@@ -11,7 +11,7 @@ namespace BooksStore.Core.Entities
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
 
-        public Comment() : base() { }
+        private Comment() : base() { }
 
         public Comment(string descriptions, int bookId, string appUserId) : base()
         {

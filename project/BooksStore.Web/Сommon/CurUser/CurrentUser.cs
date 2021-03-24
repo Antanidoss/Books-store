@@ -13,14 +13,14 @@ namespace BooksStore.Web.Common.CurUser
         {
             UserManagerService = userManagerService;       
         }
-        IUserService UserManagerService { get; set; }
-        public string AppUserId { get; set; }
-        public bool IsAuthenticated { get; set; }
-        public int BasketId { get; set; }
+        private IUserService UserManagerService { get; set; }
 
         public async Task<AppUserDTO> GetCurrentUser(HttpContext httpContext)
         {
-            return (await UserManagerService.FindAppUserByIdAsync(httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier))).AppUserDTO;
+            var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await UserManagerService.FindAppUserByIdAsync(userId);
+
+            return result.AppUserDTO;
         }
     }
 }

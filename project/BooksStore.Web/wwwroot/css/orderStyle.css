@@ -19,6 +19,10 @@
     position:relative;
     padding-bottom:50px;
     padding-right:50px;
+    margin:0 auto;
+}
+.removeCompleteOrders-div .button{
+    padding:5px;
 }
 .indexOrder-pagination-div{
     position:relative;
@@ -27,7 +31,6 @@
     display: flex;
     position: relative;
     flex-direction: row;
-    left: 700px;
     padding-top: 100px;
 }
 .indexOrder-timeCreate{
@@ -47,29 +50,27 @@
     font-family: "Source Sans Pro", sans-serif;
 }
 .ordering {
-    margin-left: 600px;
+    margin: 0 auto;
     margin-top: 100px;
+    width: 700px;
+    text-align:center;
 }
 .ordering-text {
     margin-top: 100px;
-    margin-left: 200px;
 }
 .ordering-form {
     margin-top:200px;
 }
 .ordering-form-book {
-    margin-top:50px;
-}
-.ordering-list-text {
-    margin-left: 280px;
+    margin-top: 50px;
+    overflow: inherit;
+    word-wrap: break-word;
 }
 .ordering-form-totalPrice {
     margin-top: 50px;
-    margin-left: 300px;
 }
 .ordering-form-button {
     margin-top:100px;
-    margin-left:300px;
 }
 .ordering-form-button button{
     width: 150px;

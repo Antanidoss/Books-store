@@ -46,13 +46,13 @@ namespace BooksStore.Services
             Category category = await _categoryRepository.GetCategoryByName(bookDTO.CategoryName);
             if (category == null)
             {
-                category = new Category() { Name = bookDTO.CategoryName };                
+                category = new Category(bookDTO.CategoryName);                
             }           
 
             Author author = await _authorRepository.GetAuthorByName(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
             if (author == null)
             {
-                author = new Author() { Firstname = bookDTO.AuthorFirstname, Surname = bookDTO.AuthorSurname };              
+                author = new Author(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);              
             }
           
             Book book = new Book(
@@ -61,7 +61,7 @@ namespace BooksStore.Services
                 inStock: bookDTO.InStock,
                 numberOfPages: bookDTO.NumberOfPages,
                 descriptions: bookDTO.Descriptions,
-                img: new Img() { Path = bookDTO.ImgPath },
+                img: new Img(bookDTO.ImgPath),
                 author: author,
                 category: category
             );
@@ -111,10 +111,9 @@ namespace BooksStore.Services
 
         public async Task<bool> IsBookInBasketAsync(int basketId, int bookId)
         {
-            Book book = new Book();
+            var book = await _bookRepository.GetBookByIdAsync(bookId);
 
-            return (book = await _bookRepository.GetBookByIdAsync(bookId)) != null &&
-                (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default
+            return book != null && (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default
                 ? true
                 : false;            
         }

@@ -12,7 +12,7 @@ namespace BooksStore.Core.Entities
         public string Surname { get; set; }
         public IEnumerable<Book> Books { get; set; }
 
-        public Author() : base()
+        private Author() : base()
         {
             Books = new List<Book>();
         }

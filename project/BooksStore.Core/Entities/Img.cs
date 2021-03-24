@@ -8,26 +8,21 @@ namespace BooksStore.Core.Entities
         public Book Book { get; set; }
         public int BookId { get; set; }
 
-        public Img() : base() { }
+        private Img() : base() { }
 
-        public Img(string path, int bookId) : base()
+        public Img(string path) : base()
         {
-            ValidateArgumentConstructor(path, bookId);
+            ValidateArgumentConstructor(path);
 
             Path = path;
-            BookId = bookId;
         }
 
-        private void ValidateArgumentConstructor(string path, int bookId)
+        private void ValidateArgumentConstructor(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
                 throw new ArgumentException("Путь картинки не может быть пустой либо равен null", nameof(path));
-            }
-            if (bookId <= 0)
-            {
-                throw new ArgumentException("Id книги не может быть равен либо меньше 0", nameof(path));
-            }
+            }            
         }
     }
 }

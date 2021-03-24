@@ -30,7 +30,8 @@ namespace BooksStore.Services
 
         public async Task AddOrderAsync(OrderDTO orderDTO)
         {
-            var order = new Order(_mapper.Map<IEnumerable<BookOrderJunction>>(orderDTO.OrderBooks), orderDTO.AppUserId);       
+            var books = _mapper.Map<IEnumerable<BookOrderJunction>>(orderDTO.OrderBooks);
+            var order = new Order(books, orderDTO.AppUserId, DateTime.Now.AddDays(3));       
             await _orderRepository.AddOrderAsync(order);
         }
 
