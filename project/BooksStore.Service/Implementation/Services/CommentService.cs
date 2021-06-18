@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces;
@@ -29,7 +30,7 @@ namespace BooksStore.Services
         public async Task AddCommentAsync(CommentDTO commentDTO)
         {
             var comment = new Comment(commentDTO.Descriptions, commentDTO.BookId, commentDTO.AppUserId);           
-            await _commentRepository.AddCommentAsync(comment);
+            await _commentRepository.AddAsync(comment);
         }
 
         public async Task<CommentDTO> GetCommentById(int commentId)
@@ -39,7 +40,7 @@ namespace BooksStore.Services
                 return _mapper.Map<CommentDTO>(_cacheManager.Get<Comment>(CacheKeys.GetCommentKey(commentId)));
             }            
 
-            var comment = await _commentRepository.GetCommentById(commentId);
+            var comment = await _commentRepository.GetByIdAsync(commentId);
             if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));
@@ -50,32 +51,32 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<CommentDTO>> GetComments(int skip, int take, int bookId)
         {
-            var comments = await _commentRepository.GetComments(skip, take, bookId);
+            var comments = await _commentRepository.GetAsync(skip, take, bookId);
 
             return _mapper.Map<IEnumerable<CommentDTO>>(comments);
         }
 
         public async Task RemoveCommentAsync(int commentId)
         {
-            var comment = await _commentRepository.GetCommentById(commentId);
+            var comment = await _commentRepository.GetByIdAsync(commentId);
 
             if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));              
             }
 
-            await _commentRepository.RemoveCommentAsync(comment);
+            await _commentRepository.RemoveAsync(comment);
         }
 
         public async Task UpdateCommentAsync(CommentDTO commentDTO)
         {
-            await _commentRepository.UpdateCommentAsync(_mapper.Map<Comment>(commentDTO));
+            await _commentRepository.UpdateAsync(_mapper.Map<Comment>(commentDTO));
             _cacheManager.Remove(CacheKeys.GetCommentKey(commentDTO.Id));
         }        
 
         public async Task<int> GetCountComments()
         {
-            return await _commentRepository.GetCountComments();
+            return await _commentRepository.GetCountAsync();
         }
     }
 }

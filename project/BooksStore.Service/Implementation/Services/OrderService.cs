@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
@@ -32,7 +32,7 @@ namespace BooksStore.Services
         {
             var books = _mapper.Map<IEnumerable<BookOrderJunction>>(orderDTO.OrderBooks);
             var order = new Order(books, orderDTO.AppUserId, DateTime.Now.AddDays(3));       
-            await _orderRepository.AddOrderAsync(order);
+            await _orderRepository.AddAsync(order);
         }
 
         public async Task<OrderDTO> GetOrderByIdAsync(int orderId)
@@ -42,7 +42,7 @@ namespace BooksStore.Services
                 return _mapper.Map<OrderDTO>(_cacheManager.Get<Order>(CacheKeys.GetOrderKey(orderId)));
             }
 
-            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            var order = await _orderRepository.GetByIdAsync(orderId);
 
             if(order == null)
             {
@@ -63,33 +63,33 @@ namespace BooksStore.Services
                 return _mapper.Map<IEnumerable<OrderDTO>>(orders);
             }
 
-            orders = (await _orderRepository.GetOrdersAsync(appUserId, skip, take)).ToList() ?? new List<Order>();
+            orders = (await _orderRepository.GetAsync(appUserId, skip, take)).ToList() ?? new List<Order>();
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            var order = await _orderRepository.GetByIdAsync(orderId);
 
             if (order == null)
             {
                 throw new NotFoundException(nameof(OrderDTO), order);
             }
 
-            await _orderRepository.RemoveOrderAsync(order);
+            await _orderRepository.RemoveAsync(order);
             _cacheManager.Remove(CacheKeys.GetOrdersKey(order.AppUserId));
         }        
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
-            int orderCount = await _orderRepository.GetCountOrdersAsync(appUserId);
-            var orders = await _orderRepository.GetOrdersAsync(appUserId, 0, orderCount);
+            int orderCount = await _orderRepository.GetCountAsync(appUserId);
+            var orders = await _orderRepository.GetAsync(appUserId, 0, orderCount);
 
             foreach (var order in orders)
             {
                 if (order.TimeOfDelivery < DateTime.Now)
                 {
-                    await _orderRepository.RemoveOrderAsync(order);
+                    await _orderRepository.RemoveAsync(order);
                 }
             }
 
@@ -98,7 +98,7 @@ namespace BooksStore.Services
 
         public async Task<int> GetCountOrders(string appUserId)
         {
-            return await _orderRepository.GetCountOrdersAsync(appUserId);
+            return await _orderRepository.GetCountAsync(appUserId);
         }        
     }
 }

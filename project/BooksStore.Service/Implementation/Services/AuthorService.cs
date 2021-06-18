@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,7 +28,7 @@ namespace BooksStore.Services.AuthorSer
 
         public async Task AddAuthorAsync(AuthorDTO authorDTO)
         {
-            await _authorRepository.AddAuthorAsync(new Author(authorDTO.Firstname, authorDTO.Surname));
+            await _authorRepository.AddAsync(new Author(authorDTO.Firstname, authorDTO.Surname));
         }
 
         public async Task<AuthorDTO> GetAuthorByIdAsync(int authorId)
@@ -39,7 +38,7 @@ namespace BooksStore.Services.AuthorSer
                 return _mapper.Map<AuthorDTO>(_cacheManager.Get<Author>(CacheKeys.GetAuthorKey(authorId)));
             }
 
-            var author = await _authorRepository.GetAuthorById(authorId);
+            var author = await _authorRepository.GetByIdAsync(authorId);
 
             if (author == null)
             {
@@ -52,17 +51,17 @@ namespace BooksStore.Services.AuthorSer
 
         public async Task<IEnumerable<AuthorDTO>> GetAuthors(int skip , int take)
         {
-            return _mapper.Map<IEnumerable<AuthorDTO>>(await _authorRepository.GetAuthors(skip, take));
+            return _mapper.Map<IEnumerable<AuthorDTO>>(await _authorRepository.GetAsync(skip, take));
         }
 
         public async Task RemoveAuthorAsync(int authorId)
         {
             if (authorId >= 1)
             {
-                var author = await _authorRepository.GetAuthorById(authorId);
+                var author = await _authorRepository.GetByIdAsync(authorId);
                 if (author != null)
                 {
-                    await _authorRepository.RemoveAuthorAsync(author);
+                    await _authorRepository.RemoveAsync(author);
                     _cacheManager.Remove(CacheKeys.GetAuthorKey(author.Id));
                 }
             }
@@ -72,14 +71,14 @@ namespace BooksStore.Services.AuthorSer
         {
             if (authorDTO != null && authorDTO != default)
             {
-                await _authorRepository.UpdateAuthorAsync(_mapper.Map<Author>(authorDTO));
+                await _authorRepository.UpdateAsync(_mapper.Map<Author>(authorDTO));
                 _cacheManager.Remove(CacheKeys.GetAuthorKey(authorDTO.Id));
             }
         }
 
         public async Task<int> GetCountAuthors()
         {
-            return await _authorRepository.GetCountAuthors();
+            return await _authorRepository.GetCountAsync();
         }
     }
 }

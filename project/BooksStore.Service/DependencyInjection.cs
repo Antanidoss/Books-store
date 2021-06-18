@@ -1,9 +1,9 @@
 ﻿using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.AuthorSer;
-using BooksStore.Services.Implementation.Identity;
+using BooksStore.Services.Implementation.IdentityServices;
 using BooksStore.Services.Interfaces;
-using BooksStore.Services.Interfaces.Identity;
+using BooksStore.Services.Interfaces.IdentityServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BooksStore.Services

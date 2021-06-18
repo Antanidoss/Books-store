@@ -1,5 +1,5 @@
 ﻿using BooksStore.Services.DTO;
-using BooksStore.Services.Interfaces.Identity;
+using BooksStore.Services.Interfaces.IdentityServices;
 using BooksStore.Web.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;

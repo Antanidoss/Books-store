@@ -21,6 +21,7 @@ namespace BooksStore.Infastructure.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Img> Imgs { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {

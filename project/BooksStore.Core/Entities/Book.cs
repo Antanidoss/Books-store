@@ -41,8 +41,7 @@ namespace BooksStore.Core.Entities
             Category = category;
         }
 
-        private void ValidateArgumentConstructor(string title, decimal price, bool inStock, int numberOfPages, string descriptions, 
-            Img img, Author author, Category category)
+        private void ValidateArgumentConstructor(string title, decimal price, bool inStock, int numberOfPages, string descriptions, Img img, Author author, Category category)
         {
             if (string.IsNullOrEmpty(title))
             {

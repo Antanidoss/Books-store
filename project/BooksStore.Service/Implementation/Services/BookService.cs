@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
@@ -43,13 +44,13 @@ namespace BooksStore.Services
 
         public async Task AddBookAsync(BookDTO bookDTO)
         {            
-            Category category = await _categoryRepository.GetCategoryByName(bookDTO.CategoryName);
+            Category category = await _categoryRepository.GetByNameAsync(bookDTO.CategoryName);
             if (category == null)
             {
                 category = new Category(bookDTO.CategoryName);                
             }           
 
-            Author author = await _authorRepository.GetAuthorByName(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
+            Author author = await _authorRepository.GetByNameAsync(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
             if (author == null)
             {
                 author = new Author(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);              
@@ -65,7 +66,7 @@ namespace BooksStore.Services
                 author: author,
                 category: category
             );
-            await _bookRepository.AddBookAsync(book);
+            await _bookRepository.AddAsync(book);
         }
 
         public async Task<BookDTO> GetBookByIdAsync(int bookId)
@@ -75,7 +76,7 @@ namespace BooksStore.Services
                 return _mapper.Map<BookDTO>(_cacheManager.Get<Book>(CacheKeys.GetBookKey(bookId)));
             }            
 
-            var book = await _bookRepository.GetBookByIdAsync(bookId);
+            var book = await _bookRepository.GetByIdAsync(bookId);
 
             if (book == null)
             {
@@ -87,31 +88,31 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<BookDTO>> GetBooks(int skip , int take)
         {
-            var books = await _bookRepository.GetBooks(skip, take);
+            var books = await _bookRepository.GetAsync(skip, take);
 
             return _mapper.Map<IEnumerable<BookDTO>>(books);
         }
 
         public async Task RemoveBookAsync(int bookId)
         {           
-            var book = await _bookRepository.GetBookByIdAsync(bookId);
+            var book = await _bookRepository.GetByIdAsync(bookId);
 
             if (book != default)
             {
-                await _bookRepository.RemoveBookAsync(book);
+                await _bookRepository.RemoveAsync(book);
                 _cacheManager.Remove(CacheKeys.GetBookKey(bookId));
             }
         }
 
         public async Task UpdateBookAsync(BookDTO bookDTO)
         {            
-            await _bookRepository.UpdateBookAsync(_mapper.Map<Book>(bookDTO));
+            await _bookRepository.UpdateAsync(_mapper.Map<Book>(bookDTO));
             _cacheManager.Remove(CacheKeys.GetBookKey(bookDTO.Id));
         }
 
         public async Task<bool> IsBookInBasketAsync(int basketId, int bookId)
         {
-            var book = await _bookRepository.GetBookByIdAsync(bookId);
+            var book = await _bookRepository.GetByIdAsync(bookId);
 
             return book != null && (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default
                 ? true
@@ -120,24 +121,24 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int skip, int take, int categoryId)
         {            
-            Category category = await _categoryRepository.GetCategoryByIdAsync(categoryId);
+            Category category = await _categoryRepository.GetByIdAsync(categoryId);
             if (category == null)
             {
                 throw new ArgumentNullException(nameof(Category));
             }
 
-            return _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetBooks(skip, take, (b) => b.CategoryId == categoryId));
+            return _mapper.Map<IEnumerable<BookDTO>>(await _bookRepository.GetAsync(skip, take, (b) => b.CategoryId == categoryId));
         }
 
         public async Task<int> GetCountBooks()
         {
-            return await _bookRepository.GetCountBooks();
+            return await _bookRepository.GetCountAsync();
         }
 
         public async Task<IEnumerable<BookDTO>> GetBooksByNameAsync(int skip, int take, string bookName)
         {
             bookName = bookName.ToLower().Replace(" ", "");
-            var books = await _bookRepository.GetBooks(skip, take, (b) => b.Title.ToLower().Replace(" ", "") == bookName);
+            var books = await _bookRepository.GetAsync(skip, take, (b) => b.Title.ToLower().Replace(" ", "") == bookName);
 
             return _mapper.Map<IEnumerable<BookDTO>>(books);
         }

@@ -93,7 +93,7 @@ namespace BooksStore.Web.Controllers
         [IdValidationFilter("categoryId")]
         public async Task<IActionResult> IndexByCategory(int? categoryId, string categoryName, int pageNum = 1)
         {
-            if (!string.IsNullOrEmpty(categoryName))
+            if (string.IsNullOrEmpty(categoryName))
             {
                 return View(StatusCode(404));
             }
