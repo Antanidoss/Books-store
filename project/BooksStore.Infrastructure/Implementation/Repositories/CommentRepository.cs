@@ -11,7 +11,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
     public class CommentRepository : ICommentRepository
     {
         private readonly EFDbContext _context;        
-        public CommentRepository(EFDbContext context) => this._context = context;
+        public CommentRepository(EFDbContext context) => _context = context;
 
         public IEnumerable<Comment> Comments => _context.Comments.Include(p => p.AppUser).ToArray();
 

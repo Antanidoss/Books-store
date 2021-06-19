@@ -2,7 +2,7 @@
 using BooksStore.Infrastructure.Interfaces.Repositories;
 using System.Threading.Tasks;
 
-namespace BooksStore.Infastructure.Interfaces
+namespace BooksStore.Infastructure.Interfaces.Repositories
 {
     public interface IBasketRepository : IRepository<Basket>
     {

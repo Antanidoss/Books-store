@@ -1,6 +1,6 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
-using BooksStore.Infastructure.Interfaces;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
     public class BookRepository : IBookRepository
     {
         private readonly EFDbContext _context;
-        public BookRepository(EFDbContext context) => this._context = context;
+        public BookRepository(EFDbContext context) => _context = context;
 
         public async Task AddAsync(Book book)
         {

@@ -11,7 +11,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
     public class AuthorRepository : IAuthorRepository
     {
         private readonly EFDbContext _context;
-        public AuthorRepository(EFDbContext context) => this._context = context;
+        public AuthorRepository(EFDbContext context) => _context = context;
         public async Task AddAsync(Author author)
         {
             _context.Authors.Add(author);

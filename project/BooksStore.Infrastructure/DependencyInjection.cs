@@ -1,8 +1,9 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Implementation.Repositories;
-using BooksStore.Infastructure.Interfaces;
 using BooksStore.Infastructure.Interfaces.Repositories;
+using BooksStore.Infrastructure.Implementation.Repositories;
+using BooksStore.Infrastructure.Interfaces.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +36,7 @@ namespace BooksStore.Infastructure
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IDiscountRepository, DiscountRepository>();
 
             return services;
         }
