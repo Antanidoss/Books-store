@@ -4,66 +4,11 @@
 
 @if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
 {
-    <div class="indexBooks-main">
+    <div class="indexBooks-main col-md-10">
         <div class="indexBooks-div">
             @foreach (var book in Model.BookIndexModel.Objects)
             {
-                <div class="indexBooks-book-div">
-
-                    <div class="indexBooks-bookTitle-div">
-                        <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a>
-                    </div>
-
-                    <div class="indexBooks-bookImg-div">
-                        @if (!string.IsNullOrEmpty(book.ImgPath))
-                        {
-                            <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">
-                                <img src="@Url.Content(book.ImgPath)" />
-                            </a>
-                        }
-                    </div>
-
-                    @if (book.InStock)
-                    {
-                        <div class="indexBooks-bookStock-div">
-                            <text>В наличии</text>                          
-                        </div>
-
-                        <div class="indexBooks-book-lowPanel">
-                            @if (!book.IsAddToBasket)
-                            {
-                                <div class="indexBooks-AddBasket-div">
-                                    <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
-                                        <input type="hidden" value="@book.Id" name="bookId" />
-                                        <input type="submit" value="Добавить в корзину" class="button" />
-                                    </form>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="bookInBasket-div">
-                                    <a class="button" asp-action="IndexBasket" asp-controller="Basket">
-                                        Уже в корзине<i class="fas fa-check"></i>
-                                    </a>
-                                </div>
-                            }
-
-                            <div class="indexBooks-bookPrice-div">
-                                @book.Price.ToString("c")
-                            </div>
-
-                            <div class="indexBooks-bookAuthName-div">
-                                @book.AuthorFullName
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="indexBooks-noneStock">
-                            Нет в наличии
-                        </div>
-                    }
-                </div>
+                @await Html.PartialAsync("../Shared/BookPartial", book)
             }
         </div>
         <div class="indexBooks-pagination-div">

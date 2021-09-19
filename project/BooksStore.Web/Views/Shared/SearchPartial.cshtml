@@ -1,9 +1,14 @@
-﻿
-<div class="search">
+﻿<div class="search col-md-2">
     <div class="serchByName">
         <form asp-action="IndexBooksByName" asp-controller="Book" method="get">
-            <input type="search" placeholder="Название" name="bookName" />
-            <input type="submit" value="Поиск" class="button" />
+            <div class="col-md-12 row btn-group">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Название" name="bookName" />
+                    <div class="input-group-btn">
+                        <input type="submit" value="Поиск" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="serchByCategory">

@@ -1,46 +1,81 @@
 ﻿@model BookCreateModel
 
-<div>
+<div class="col-md-12">
     <form asp-action="AddBook" asp-controller="Book" method="post" enctype="multipart/form-data" class="addBook-form">
-        <div class="vailidate-div" asp-validation-summary="All"></div>
-        <div>
-            <label asp-for="Title">Названия:</label><br />
-            <input asp-for="Title" class="inputGroup-addBook" />
+        <div class="row">
+            <div class="form-group col-md-4">
+                <div>
+                    @Html.ValidationMessageFor(b => b.Title)
+                </div>
+                <label asp-for="Title">Названия</label><br />
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="form-group col-md-5">
+                <div>
+                    @Html.ValidationMessageFor(b => b.Descriptions)
+                </div>
+                <label asp-for="Descriptions">Описания</label><br />
+                <textarea class="form-control" asp-for="Descriptions"></textarea>
+            </div>
+            <div class="form-group col-md-3">
+                <div>
+                    @Html.ValidationMessageFor(b => b.CategoryName)
+                </div>
+                <label asp-for="CategoryName">Категория</label><br />
+                <input asp-for="CategoryName" class="form-control" />
+            </div>
         </div>
-        <div>
-            <label asp-for="Descriptions">Описания:</label><br />
-            <textarea class="inputGroup-addBook textarea-addBook" asp-for="Descriptions"></textarea>
+
+        <div class="row">
+            <div class="form-group col-md-2">
+                <div>
+                    @Html.ValidationMessageFor(b => b.NumberOfPages)
+                </div>
+                <label asp-for="NumberOfPages">Количество страниц</label><br />
+                <input asp-for="NumberOfPages" value="0" type="number" class="form-control" />
+            </div>
+            <div class="form-group col-md-2">
+                <div>
+                    @Html.ValidationMessageFor(b => b.Price)
+                </div>
+                <label asp-for="Price">Цена</label><br />
+                <input asp-for="Price" type="number" value="0" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <div>
+                    @Html.ValidationMessageFor(b => b.AuthorFirstname)
+                </div>
+                <label asp-for="AuthorFirstname">Имя автора</label><br />
+                <input asp-for="AuthorFirstname" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <div>
+                    @Html.ValidationMessageFor(b => b.AuthorSurname)
+                </div>
+                <label asp-for="AuthorSurname">Фамилия автора</label><br />
+                <input asp-for="AuthorSurname" class="form-control" />
+            </div>
         </div>
-        <div>
-            <label asp-for="CategoryName">Категория:</label><br />
-            <input asp-for="CategoryName" class="inputGroup-addBook" />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <div>
+                    @Html.ValidationMessageFor(b => b.ImgFile)
+                </div>
+                <label asp-for="ImgFile">Изображения</label><br />
+                <input asp-for="ImgFile" type="file" />
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-check">
+                    <input asp-for="InStock" type="checkbox" class="form-check-input" />
+                    <label class="form-check-label" asp-for="InStock">В наличии</label>
+                </div>
+            </div>
         </div>
-        <div>
-            <label asp-for="NumberOfPages">Количество страниц:</label><br />
-            <input asp-for="NumberOfPages" value="0" type="number" class="inputGroup-addBook" />
-        </div>
-        <div>
-            <label asp-for="Price">Цена:</label><br />
-            <input asp-for="Price" type="number" value="0" class="inputGroup-addBook" />
-        </div>
-        <div>
-            <label asp-for="AuthorFirstname">Имя автора:</label><br />
-            <input asp-for="AuthorFirstname" class="inputGroup-addBook" />
-        </div>
-        <div>
-            <label asp-for="AuthorSurname">Фамилия автора:</label><br />
-            <input asp-for="AuthorSurname" class="inputGroup-addBook" />
-        </div>
-        <div>
-            <label asp-for="ImgFile">Изображения:</label><br />
-            <input asp-for="ImgFile" type="file" class="inputGroup-addBook" />
-        </div>
-        <div>
-            <label asp-for="InStock">В наличии</label><br />
-            <input asp-for="InStock" type="checkbox" class="inputGroup-addBook checkbox-addBook" />
-        </div>
-        <div>
-            <input type="submit" value="Создать" class="button" />
+
+        <div class="col text-center">
+            <input type="submit" value="Создать" class="btn btn-primary" />
         </div>
     </form>
 </div>

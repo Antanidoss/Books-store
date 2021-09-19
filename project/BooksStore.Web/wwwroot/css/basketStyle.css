@@ -1,15 +1,6 @@
-﻿.indexBasket-main {
-    position: relative;
-    width: 1450px;
-    left: 50px;
-    min-height: 100%;
-}
-.basketEmpty-text-div {
+﻿.basketEmpty-text-div {
     text-align: center;
-    height: 100%;
-    width: 100%;
     font-family: "Source Sans Pro", sans-serif;
-    margin-left:100px;
 }
 .basketEmpty-text-div h3{
     padding-top:300px;

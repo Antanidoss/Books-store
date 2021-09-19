@@ -1,26 +1,28 @@
 ﻿@model BookViewModel
 
-<div class="indexBook-main">
+<div class="indexBook-main col-md-12">
     <div class="indexBook-book">
-        <div class="indexBook-flexDiv">
-            <div class="indexBook-titleBook">
+        <div class="indexBook-flexDiv col-md-12">
+            <div class="indexBook-titleBook col-md-12">
                 <h2>@Model.Title</h2>
             </div>
-
-            <div class="indexBook-authorBook">
+            <div class="indexBook-authorBook col-md-12">
                <h4>@Model.AuthorFullName</h4>
             </div>
         </div>
-        <div class="indexBook-flexDiv">
-            <div class="indexBook-bookImg-div">
+
+        <div class="indexBook-flexDiv col-md-12">
+            <div class="indexBook-bookImg-div col-md-5">
                 @if (!string.IsNullOrEmpty(Model.ImgPath))
                 {
                     <img src="@Url.Content(Model.ImgPath)" />
                 }
             </div>
 
-            <div class="indexBook-descriptionsBook">
-                @Model.Descriptions
+            <div class="indexBook-descriptionsBook col-md-7">
+                <p class="text-justify">
+                    @Model.Descriptions
+                </p>
             </div>
         </div>
         <div class="indexBook-flexDiv">
@@ -36,7 +38,6 @@
             </div>
         </div>
         <div class="indexBook-flexDiv"> 
-
             <div class="indexBook-addBusket">
                 @if (!Model.IsAddToBasket)
                 {
@@ -56,6 +57,7 @@
                     </div>
                 }
             </div>
+
             <div class="indexBook-priceBook">
                 @Model.Price.ToString("c")
             </div>    

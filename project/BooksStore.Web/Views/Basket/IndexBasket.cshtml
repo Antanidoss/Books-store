@@ -1,54 +1,14 @@
 ﻿@model BasketViewModel
 
+@await Html.PartialAsync("SearchPartial")
 
-<div class="indexBasket-main">
+<div class="indexBasket-main col-md-10">
     @if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
     {
-        <div class="indexBooks-div">
-
+        <div class="indexBooks-div col-md-12">
             @foreach (var book in Model.BookIndexModel.Objects)
             {
-                <div class="indexBooks-book-div">
-
-                    <div class="indexBooks-bookTitle-div">
-                        <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a>
-                    </div>
-
-                    <div class="indexBooks-bookImg-div">
-                        @if (!string.IsNullOrEmpty(book.ImgPath))
-                        {
-                            <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">
-                                <img src="@Url.Content(book.ImgPath)" />
-                            </a>
-                        }
-                    </div>
-
-                    <div class="indexBooks-bookStock-div">
-                        <text>В наличии</text>
-                    </div>
-
-                    <div class="indexBasket-lowPanel">
-                        <div class="basketIndex-buy">
-                            <form asp-action="AddOrder" asp-controller="Order" method="get">
-                                <input name="booksIds" value="@book.Id" type="hidden" />
-                                <div>
-                                    <input type="submit" value="Купить" class="basketIndex-buy-dutton button" />
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="indexBooks-BasketbookPrice-div">
-                            @book.Price.ToString("c")
-                        </div>
-
-                        <div class="basketIndex-remove">
-                            <form asp-action="RemoveBasketBook" asp-controller="Basket" method="post">
-                                <input value="@book.Id" type="hidden" name="bookId" />
-                                <input type="submit" value="Убрать с корзины" class="basketIndex-removeBook-dutton button" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                @await Html.PartialAsync("../Shared/BookPartial", book)
             }
         </div>
 
