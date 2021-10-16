@@ -87,7 +87,7 @@ namespace BooksStore.Web.Сommon.Services
             await _bookService.UpdateBookAsync(_mapper.Map<BookDTO>(bookUpdateModel));
         }
 
-        private async Task BookInBasketAsync(BookViewModel book)
+        public async Task BookInBasketAsync(BookViewModel book)
         {
             if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
             {

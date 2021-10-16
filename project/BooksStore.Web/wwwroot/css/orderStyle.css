@@ -1,4 +1,7 @@
-﻿.indexOrder-orders {
+﻿.indexOrder-main {
+    margin: 0 auto;
+}
+.indexOrder-orders {
     display: flex;
     justify-content: center;
     align-items: center;

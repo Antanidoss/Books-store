@@ -1,15 +1,24 @@
 ﻿@model CategoryCreateModel 
 
 <div>
-    <div class="addCategory-div">
+    <div class="addCategory-div col-md-12">
         <form asp-action="AddCategory" asp-controller="Category" method="post" class="addCategory-form">
-            <div class="vailidate-div" asp-validation-summary="All"></div>
-            <div class="addCategory-name">
-                <label asp-for="Name">Название</label><br />
-                <input asp-for="Name" />
+            <div class="col-md-12 form-group row" style="margin-top:100px">
+                <div class="col-md-2"></div>
+
+                <div class="col-form-label">
+                    @Html.ValidationMessageFor(c => c.Name)
+                </div>
+
+                <div class="col-md-1"></div>
+
+                <label asp-for="Name" class="col-form-label">Название</label>
+                <div class="col-md-6">
+                    <input asp-for="Name" class="form-control" />
+                </div>
             </div>
-            <div>
-                <input type="submit" class="button" value="Создать" />
+            <div class="col text-center">
+                <input type="submit" class="btn btn-primary" value="Создать" />
             </div>
         </form>
     </div>
