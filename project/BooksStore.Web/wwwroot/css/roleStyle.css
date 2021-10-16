@@ -25,14 +25,6 @@
     width: 120px;
     height: 35px;
 }
-.indexRoles-main {
-    position: relative;
-}
-.indexRoles-roles{
-    display:flex;
-    justify-content:space-around;
-    margin-top:100px;
-}
 .indexRoles-addRole{
     position:relative;
     text-align:center;

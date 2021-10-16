@@ -22,12 +22,15 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BasketViewModelService(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
+        private readonly IBookViewModelService _bookViewModelService;
+
+        public BasketViewModelService(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor, IBookViewModelService bookViewModelService)
         {
             _basketService = basketService;
             _mapper = mapper;
             _currentUser = currentUser;
             _httpContextAccessor = httpContextAccessor;
+            _bookViewModelService = bookViewModelService;
         }
 
         public async Task AddBasketBookAsync(int bookId)

@@ -10,8 +10,7 @@ namespace BooksStore.Web.Сommon.Profiles
     {
         public BookVMProfile()
         {
-            CreateMap<BookDTO, BookViewModel>()
-                    .ForMember(p => p.AuthorFullName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname));
+            CreateMap<BookDTO, BookViewModel>().ForMember(p => p.AuthorFullName, conf => conf.MapFrom(o => o.AuthorFirstname + " " + o.AuthorSurname));
 
             CreateMap<BookCreateModel, BookDTO>();
             CreateMap<BookUpdateModel, BookDTO>();

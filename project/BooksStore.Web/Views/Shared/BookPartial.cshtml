@@ -1,50 +1,69 @@
-﻿@model BookViewModel
+﻿@model (BookViewModel Book, bool IsAdmin)
 
 <div class="indexBooks-book-div col-md-3">
     <div class="indexBooks-bookTitle-div col-md-12">
-        <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.Id">@Model.Title</a>
+        <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.Book.Id">@Model.Book.Title</a>
     </div>
 
     <div class="indexBooks-bookImg-div col-md-12">
-        @if (!string.IsNullOrEmpty(Model.ImgPath))
+        @if (!string.IsNullOrEmpty(Model.Book.ImgPath))
         {
-            <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.Id">
-                <img src="@Url.Content(Model.ImgPath)" />
+            <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.Book.Id">
+                <img src="@Url.Content(Model.Book.ImgPath)" />
             </a>
          }
     </div>
 
-    @if (Model.InStock)
+    @if (Model.Book.InStock)
     {
         <div class="indexBooks-bookStock-div col-md-12">
             <text>В наличии</text>
         </div>
 
         <div class="indexBooks-book-lowPanel row">
-            @if (!Model.IsAddToBasket)
-             {
-                 <div class="indexBooks-AddBasket-div col-auto">
-                     <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
-                         <input type="hidden" value="@Model.Id" name="bookId" />
-                         <input type="submit" value="Добавить в корзину" class="btn btn-primary btn-sm" />
-                     </form>
-                 </div> 
-             }
-             else
-             {
-                <div class="bookInBasket-div col-md-3">B
-                    <a class="button" asp-action="IndexBasket" asp-controller="Basket">
-                        Уже в корзине<i class="fas fa-check"></i>
-                    </a>
+            @if (Model.IsAdmin)
+            {
+                <div class="indexBooks-removeBook-div">
+                    <form asp-action="RemoveBook" asp-controller="Book" method="post">
+                        <input type="hidden" value="@Model.Book.Id" name="bookId" />
+                        <input class="indexAdmin-removeBook-button button " value="Удалить" type="submit" />
+                    </form>
                 </div>
-             }
+
+                <div class="indexBooks-updateBook-div">
+                    <form asp-action="UpdateBook" asp-controller="Book" method="get">
+                        <input type="hidden" value="@Model.Book.Id" name="bookId" />
+                        <input type="submit" value="Обновить" class="indexAdmin-updateBook-button button" />
+                    </form>
+                </div>
+            }
+            else 
+            {
+                @if (!Model.Book.IsAddToBasket)
+                {
+                    <div class="indexBooks-AddBasket-div col-auto">
+                        <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
+                            <input type="hidden" value="@Model.Book.Id" name="bookId" />
+                            <input type="submit" value="Добавить в корзину" class="btn btn-primary btn-sm" />
+                        </form>
+                    </div> 
+                }
+                else
+                {
+                   <div class="bookInBasket-div col-md-5">
+                       <a class="button" asp-action="IndexBasket" asp-controller="Basket">
+                           Уже в корзине<i class="fas fa-check"></i>
+                       </a>
+                   </div>
+                }   
+            }
 
              <div class="indexBooks-bookPrice-div col-md-3">
-                 @Model.Price.ToString("c")
+                 @Model.Book.Price.ToString("c")
              </div>
 
              <div class="indexBooks-bookAuthName-div col-auto">
-                 @Model.AuthorFullName
+                 @Model.Book.AuthorFullName
              </div>
         </div> 
      }
