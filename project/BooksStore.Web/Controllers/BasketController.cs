@@ -19,32 +19,32 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         public async Task<IActionResult> IndexBasket(int pageNum = 1)
-        {            
-            return View(await _basketService.GetBasketAsync(pageNum));                        
+        {
+            return View(await _basketService.GetBasketAsync(pageNum));
         }
 
         [HttpPost]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> AddBasketBook(int? bookId)
-        {            
-            await _basketService.AddBasketBookAsync(bookId.Value);               
-            
-            return RedirectToAction("IndexBooks", "Book");            
+        {
+            await _basketService.AddBasketBookAsync(bookId.Value);
+
+            return RedirectToAction("IndexBooks", "Book");
         }
 
         [HttpPost]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> RemoveBasketBook(int? bookId)
-        {           
+        {
             await _basketService.RemoveBasketBookAsync(bookId.Value);
-                       
+
             return RedirectToAction(nameof(IndexBasket));
         }
 
         [HttpPost]
         public async Task<IActionResult> RemoveBasketBooks(IEnumerable<int> bookIds)
         {
-            foreach(int bookId in bookIds)
+            foreach (int bookId in bookIds)
             {
                 await _basketService.RemoveBasketBookAsync(bookId);
             }
@@ -58,6 +58,6 @@ namespace BooksStore.Web.Controllers
             await _basketService.RemoveAllBasketBooksAsync();
 
             return RedirectToAction(nameof(IndexBasket));
-        }          
+        }
     }
 }

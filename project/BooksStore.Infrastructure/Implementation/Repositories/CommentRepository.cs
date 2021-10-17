@@ -10,7 +10,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 {
     public class CommentRepository : ICommentRepository
     {
-        private readonly EFDbContext _context;        
+        private readonly EFDbContext _context;
         public CommentRepository(EFDbContext context) => _context = context;
 
         public IEnumerable<Comment> Comments => _context.Comments.Include(p => p.AppUser).ToArray();
@@ -29,7 +29,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
             return comment != default ? comment : null;
         }
-       
+
         public async Task RemoveAsync(Comment comment)
         {
             _context.Comments.Remove(comment);
@@ -50,7 +50,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .Take(take)
                 .Include(p => p.AppUser)
                 .ToListAsync();
-        }        
+        }
 
         public async Task<int> GetCountAsync()
         {

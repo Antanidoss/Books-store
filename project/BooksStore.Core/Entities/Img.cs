@@ -2,7 +2,7 @@
 
 namespace BooksStore.Core.Entities
 {
-    public class Img : BaseEntity 
+    public class Img : BaseEntity
     {
         public string Path { get; set; }
         public Book Book { get; set; }
@@ -22,7 +22,7 @@ namespace BooksStore.Core.Entities
             if (string.IsNullOrEmpty(path))
             {
                 throw new ArgumentException("Путь картинки не может быть пустой либо равен null", nameof(path));
-            }            
+            }
         }
     }
 }

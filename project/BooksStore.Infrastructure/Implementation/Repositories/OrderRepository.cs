@@ -27,7 +27,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             return order != default ? order : null;
-        }        
+        }
 
         public async Task RemoveAsync(Order order)
         {
@@ -36,15 +36,15 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         }
 
         public async Task UpdateAsync(Order order)
-        {                     
+        {
             _context.Orders.Update(order);
-            await _context.SaveChangesAsync();            
+            await _context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(IEnumerable<Order> orders)
         {
             _context.Orders.RemoveRange(orders);
-            await _context.SaveChangesAsync();         
+            await _context.SaveChangesAsync();
         }
 
         public async Task<int> GetCountAsync(string appUserId)
@@ -61,7 +61,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.OrderBooks)
-                .ThenInclude(p => p.Book)                                
+                .ThenInclude(p => p.Book)
                 .ToListAsync();
         }
     }

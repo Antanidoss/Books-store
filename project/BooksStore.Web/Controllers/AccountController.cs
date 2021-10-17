@@ -19,9 +19,9 @@ namespace BooksStore.Web.Controllers
 
         private readonly IMapper _mapper;
 
-        public AccountController(ICurrentUser currentUser, IUserService userManagerService , IMapper mapper)
+        public AccountController(ICurrentUser currentUser, IUserService userManagerService, IMapper mapper)
         {
-            _currentUser = currentUser;      
+            _currentUser = currentUser;
             _userService = userManagerService;
             _mapper = mapper;
         }
@@ -41,7 +41,7 @@ namespace BooksStore.Web.Controllers
             {
                 return RedirectToAction("IndexBooks", "Book");
             }
-               
+
             return View(logModel);
         }
 
@@ -50,7 +50,7 @@ namespace BooksStore.Web.Controllers
         [HttpPost]
         [ModelStateValidationFilter]
         public async Task<IActionResult> Registration(RegistrationModel regModel)
-        {                        
+        {
             var result = await _userService.CreateAppUserAsync(regModel.Name, regModel.Email, regModel.Password);
             if (!result.Result.Succeeded)
             {
@@ -59,7 +59,7 @@ namespace BooksStore.Web.Controllers
             }
             await _userService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
 
-            return RedirectToAction("IndexBooks", "Book");          
+            return RedirectToAction("IndexBooks", "Book");
         }
 
         [Authorize]
@@ -77,7 +77,7 @@ namespace BooksStore.Web.Controllers
             AppUserDTO curUser = await _currentUser.GetCurrentUser(HttpContext);
             var userViewModel = _mapper.Map<AppUserViewModel>(curUser);
 
-            userViewModel.RoleName = await _userService.IsInRoleAsync(curUser , "admin") ? "admin" : "user";
+            userViewModel.RoleName = await _userService.IsInRoleAsync(curUser, "admin") ? "admin" : "user";
 
             return View(userViewModel);
         }

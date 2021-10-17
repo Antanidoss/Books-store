@@ -33,7 +33,7 @@ namespace BooksStore.Infrastructure.Implementation
 
         public void Set<T>(string key, object data, int cacheTime)
         {
-            if(string.IsNullOrEmpty(key) | data == null | cacheTime <= 0)
+            if (string.IsNullOrEmpty(key) | data == null | cacheTime <= 0)
             {
                 return;
             }

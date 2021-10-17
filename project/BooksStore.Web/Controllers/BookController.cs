@@ -31,18 +31,18 @@ namespace BooksStore.Web.Controllers
         {
             int booksCount = await _bookService.GetCountAsync();
             var books = await _bookService.GetBooksAsync(pageNum);
-                         
-            return View(new BookListViewModel(pageNum, PageSizes.Books, booksCount, books));                       
+
+            return View(new BookListViewModel(pageNum, PageSizes.Books, booksCount, books));
         }
 
         [HttpGet]
         [AllowAnonymous]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> IndexBook(int? bookId)
-        {            
-            var book = await _bookService.GetBookByIdAsync(bookId.Value);                                           
+        {
+            var book = await _bookService.GetBookByIdAsync(bookId.Value);
 
-            return View(book);                        
+            return View(book);
         }
 
         [HttpGet]
@@ -56,54 +56,44 @@ namespace BooksStore.Web.Controllers
         [HttpPost]
         [ModelStateValidationFilter]
         public async Task<IActionResult> AddBook(BookCreateModel model)
-        {          
+        {
             await _bookService.AddBookAsync(model);
 
-            return RedirectToAction(nameof(IndexBooksAdmin));                       
+            return RedirectToAction(nameof(IndexBooksAdmin));
         }
 
         [HttpPost]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> RemoveBook(int? bookId)
-        {           
-            await _bookService.RemoveBookAsync(bookId.Value);          
+        {
+            await _bookService.RemoveBookAsync(bookId.Value);
 
-            return RedirectToAction(nameof(IndexBooksAdmin));                       
+            return RedirectToAction(nameof(IndexBooksAdmin));
         }
 
         [HttpGet]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> UpdateBook(int? bookId)
-        {          
+        {
             var book = await _bookService.GetBookByIdAsync(bookId.Value);
 
-            return View(_mapper.Map<BookUpdateModel>(book));            
+            return View(_mapper.Map<BookUpdateModel>(book));
         }
         [HttpPost]
         [ModelStateValidationFilter]
         public async Task<IActionResult> UpdateBook(BookUpdateModel model)
-        {           
+        {
             await _bookService.UpdateBookAsync(model);
 
-            return RedirectToAction(nameof(IndexBooksAdmin));           
+            return RedirectToAction(nameof(IndexBooksAdmin));
         }
 
         [HttpGet]
         [AllowAnonymous]
         [IdValidationFilter("categoryId")]
-        public async Task<IActionResult> IndexByCategory(int? categoryId, string categoryName, int pageNum = 1)
+        public async Task<IActionResult> IndexByCategory(int? categoryId, int pageNum = 1)
         {
-            if (string.IsNullOrEmpty(categoryName))
-            {
-                return View(StatusCode(404));
-            }
-
-            var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);    
-            
-            if (booksCategory.Count() == 0)
-            {
-                return View("NotFoundBook", new NotFountBookModel("Не удалось найти книгу по категории", categoryName));
-            }
+            var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);
 
             BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory);
 
@@ -112,8 +102,8 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1) //TODO:
-        {           
+        public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
+        {
             var books = await _bookService.GetBooksByNameAsync(pageNum, bookName);
 
             if (books.Count() == 0)
@@ -123,7 +113,7 @@ namespace BooksStore.Web.Controllers
 
             BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books);
 
-            return View(nameof(IndexBooks), indexBookModel);           
-        }        
+            return View(nameof(IndexBooks), indexBookModel);
+        }
     }
 }

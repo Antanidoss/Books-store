@@ -28,8 +28,7 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public BookViewModelService(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor,
-            ICurrentUser currentUser, IWebHostEnvironment appEnvironment)
+        public BookViewModelService(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser, IWebHostEnvironment appEnvironment)
         {
             _bookService = bookService;
             _mapper = mapper;

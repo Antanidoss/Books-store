@@ -36,7 +36,7 @@ namespace BooksStore.Core.Entities
             }
             if (timeOfDelivery == null || timeOfDelivery < DateTime.Now)
             {
-                throw new ArgumentException("Время доставки не может быть равным null либо иметь прошлую форму времени", 
+                throw new ArgumentException("Время доставки не может быть равным null либо иметь прошлую форму времени",
                     nameof(timeOfDelivery));
             }
         }

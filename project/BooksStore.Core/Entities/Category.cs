@@ -17,7 +17,7 @@ namespace BooksStore.Core.Entities
 
         public Category(string name) : base()
         {
-            ValidateArgumentConstructor(name);       
+            ValidateArgumentConstructor(name);
 
             Name = name;
             Books = new List<Book>();

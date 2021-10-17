@@ -22,7 +22,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         {
             var author = await _context.Authors.FirstOrDefaultAsync(p => p.Id == id);
             return author != default ? author : null;
-        }       
+        }
 
         public async Task RemoveAsync(Author author)
         {

@@ -49,7 +49,7 @@ namespace BooksStore.Services.AuthorSer
             return _mapper.Map<AuthorDTO>(author);
         }
 
-        public async Task<IEnumerable<AuthorDTO>> GetAuthors(int skip , int take)
+        public async Task<IEnumerable<AuthorDTO>> GetAuthors(int skip, int take)
         {
             return _mapper.Map<IEnumerable<AuthorDTO>>(await _authorRepository.GetAsync(skip, take));
         }

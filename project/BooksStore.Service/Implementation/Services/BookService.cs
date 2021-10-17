@@ -43,19 +43,19 @@ namespace BooksStore.Services
         }
 
         public async Task AddBookAsync(BookDTO bookDTO)
-        {            
+        {
             Category category = await _categoryRepository.GetByNameAsync(bookDTO.CategoryName);
             if (category == null)
             {
-                category = new Category(bookDTO.CategoryName);                
-            }           
+                category = new Category(bookDTO.CategoryName);
+            }
 
             Author author = await _authorRepository.GetByNameAsync(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
             if (author == null)
             {
-                author = new Author(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);              
+                author = new Author(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
             }
-          
+
             Book book = new Book(
                 title: bookDTO.Title,
                 price: bookDTO.Price,
@@ -74,7 +74,7 @@ namespace BooksStore.Services
             if (_cacheManager.IsSet(CacheKeys.GetBookKey(bookId)))
             {
                 return _mapper.Map<BookDTO>(_cacheManager.Get<Book>(CacheKeys.GetBookKey(bookId)));
-            }            
+            }
 
             var book = await _bookRepository.GetByIdAsync(bookId);
 
@@ -83,10 +83,10 @@ namespace BooksStore.Services
                 throw new NotFoundException(nameof(Book), book);
             }
 
-            return _mapper.Map<BookDTO>(book);           
+            return _mapper.Map<BookDTO>(book);
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBooks(int skip , int take)
+        public async Task<IEnumerable<BookDTO>> GetBooks(int skip, int take)
         {
             var books = await _bookRepository.GetAsync(skip, take);
 
@@ -94,7 +94,7 @@ namespace BooksStore.Services
         }
 
         public async Task RemoveBookAsync(int bookId)
-        {           
+        {
             var book = await _bookRepository.GetByIdAsync(bookId);
 
             if (book != default)
@@ -105,7 +105,7 @@ namespace BooksStore.Services
         }
 
         public async Task UpdateBookAsync(BookDTO bookDTO)
-        {            
+        {
             await _bookRepository.UpdateAsync(_mapper.Map<Book>(bookDTO));
             _cacheManager.Remove(CacheKeys.GetBookKey(bookDTO.Id));
         }
@@ -116,11 +116,11 @@ namespace BooksStore.Services
 
             return book != null && (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default
                 ? true
-                : false;            
+                : false;
         }
 
         public async Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int skip, int take, int categoryId)
-        {            
+        {
             Category category = await _categoryRepository.GetByIdAsync(categoryId);
             if (category == null)
             {

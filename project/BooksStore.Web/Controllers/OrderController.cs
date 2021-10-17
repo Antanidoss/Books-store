@@ -26,24 +26,19 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         public async Task<IActionResult> IndexOrders(int pageNum = 1)
-        {           
-            var orders = (await _orderService.GetOrdersAsync(pageNum)).ToList();                                    
+        {
+            var orders = (await _orderService.GetOrdersAsync(pageNum)).ToList();
 
-            var orderListViewModel = new OrderListViewModel(pageNum, PageSizes.Orders, orders.Count(), orders);            
+            var orderListViewModel = new OrderListViewModel(pageNum, PageSizes.Orders, orders.Count(), orders);
 
-            return View(orderListViewModel);                      
+            return View(orderListViewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> AddOrder(List<int> booksIds)
         {
-            if (booksIds == null | booksIds.Count() == 0)
-            {
-                return StatusCode(404);
-            }
-
             var books = new List<BookViewModel>();
-            foreach(var bookId in booksIds)
+            foreach (var bookId in booksIds)
             {
                 books.Add(await _bookService.GetBookByIdAsync(bookId));
             }
@@ -52,16 +47,16 @@ namespace BooksStore.Web.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> AddOrder(OrderCreateModel createModel)
-        {               
+        {
             await _orderService.AddOrderAsync(createModel);
-            
-            return RedirectToAction("IndexBooks", "Book");                      
+
+            return RedirectToAction("IndexBooks", "Book");
         }
 
         [HttpPost]
         [IdValidationFilter("orderId")]
         public async Task<IActionResult> RemoveOrder(int? orderId)
-        {             
+        {
             await _orderService.RemoveOrderAsync(orderId.Value);
 
             return RedirectToAction(nameof(IndexOrders));

@@ -27,11 +27,6 @@ namespace BooksStore.Web.Controllers
         [ModelStateValidationFilter]
         public async Task<IActionResult> AddRole(RoleCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             await _roleService.CreateRoleAsync(model);
 
             return RedirectToAction(nameof(IndexRole));
@@ -39,21 +34,21 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         public async Task<IActionResult> IndexRole(int pageNum = 1)
-        {                     
+        {
             var roles = await _roleService.GetRolesAsync(pageNum);
 
             var indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(), roles);
 
-            return View(indexViewModel);                       
+            return View(indexViewModel);
         }
 
         [HttpPost]
         [IdValidationFilter("roleId")]
         public async Task<IActionResult> RemoveRole(string roleId)
-        {                       
+        {
             await _roleService.DeleteAsync(roleId);
-            
+
             return RedirectToAction(nameof(IndexRole));
-        }       
+        }
     }
 }

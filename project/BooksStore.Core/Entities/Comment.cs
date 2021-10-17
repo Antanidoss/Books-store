@@ -1,5 +1,4 @@
-﻿using BooksStore.Core.Entities;
-using System;
+﻿using System;
 
 namespace BooksStore.Core.Entities
 {

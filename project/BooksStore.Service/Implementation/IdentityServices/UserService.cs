@@ -32,7 +32,7 @@ namespace BooksStore.Services.Implementation.IdentityServices
             {
                 return (IdentityResultExtensions.EmailAreadyUse(), "");
             }
-            
+
             user = new AppUser()
             {
                 UserName = userName,
@@ -47,8 +47,8 @@ namespace BooksStore.Services.Implementation.IdentityServices
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-            return user != null 
-                ? (Result.Success(), _mapper.Map<AppUserDTO>(user)) 
+            return user != null
+                ? (Result.Success(), _mapper.Map<AppUserDTO>(user))
                 : (IdentityResultExtensions.AppUserNotFound(), new AppUserDTO());
         }
 
@@ -82,7 +82,7 @@ namespace BooksStore.Services.Implementation.IdentityServices
         public async Task<Result> RemoveAppUserAsync(string appUserId)
         {
             AppUser appUser = await _userManager.FindByIdAsync(appUserId);
-            if(appUser != null)
+            if (appUser != null)
             {
                 var result = await _userManager.DeleteAsync(appUser);
                 return result.Succeeded ? Result.Success() : result.ToApplicationResult();
@@ -94,7 +94,7 @@ namespace BooksStore.Services.Implementation.IdentityServices
         public async Task<Result> SignInAsync(string appUserId, bool isPasrsistent)
         {
             var user = await _userManager.FindByIdAsync(appUserId);
-            if(user != null)
+            if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPasrsistent);
             }
@@ -109,7 +109,7 @@ namespace BooksStore.Services.Implementation.IdentityServices
 
         public async Task<Result> RemoveFromRoleAsync(AppUserDTO appUserDTO, string roleName)
         {
-            if(appUserDTO != null && appUserDTO != default && !string.IsNullOrEmpty(roleName))
+            if (appUserDTO != null && appUserDTO != default && !string.IsNullOrEmpty(roleName))
             {
                 var result = await _userManager.RemoveFromRoleAsync(_mapper.Map<AppUser>(appUserDTO), roleName);
                 return result.Succeeded ? Result.Success() : result.ToApplicationResult();

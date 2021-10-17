@@ -25,8 +25,7 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderViewModelService(IOrderService orderService, IMapper mapper, ICurrentUser currentUser,
-            IHttpContextAccessor httpContextAccessor, IBasketService basketService)
+        public OrderViewModelService(IOrderService orderService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor, IBasketService basketService)
         {
             _orderService = orderService;
             _mapper = mapper;
