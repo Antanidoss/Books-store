@@ -27,14 +27,14 @@ namespace BooksStore.Services
             _bookRepository = bookRepository;
             _mapper = mapper;
             _cacheManager = cacheManager;
-        }       
+        }
 
         public async Task<BasketDTO> GetBasketByIdAsync(int basketId)
         {
             if (_cacheManager.IsSet(CacheKeys.GetBasketKey(basketId)))
             {
                 return _mapper.Map<BasketDTO>(_cacheManager.Get<Basket>(CacheKeys.GetBasketKey(basketId)));
-            }           
+            }
 
             var basket = await _basketRepository.GetByIdAsync(basketId);
 
@@ -45,11 +45,11 @@ namespace BooksStore.Services
 
             _cacheManager.Set<Basket>(CacheKeys.GetBasketKey(basket.Id), basket, CacheTimes.BasketCacheTime);
             return _mapper.Map<BasketDTO>(basket);
-        }                  
+        }
 
         public async Task AddBasketBookAsync(int basketId, int bookId)
         {
-            Basket basket = await _basketRepository.GetByIdAsync(basketId);           
+            Basket basket = await _basketRepository.GetByIdAsync(basketId);
             if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
@@ -93,7 +93,7 @@ namespace BooksStore.Services
 
                 await _basketRepository.UpdateAsync(basket);
                 _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
-            }            
+            }
         }
 
         public async Task RemoveAllBasketBooksAsync(int basketId)

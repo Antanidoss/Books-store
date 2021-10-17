@@ -10,7 +10,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly EFDbContext _context;      
+        private readonly EFDbContext _context;
         public CategoryRepository(EFDbContext context) => _context = context;
 
         public async Task AddAsync(Category category)

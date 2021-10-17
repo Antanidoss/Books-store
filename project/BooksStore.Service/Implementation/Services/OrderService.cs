@@ -31,7 +31,7 @@ namespace BooksStore.Services
         public async Task AddOrderAsync(OrderDTO orderDTO)
         {
             var books = _mapper.Map<IEnumerable<BookOrderJunction>>(orderDTO.OrderBooks);
-            var order = new Order(books, orderDTO.AppUserId, DateTime.Now.AddDays(3));       
+            var order = new Order(books, orderDTO.AppUserId, DateTime.Now.AddDays(3));
             await _orderRepository.AddAsync(order);
         }
 
@@ -44,7 +44,7 @@ namespace BooksStore.Services
 
             var order = await _orderRepository.GetByIdAsync(orderId);
 
-            if(order == null)
+            if (order == null)
             {
                 throw new NotFoundException(nameof(OrderDTO), order);
             }
@@ -55,7 +55,7 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<OrderDTO>> GetOrders(string appUserId, int skip, int take)
         {
-            var orders = new List<Order>(); 
+            var orders = new List<Order>();
 
             if (_cacheManager.IsSet(CacheKeys.GetOrdersKey(appUserId)))
             {
@@ -78,7 +78,7 @@ namespace BooksStore.Services
 
             await _orderRepository.RemoveAsync(order);
             _cacheManager.Remove(CacheKeys.GetOrdersKey(order.AppUserId));
-        }        
+        }
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
@@ -99,6 +99,6 @@ namespace BooksStore.Services
         public async Task<int> GetCountOrders(string appUserId)
         {
             return await _orderRepository.GetCountAsync(appUserId);
-        }        
+        }
     }
 }

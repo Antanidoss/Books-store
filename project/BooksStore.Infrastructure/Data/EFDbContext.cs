@@ -26,6 +26,7 @@ namespace BooksStore.Infastructure.Data
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             DbSaveChanges();
+
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
@@ -33,14 +34,14 @@ namespace BooksStore.Infastructure.Data
         {
             var addedEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Added);
 
-            foreach(var entry in addedEntities)
+            foreach (var entry in addedEntities)
             {
                 if (!(entry.Entity is BaseEntity))
                 {
                     return;
                 }
 
-                var timeOfCreate = entry.Property(nameof(BaseEntity.TimeOfCreate)).CurrentValue;                
+                var timeOfCreate = entry.Property(nameof(BaseEntity.TimeOfCreate)).CurrentValue;
 
                 if (timeOfCreate == null || DateTime.Parse(timeOfCreate.ToString()).Year < 2020)
                 {

@@ -29,12 +29,12 @@ namespace BooksStore.Web.Controllers
         [HttpGet]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> IndexComments(int? bookId, int pageNum = 1)
-        {            
+        {
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
             var comments = (await _commentService.GetCommentsAsync(pageNum, bookId.Value)).ToList();
 
             string userId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
-            CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), 
+            CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId),
                 pageNum, PageSizes.Comments, comments.Count(), comments);
 
             return View(bookComment);
@@ -44,7 +44,7 @@ namespace BooksStore.Web.Controllers
         [Authorize]
         [ModelStateValidationFilter]
         public async Task<IActionResult> AddComment(CommentCreateModel model)
-        {            
+        {
             await _commentService.AddCommentAsync(model);
 
             return RedirectToAction(nameof(IndexComments), new { bookId = model.BookId });
@@ -54,7 +54,7 @@ namespace BooksStore.Web.Controllers
         [Authorize(Roles = "admin")]
         [IdValidationFilter("commentId")]
         public async Task<IActionResult> RemoveComment(int? commentId, string returnUrl)
-        {            
+        {
             await _commentService.RemoveCommentAsync(commentId.Value);
 
             return View(returnUrl);

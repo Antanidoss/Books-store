@@ -23,14 +23,14 @@ namespace BooksStore.Services.Implementation.IdentityServices
         }
 
         public async Task<Result> CreateRoleAsync(string roleName)
-        {          
+        {
             var result = await _roleManager.CreateAsync(new IdentityRole() { Name = roleName });
 
-            return result.ToApplicationResult();           
+            return result.ToApplicationResult();
         }
 
         public async Task<Result> DeleteAsync(string roleId)
-        {          
+        {
             var role = await _roleManager.FindByIdAsync(roleId);
             var result = await _roleManager.DeleteAsync(role);
 
@@ -38,7 +38,7 @@ namespace BooksStore.Services.Implementation.IdentityServices
         }
 
         public async Task<RoleDTO> FindRoleByIdAsync(string roleId)
-        {           
+        {
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
@@ -46,7 +46,7 @@ namespace BooksStore.Services.Implementation.IdentityServices
                 throw new NotFoundException(nameof(role), roleId);
             }
 
-            return (_mapper.Map<RoleDTO>(role));                    
+            return (_mapper.Map<RoleDTO>(role));
         }
 
         public async Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take)

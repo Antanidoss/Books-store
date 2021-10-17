@@ -16,7 +16,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
         public async Task AddAsync(Book book)
         {
-            if(book != null && book != default)
+            if (book != null && book != default)
             {
                 _context.Books.Add(book);
                 await _context.SaveChangesAsync();
@@ -42,8 +42,8 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         }
 
         public async Task UpdateAsync(Book book)
-        {           
-             var updateBook = await _context.Books.FirstOrDefaultAsync(p => p.Id == book.Id);
+        {
+            var updateBook = await _context.Books.FirstOrDefaultAsync(p => p.Id == book.Id);
 
             updateBook.Title = book.Title;
             updateBook.Descriptions = book.Descriptions;
@@ -53,7 +53,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
             updateBook.InStock = book.InStock;
 
             _context.Books.Update(updateBook);
-            await _context.SaveChangesAsync();       
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Book>> GetAsync(int skip, int take)
@@ -74,7 +74,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
         public async Task<IEnumerable<Book>> GetAsync(int skip, int take, Func<Book, bool> func)
         {
-            return _context.Books             
+            return _context.Books
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)

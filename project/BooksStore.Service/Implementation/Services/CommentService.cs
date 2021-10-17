@@ -29,7 +29,7 @@ namespace BooksStore.Services
 
         public async Task AddCommentAsync(CommentDTO commentDTO)
         {
-            var comment = new Comment(commentDTO.Descriptions, commentDTO.BookId, commentDTO.AppUserId);           
+            var comment = new Comment(commentDTO.Descriptions, commentDTO.BookId, commentDTO.AppUserId);
             await _commentRepository.AddAsync(comment);
         }
 
@@ -38,7 +38,7 @@ namespace BooksStore.Services
             if (_cacheManager.IsSet(CacheKeys.GetCommentKey(commentId)))
             {
                 return _mapper.Map<CommentDTO>(_cacheManager.Get<Comment>(CacheKeys.GetCommentKey(commentId)));
-            }            
+            }
 
             var comment = await _commentRepository.GetByIdAsync(commentId);
             if (comment == null)
@@ -62,7 +62,7 @@ namespace BooksStore.Services
 
             if (comment == null)
             {
-                throw new ArgumentNullException(nameof(Comment));              
+                throw new ArgumentNullException(nameof(Comment));
             }
 
             await _commentRepository.RemoveAsync(comment);
@@ -72,7 +72,7 @@ namespace BooksStore.Services
         {
             await _commentRepository.UpdateAsync(_mapper.Map<Comment>(commentDTO));
             _cacheManager.Remove(CacheKeys.GetCommentKey(commentDTO.Id));
-        }        
+        }
 
         public async Task<int> GetCountComments()
         {

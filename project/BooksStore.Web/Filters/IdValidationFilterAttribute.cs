@@ -25,7 +25,7 @@ namespace BooksStore.Web.Filters
                     context.Result = new StatusCodeResult(404);
                     return;
                 }
-            }           
+            }
         }
     }
 }

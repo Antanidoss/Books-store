@@ -26,8 +26,8 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .Include(p => p.BasketBooks)
                 .ThenInclude(p => p.Book)
                 .ThenInclude(p => p.Img)
-                .FirstOrDefaultAsync(p => p.Id == basketId);       
-            
+                .FirstOrDefaultAsync(p => p.Id == basketId);
+
             return basket != default ? basket : null;
         }
 
@@ -58,7 +58,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
             var basket = await _context.Baskets
                 .Include(b => b.BasketBooks)
                 .FirstOrDefaultAsync(b => b.Id == basketId);
-                            
+
             return basket == null ? default : basket.BasketBooks.Count();
         }
     }

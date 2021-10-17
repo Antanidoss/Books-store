@@ -31,7 +31,7 @@ namespace BooksStore.Services
             var category = new Category(categoryDTO.Name);
             await _categoryRepository.AddAsync(category);
         }
-                              
+
         public async Task<CategoryDTO> GetCategoryById(int categoryId)
         {
             var category = await _categoryRepository.GetByIdAsync(categoryId);
@@ -52,7 +52,7 @@ namespace BooksStore.Services
         }
 
         public async Task RemoveCategoryAsync(int categoryId)
-        {            
+        {
             var category = await _categoryRepository.GetByIdAsync(categoryId);
 
             if (category == null)
