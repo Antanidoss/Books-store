@@ -1,5 +1,6 @@
 using AutoMapper;
 using BooksStore.Infastructure;
+using BooksStore.Infastructure.Data;
 using BooksStore.Services;
 using BooksStore.Services.Profiles;
 using BooksStore.Web.Common.CurUser;
@@ -9,6 +10,8 @@ using BooksStore.Web.Ñommon.Profiles;
 using BooksStore.Web.Ñommon.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -78,6 +81,15 @@ namespace BooksStore.Web
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<EFDbContext>();
+                if ((context.GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists())
+                {
+                    context.Database.EnsureCreated();
+                }
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
