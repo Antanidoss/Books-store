@@ -42,7 +42,7 @@ namespace BooksStore.Web
 
             // Auto mapper configuration
             var mappingConfig = new MapperConfiguration(mc =>
-            {               
+            {
                 //View model profiles
                 mc.AddProfile(new AppUserVMProfile());
                 mc.AddProfile(new BookVMProfile());
@@ -61,7 +61,7 @@ namespace BooksStore.Web
                 mc.AddProfile(new CommentDTOProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);            
+            services.AddSingleton(mapper);
 
             //Current user configuration 
             services.AddScoped<ICurrentUser, CurrentUser>();
@@ -75,7 +75,7 @@ namespace BooksStore.Web
             services.AddScoped<IRoleViewModelService, RoleViewModelService>();
         }
 
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -85,13 +85,13 @@ namespace BooksStore.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                
+
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-         
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
