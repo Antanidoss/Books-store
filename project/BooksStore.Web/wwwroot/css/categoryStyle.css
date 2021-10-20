@@ -1,39 +1,46 @@
-﻿.addCategory-name{
-    margin-top:100px;
-    padding-bottom:100px;
+﻿.addCategory-name {
+    margin-top: 100px;
+    padding-bottom: 100px;
 }
-.addCategory-name input{
+
+.addCategory-name input {
     width: 250px;
     height: 50px;
     border-radius: 10px;
     border-color: #5477cb;
 }
-.indexCategories-category{
-    margin-top:60px;
+
+.indexCategories-category {
+    margin-top: 60px;
 }
+
 .indexCategories-categoryName {
     margin-left: 800px;
     margin-top: 50px;
     font-size: 19px;
     font-family: "Source Sans Pro", sans-serif;
 }
-.indexCategories-noneCategory{
+
+.indexCategories-noneCategory {
     position: relative;
     text-align: center;
     top: 900px;
 }
+
 .indexCategories-addCategory {
     font-size: 19px;
     font-family: "Source Sans Pro", sans-serif;
     text-align: center;
     margin-top: 100px;
 }
-.indexCategories-pagination-div{
+
+.indexCategories-pagination-div {
     position: relative;
     display: flex;
     top: 200px;
     justify-content: center;
 }
+
 .indexCategories-main {
     margin: 0 auto;
 }

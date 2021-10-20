@@ -1,9 +1,7 @@
 ﻿@model BasketViewModel
 
-@await Html.PartialAsync("SearchPartial")
-
-<div class="col-md-10">
-    <div class="indexBasket-main col-md-12">
+<div class="col-md-12">
+    <div class="indexBasket-main">
         @if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
         {
             <div class="indexBooks-div col-md-12">
@@ -34,7 +32,6 @@
             </div>
     
             <div>
-    
                 @if (Model.BookIndexModel.PageInfo.TotalPage != Model.BookIndexModel.PageInfo.PageNumber)
                 {
                     @Html.ActionLink("Вперед", "IndexBasket", "Basket", new { pageNum = (Model.BookIndexModel.PageInfo.PageNumber + 1) })
@@ -44,7 +41,6 @@
                 {
                     @Html.ActionLink("Назад", "IndexBasket", "Basket", new { pageNum = (Model.BookIndexModel.PageInfo.PageNumber - 1) })
                 }
-    
             </div>
         }
         else

@@ -1,6 +1,7 @@
 ﻿.indexOrder-main {
     margin: 0 auto;
 }
+
 .indexOrder-orders {
     display: flex;
     justify-content: center;
@@ -9,73 +10,88 @@
     flex-direction: column;
     flex: 1 1 auto;
 }
+
 .indexOrder-order {
-    display:flex;
-    flex-direction:column;
-    border:2px solid #5477cb;
-    border-radius:5px;
-    width:800px;
-    min-height:200px;
-    margin-top:50px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #5477cb;
+    border-radius: 5px;
+    width: 800px;
+    min-height: 200px;
+    margin-top: 50px;
 }
-.removeCompleteOrders-div{
-    position:relative;
-    padding-bottom:50px;
-    padding-right:50px;
-    margin:0 auto;
+
+.removeCompleteOrders-div {
+    position: relative;
+    padding-bottom: 50px;
+    padding-right: 50px;
+    margin: 0 auto;
 }
-.removeCompleteOrders-div .button{
-    padding:5px;
+
+.removeCompleteOrders-div .button {
+    padding: 5px;
 }
-.indexOrder-pagination-div{
-    position:relative;
+
+.indexOrder-pagination-div {
+    position: relative;
 }
+
 .removeAndPaginationOrder-div {
     display: flex;
     position: relative;
     flex-direction: row;
     padding-top: 100px;
 }
-.indexOrder-timeCreate{
-    text-align:center;
-    font-size:18px;
+
+.indexOrder-timeCreate {
+    text-align: center;
+    font-size: 18px;
 }
-.indexOrder-orderPlaced{
-    display:flex;
-    justify-content:space-around;
-    padding-top:50px;
+
+.indexOrder-orderPlaced {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 50px;
 }
+
 .NoOrders-text-div {
-    margin-top:300px;
+    margin-top: 300px;
     text-align: center;
     height: 100%;
     width: 100%;
     font-family: "Source Sans Pro", sans-serif;
 }
+
 .ordering {
     margin: 0 auto;
     margin-top: 100px;
     width: 700px;
-    text-align:center;
+    text-align: center;
 }
+
 .ordering-text {
     margin-top: 100px;
 }
+
 .ordering-form {
-    margin-top:200px;
+    margin-top: 200px;
 }
+
 .ordering-form-book {
     margin-top: 50px;
     overflow: inherit;
     word-wrap: break-word;
 }
+
 .ordering-form-totalPrice {
     margin-top: 50px;
 }
+
 .ordering-form-button {
-    margin-top:100px;
+    margin-top: 100px;
 }
-.ordering-form-button button{
+
+.ordering-form-button button {
     width: 150px;
     height: 35px;
 }
