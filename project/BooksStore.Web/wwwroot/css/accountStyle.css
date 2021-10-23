@@ -1,6 +1,8 @@
 ﻿.regLog-div {
     display: flex;
     justify-content: center;
+    margin: 0 auto;
+    height: 550px;
 }
 
 .regLog-form {
@@ -42,7 +44,7 @@
 }
 
 .regLog-input {
-    width: 190px;
+    width: 300px;
     padding-bottom: 10px;
     border: none;
     border-bottom: 1px solid #e0e0e0;

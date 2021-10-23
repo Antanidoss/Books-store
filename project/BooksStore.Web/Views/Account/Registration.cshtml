@@ -21,14 +21,14 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="IsPasrsistent" class="logReg-label">Запомнить:</label>
+            <label asp-for="IsPasrsistent" class="logReg-label" style="width: 20px">Запомнить:</label>
             <input asp-for="IsPasrsistent" class="regLog-input" type="checkbox" />
         </div>
-
-        <div class="form-group">
-            <input class="regLog-submit" value="Зарегестрироваться" type="submit" />
+        <div class="col-auto row">
+            <div class="col-md-9">
+                <input class="regLog-submit" value="Зарегестрироваться" type="submit" />
+            </div>
+            <a asp-action="Login" asp-controller="Account" style="line-height: 40px">Войти</a>
         </div>
-
-        <a asp-action="Login" asp-controller="Account">Войти</a>
     </form>
 </div>
