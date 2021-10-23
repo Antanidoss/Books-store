@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
 using BooksStore.Services.DTO;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BooksStore.Services.Profiles
@@ -20,7 +21,12 @@ namespace BooksStore.Services.Profiles
                 .ForMember(p => p.AppUser, conf => conf.Ignore())
                 .ForMember(p => p.UpdateTime, conf => conf.Ignore())
                 .ForMember(p => p.OrderBooks, conf => conf.MapFrom(p => p.OrderBooks));
+
+            CreateMap<int, BookOrderJunction>()
+                .ForMember(o => o.BookId, conf => conf.MapFrom(i => i))
+                .ForMember(o => o.Book, conf => conf.Ignore())
+                .ForMember(o => o.Order, conf => conf.Ignore())
+                .ForMember(o => o.OrderId, conf => conf.Ignore());
         }
-        
     }
 }

@@ -37,13 +37,13 @@ namespace BooksStore.Services
             }
 
             var basket = await _basketRepository.GetByIdAsync(basketId);
-
             if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
 
             _cacheManager.Set<Basket>(CacheKeys.GetBasketKey(basket.Id), basket, CacheTimes.BasketCacheTime);
+
             return _mapper.Map<BasketDTO>(basket);
         }
 

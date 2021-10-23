@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BooksStore.Web.Сommon.Pagination
 {
-    public class PageInfo
+    public class PaginationInfo
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public int TotalItems { get; set; }
+
         public int TotalPage 
         {
             get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
@@ -18,6 +16,11 @@ namespace BooksStore.Web.Сommon.Pagination
         public static bool PageNumberIsValid(int pageNumber)
         {
             return pageNumber >= 1;
+        }
+
+        public static int GetCountTakeItems(int pageNumber, int countPageItems)
+        {
+            return (pageNumber - 1) * countPageItems;
         }
     }
 }

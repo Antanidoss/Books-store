@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BooksStore.Web.Сommon.Pagination
+﻿namespace BooksStore.Web.Сommon.Pagination
 {
     public static class PageSizes
     {

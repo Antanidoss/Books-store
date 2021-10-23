@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
@@ -36,19 +35,7 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task AddOrderAsync(OrderCreateModel model)
         {
-            List<BookDTO> booksOrder = new List<BookDTO>();
-
-            foreach (var bookId in model.BookOrderIds)
-            {
-                booksOrder.Add(new BookDTO() { Id = bookId });
-            }
-
-            await _orderService.AddOrderAsync(new OrderDTO()
-            {
-                OrderBooks = booksOrder,
-                AppUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id,
-                TimeOfDelivery = DateTime.Now.AddDays(3)
-            });
+            await _orderService.AddOrderAsync(model.BookOrderIds, (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id);
 
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
             foreach (var bookId in model.BookOrderIds)
@@ -66,14 +53,13 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum)
         {
-            if (!PageInfo.PageNumberIsValid(pageNum))
+            if (!PaginationInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
 
-            int pageSize = PageSizes.Orders;
             var curUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id;
-            var orders = await _orderService.GetOrders(curUserId, (pageNum - 1) * pageSize, pageSize);
+            var orders = await _orderService.GetOrders(curUserId, PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Orders), PageSizes.Orders);
 
             return _mapper.Map<IEnumerable<OrderViewModel>>(orders);
         }

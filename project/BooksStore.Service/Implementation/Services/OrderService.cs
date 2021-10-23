@@ -28,10 +28,10 @@ namespace BooksStore.Services
             _cacheManager = cacheManager;
         }
 
-        public async Task AddOrderAsync(OrderDTO orderDTO)
+        public async Task AddOrderAsync(IEnumerable<int> booksId, string userId)
         {
-            var books = _mapper.Map<IEnumerable<BookOrderJunction>>(orderDTO.OrderBooks);
-            var order = new Order(books, orderDTO.AppUserId, DateTime.Now.AddDays(3));
+            var order = new Order(_mapper.Map<IEnumerable<BookOrderJunction>>(booksId), userId, DateTime.Now.AddDays(3));
+
             await _orderRepository.AddAsync(order);
         }
 

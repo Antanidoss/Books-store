@@ -16,7 +16,7 @@
                     <form asp-action="AddOrder" asp-controller="Order" method="post">
                         @for (int i = 0; i < Model.BookIndexModel.Objects.Count(); i++)
                         {
-                            <input name="booksIds[@i]" value="@Model.BookIndexModel.Objects[i].Id" type="hidden" />
+                            <input name="createModel.BookOrderIds[@i]" value="@Model.BookIndexModel.Objects[i].Id" type="hidden" />
                         }
                         <div>
                             <input type="submit" value="Купить все @Model.TotalPrice.ToString("c")" class="basketIndex-buyAll-dutton button" />
