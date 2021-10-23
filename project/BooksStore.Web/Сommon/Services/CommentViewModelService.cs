@@ -50,7 +50,7 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum, int bookId)
         {
-            if (!PageInfo.PageNumberIsValid(pageNum))
+            if (!PaginationInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }

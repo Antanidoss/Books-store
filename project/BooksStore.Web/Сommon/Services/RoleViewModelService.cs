@@ -40,13 +40,12 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum)
         {
-            if (!PageInfo.PageNumberIsValid(pageNum))
+            if (!PaginationInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
 
-            int pageSize = PageSizes.Roles;
-            var roles = await _roleManagerService.GetRolesAsync((pageNum - 1) * pageNum, pageSize);
+            var roles = await _roleManagerService.GetRolesAsync(PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Roles), PageSizes.Roles);
 
             return _mapper.Map<IEnumerable<RoleViewModel>>(roles);
         }

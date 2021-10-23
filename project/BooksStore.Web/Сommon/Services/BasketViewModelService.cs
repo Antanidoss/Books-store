@@ -22,15 +22,12 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly IBookViewModelService _bookViewModelService;
-
-        public BasketViewModelService(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor, IBookViewModelService bookViewModelService)
+        public BasketViewModelService(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
         {
             _basketService = basketService;
             _mapper = mapper;
             _currentUser = currentUser;
             _httpContextAccessor = httpContextAccessor;
-            _bookViewModelService = bookViewModelService;
         }
 
         public async Task AddBasketBookAsync(int bookId)
@@ -41,7 +38,7 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<BasketViewModel> GetBasketAsync(int pageNum)
         {
-            if (!PageInfo.PageNumberIsValid(pageNum))
+            if (!PaginationInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
