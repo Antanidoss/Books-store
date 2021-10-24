@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
@@ -15,15 +14,15 @@ namespace BooksStore.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         private readonly IMapper _mapper;
 
         private readonly ICacheManager _cacheManager;
 
-        public OrderService(IOrderRepository orderRepository, IMapper mapper, ICacheManager cacheManager)
+        public OrderService(IRepositoryFactory repositoryFactory, IMapper mapper, ICacheManager cacheManager)
         {
-            _orderRepository = orderRepository;
+            _repositoryFactory = repositoryFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
         }
@@ -32,7 +31,7 @@ namespace BooksStore.Services
         {
             var order = new Order(_mapper.Map<IEnumerable<BookOrderJunction>>(booksId), userId, DateTime.Now.AddDays(3));
 
-            await _orderRepository.AddAsync(order);
+            await _repositoryFactory.CreateOrderRepository().AddAsync(order);
         }
 
         public async Task<OrderDTO> GetOrderByIdAsync(int orderId)
@@ -42,7 +41,7 @@ namespace BooksStore.Services
                 return _mapper.Map<OrderDTO>(_cacheManager.Get<Order>(CacheKeys.GetOrderKey(orderId)));
             }
 
-            var order = await _orderRepository.GetByIdAsync(orderId);
+            var order = await _repositoryFactory.CreateOrderRepository().GetByIdAsync(orderId);
 
             if (order == null)
             {
@@ -63,33 +62,33 @@ namespace BooksStore.Services
                 return _mapper.Map<IEnumerable<OrderDTO>>(orders);
             }
 
-            orders = (await _orderRepository.GetAsync(appUserId, skip, take)).ToList() ?? new List<Order>();
+            orders = (await _repositoryFactory.CreateOrderRepository().GetAsync(appUserId, skip, take)).ToList() ?? new List<Order>();
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            var order = await _orderRepository.GetByIdAsync(orderId);
+            var order = await _repositoryFactory.CreateOrderRepository().GetByIdAsync(orderId);
 
             if (order == null)
             {
                 throw new NotFoundException(nameof(OrderDTO), order);
             }
 
-            await _orderRepository.RemoveAsync(order);
+            await _repositoryFactory.CreateOrderRepository().RemoveAsync(order);
             _cacheManager.Remove(CacheKeys.GetOrdersKey(order.AppUserId));
         }
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
-            int orderCount = await _orderRepository.GetCountAsync(appUserId);
-            var orders = await _orderRepository.GetAsync(appUserId, 0, orderCount);
+            int orderCount = await _repositoryFactory.CreateOrderRepository().GetCountAsync(appUserId);
+            var orders = await _repositoryFactory.CreateOrderRepository().GetAsync(appUserId, 0, orderCount);
 
             foreach (var order in orders)
             {
                 if (order.TimeOfDelivery < DateTime.Now)
                 {
-                    await _orderRepository.RemoveAsync(order);
+                    await _repositoryFactory.CreateOrderRepository().RemoveAsync(order);
                 }
             }
 
@@ -98,7 +97,7 @@ namespace BooksStore.Services
 
         public async Task<int> GetCountOrders(string appUserId)
         {
-            return await _orderRepository.GetCountAsync(appUserId);
+            return await _repositoryFactory.CreateOrderRepository().GetCountAsync(appUserId);
         }
     }
 }

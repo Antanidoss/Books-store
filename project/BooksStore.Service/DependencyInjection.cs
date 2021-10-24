@@ -1,5 +1,6 @@
 ﻿using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
+using BooksStore.Service.Implementation;
 using BooksStore.Services.AuthorSer;
 using BooksStore.Services.Implementation.IdentityServices;
 using BooksStore.Services.Interfaces;
@@ -16,6 +17,8 @@ namespace BooksStore.Services
             services.AddMemoryCache();
             //CacheManager configuration
             services.AddTransient<ICacheManager, MemoryCacheManager>();
+
+            services.AddScoped<IRepositoryFactory, RepositoryFactory>();
 
             //Services configuration 
             services.AddScoped<IBookService, BookService>();

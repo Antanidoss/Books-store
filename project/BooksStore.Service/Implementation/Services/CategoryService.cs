@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
@@ -13,15 +12,15 @@ namespace BooksStore.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         private readonly IMapper _mapper;
 
         private readonly ICacheManager _cacheManager;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, ICacheManager cacheManager)
+        public CategoryService(IRepositoryFactory repositoryFactory, IMapper mapper, ICacheManager cacheManager)
         {
-            _categoryRepository = categoryRepository;
+            _repositoryFactory = repositoryFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
         }
@@ -29,12 +28,13 @@ namespace BooksStore.Services
         public async Task AddCategoryAsync(CategoryDTO categoryDTO)
         {
             var category = new Category(categoryDTO.Name);
-            await _categoryRepository.AddAsync(category);
+
+            await _repositoryFactory.CreateCategoryRepository().AddAsync(category);
         }
 
         public async Task<CategoryDTO> GetCategoryById(int categoryId)
         {
-            var category = await _categoryRepository.GetByIdAsync(categoryId);
+            var category = await _repositoryFactory.CreateCategoryRepository().GetByIdAsync(categoryId);
 
             if (category == null)
             {
@@ -46,34 +46,34 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<CategoryDTO>> GetCategories(int skip, int take)
         {
-            var categories = await _categoryRepository.GetAsync(skip, take);
+            var categories = await _repositoryFactory.CreateCategoryRepository().GetAsync(skip, take);
 
             return _mapper.Map<IEnumerable<CategoryDTO>>(categories);
         }
 
         public async Task RemoveCategoryAsync(int categoryId)
         {
-            var category = await _categoryRepository.GetByIdAsync(categoryId);
+            var category = await _repositoryFactory.CreateCategoryRepository().GetByIdAsync(categoryId);
 
             if (category == null)
             {
                 throw new NotFoundException(nameof(Category), category);
             }
 
-            await _categoryRepository.RemoveAsync(category);
+            await _repositoryFactory.CreateCategoryRepository().RemoveAsync(category);
             _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryId));
         }
 
         public async Task UpdateCategoryAsync(CategoryDTO categoryDTO)
         {
             var category = _mapper.Map<Category>(categoryDTO);
-            await _categoryRepository.UpdateAsync(category);
+            await _repositoryFactory.CreateCategoryRepository().UpdateAsync(category);
             _cacheManager.Remove(CacheKeys.GetCategoryKey(categoryDTO.Id));
         }
 
         public async Task<int> GetCountCategories()
         {
-            return await _categoryRepository.GetCount();
+            return await _repositoryFactory.CreateCategoryRepository().GetCount();
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces;
-using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
 using BooksStore.Services.Interfaces;
@@ -14,15 +12,15 @@ namespace BooksStore.Services
 {
     public class CommentService : ICommentService
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         private readonly IMapper _mapper;
 
         private readonly ICacheManager _cacheManager;
 
-        public CommentService(ICommentRepository commentRepository, IMapper mapper, ICacheManager cacheManager)
+        public CommentService(IRepositoryFactory repositoryFactory, IMapper mapper, ICacheManager cacheManager)
         {
-            _commentRepository = commentRepository;
+            _repositoryFactory = repositoryFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
         }
@@ -30,7 +28,7 @@ namespace BooksStore.Services
         public async Task AddCommentAsync(CommentDTO commentDTO)
         {
             var comment = new Comment(commentDTO.Descriptions, commentDTO.BookId, commentDTO.AppUserId);
-            await _commentRepository.AddAsync(comment);
+            await _repositoryFactory.CreateCommentRepository().AddAsync(comment);
         }
 
         public async Task<CommentDTO> GetCommentById(int commentId)
@@ -40,7 +38,7 @@ namespace BooksStore.Services
                 return _mapper.Map<CommentDTO>(_cacheManager.Get<Comment>(CacheKeys.GetCommentKey(commentId)));
             }
 
-            var comment = await _commentRepository.GetByIdAsync(commentId);
+            var comment = await _repositoryFactory.CreateCommentRepository().GetByIdAsync(commentId);
             if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));
@@ -51,32 +49,32 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<CommentDTO>> GetComments(int skip, int take, int bookId)
         {
-            var comments = await _commentRepository.GetAsync(skip, take, bookId);
+            var comments = await _repositoryFactory.CreateCommentRepository().GetAsync(skip, take, bookId);
 
             return _mapper.Map<IEnumerable<CommentDTO>>(comments);
         }
 
         public async Task RemoveCommentAsync(int commentId)
         {
-            var comment = await _commentRepository.GetByIdAsync(commentId);
+            var comment = await _repositoryFactory.CreateCommentRepository().GetByIdAsync(commentId);
 
             if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));
             }
 
-            await _commentRepository.RemoveAsync(comment);
+            await _repositoryFactory.CreateCommentRepository().RemoveAsync(comment);
         }
 
         public async Task UpdateCommentAsync(CommentDTO commentDTO)
         {
-            await _commentRepository.UpdateAsync(_mapper.Map<Comment>(commentDTO));
+            await _repositoryFactory.CreateCommentRepository().UpdateAsync(_mapper.Map<Comment>(commentDTO));
             _cacheManager.Remove(CacheKeys.GetCommentKey(commentDTO.Id));
         }
 
         public async Task<int> GetCountComments()
         {
-            return await _commentRepository.GetCountAsync();
+            return await _repositoryFactory.CreateCommentRepository().GetCountAsync();
         }
     }
 }
