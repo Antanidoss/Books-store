@@ -95,9 +95,7 @@ namespace BooksStore.Web.Controllers
         {
             var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);
 
-            BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory);
-
-            return View(nameof(IndexBooks), indexBookModel);
+            return View(nameof(IndexBooks), new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory));
         }
 
         [HttpGet]
@@ -111,9 +109,7 @@ namespace BooksStore.Web.Controllers
                 return View("NotFoundBook", new NotFountBookModel("Не удалось найти книгу по названию", bookName));
             }
 
-            BookListViewModel indexBookModel = new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books);
-
-            return View(nameof(IndexBooks), indexBookModel);
+            return View(nameof(IndexBooks), new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books));
         }
     }
 }

@@ -30,6 +30,7 @@ namespace BooksStore.Web.Controllers
         public IActionResult Login(string returnUrl)
         {
             ViewBag.returnUrl = returnUrl;
+
             return View();
         }
         [HttpPost]
@@ -57,6 +58,7 @@ namespace BooksStore.Web.Controllers
                 ModelState.AddModelError("", result.Result.ToString());
                 return View(regModel);
             }
+
             await _userService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
 
             return RedirectToAction("IndexBooks", "Book");
@@ -67,6 +69,7 @@ namespace BooksStore.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await _userService.SignOutAsync();
+
             return RedirectToAction("IndexBooks", "Book");
         }
 

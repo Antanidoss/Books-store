@@ -37,9 +37,7 @@ namespace BooksStore.Web.Controllers
         {
             var roles = await _roleService.GetRolesAsync(pageNum);
 
-            var indexViewModel = new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(), roles);
-
-            return View(indexViewModel);
+            return View(new IndexViewModel<RoleViewModel>(pageNum, PageSizes.Roles, roles.Count(), roles));
         }
 
         [HttpPost]

@@ -44,10 +44,7 @@ namespace BooksStore.Web.Controllers
         {
             var categories = await _categoryService.GetCategories(pageNum);
 
-            IndexViewModel<CategoryViewModel> categoryIndexModel = new IndexViewModel<CategoryViewModel>(pageNum, PageSizes.Categories,
-                 await _categoryService.GetCountCategories(), categories);
-
-            return View(categoryIndexModel);
+            return View(new IndexViewModel<CategoryViewModel>(pageNum, PageSizes.Categories, await _categoryService.GetCountCategories(), categories));
 
         }
 
