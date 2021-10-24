@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
 {
-    public class BookRepository : IBookRepository
+    internal class BookRepository : IBookRepository
     {
         private readonly EFDbContext _context;
         public BookRepository(EFDbContext context) => _context = context;

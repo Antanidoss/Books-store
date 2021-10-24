@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infrastructure.Implementation.Repositories
 {
-    public class DiscountRepository : IDiscountRepository
+    internal class DiscountRepository : IDiscountRepository
     {
         private EFDbContext _context;
         public DiscountRepository(EFDbContext context) => _context = context;

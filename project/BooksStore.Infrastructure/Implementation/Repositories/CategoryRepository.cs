@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    internal class CategoryRepository : ICategoryRepository
     {
         private readonly EFDbContext _context;
         public CategoryRepository(EFDbContext context) => _context = context;

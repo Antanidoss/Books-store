@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
@@ -13,18 +12,15 @@ namespace BooksStore.Services
 {
     public class BasketService : IBasketService
     {
-        private readonly IBasketRepository _basketRepository;
-
-        private readonly IBookRepository _bookRepository;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         private readonly IMapper _mapper;
 
         private readonly ICacheManager _cacheManager;
 
-        public BasketService(IBasketRepository basketRepository, IBookRepository bookRepository, IMapper mapper, ICacheManager cacheManager)
+        public BasketService(IRepositoryFactory repositoryFactory, IMapper mapper, ICacheManager cacheManager)
         {
-            _basketRepository = basketRepository;
-            _bookRepository = bookRepository;
+            _repositoryFactory = repositoryFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
         }
@@ -36,7 +32,7 @@ namespace BooksStore.Services
                 return _mapper.Map<BasketDTO>(_cacheManager.Get<Basket>(CacheKeys.GetBasketKey(basketId)));
             }
 
-            var basket = await _basketRepository.GetByIdAsync(basketId);
+            var basket = await _repositoryFactory.CreateBasketRepository().GetByIdAsync(basketId);
             if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
@@ -49,13 +45,13 @@ namespace BooksStore.Services
 
         public async Task AddBasketBookAsync(int basketId, int bookId)
         {
-            Basket basket = await _basketRepository.GetByIdAsync(basketId);
+            Basket basket = await _repositoryFactory.CreateBasketRepository().GetByIdAsync(basketId);
             if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
 
-            Book book = await _bookRepository.GetByIdAsync(bookId);
+            Book book = await _repositoryFactory.CreateBookRepository().GetByIdAsync(bookId);
             if (book == null)
             {
                 throw new NotFoundException(nameof(Book), book);
@@ -65,19 +61,20 @@ namespace BooksStore.Services
             bookBasket.Add(new BookBasketJunction(basketId, bookId));
             basket.BasketBooks = bookBasket;
 
-            await _basketRepository.UpdateAsync(basket);
+            await _repositoryFactory.CreateBasketRepository().UpdateAsync(basket);
+
             _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
         }
 
         public async Task RemoveBasketBookAsync(int basketId, int bookId)
         {
-            Basket basket = await _basketRepository.GetByIdAsync(basketId);
+            Basket basket = await _repositoryFactory.CreateBasketRepository().GetByIdAsync(basketId);
             if (basket == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
 
-            Book book = await _bookRepository.GetByIdAsync(bookId);
+            Book book = await _repositoryFactory.CreateBookRepository().GetByIdAsync(bookId);
             if (book == null)
             {
                 throw new NotFoundException(nameof(Book), book);
@@ -91,7 +88,8 @@ namespace BooksStore.Services
                 bookBasket.Remove(bookBasketJunction);
                 basket.BasketBooks = bookBasket;
 
-                await _basketRepository.UpdateAsync(basket);
+                await _repositoryFactory.CreateBasketRepository().UpdateAsync(basket);
+
                 _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
             }
         }
@@ -100,7 +98,7 @@ namespace BooksStore.Services
         {
             Basket basket = new Basket();
 
-            if ((basket = await _basketRepository.GetByIdAsync(basketId)) == null)
+            if ((basket = await _repositoryFactory.CreateBasketRepository().GetByIdAsync(basketId)) == null)
             {
                 throw new NotFoundException(nameof(Basket), basket);
             }
@@ -109,13 +107,14 @@ namespace BooksStore.Services
             bookBasket.Clear();
             basket.BasketBooks = bookBasket;
 
-            await _basketRepository.UpdateAsync(basket);
+            await _repositoryFactory.CreateBasketRepository().UpdateAsync(basket);
+
             _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
         }
 
         public async Task<int> GetBasketBookCount(int basketId)
         {
-            return await _basketRepository.GetCountAsync(basketId);
+            return await _repositoryFactory.CreateBasketRepository().GetCountAsync(basketId);
         }
     }
 }

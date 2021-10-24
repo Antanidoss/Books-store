@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
 {
-    public class CommentRepository : ICommentRepository
+    internal class CommentRepository : ICommentRepository
     {
         private readonly EFDbContext _context;
         public CommentRepository(EFDbContext context) => _context = context;

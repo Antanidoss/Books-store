@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
 {
-    public class BasketRepository : IBasketRepository
+    internal class BasketRepository : IBasketRepository
     {
         private readonly EFDbContext _context;
 

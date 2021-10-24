@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BooksStore.Infrastructure.Interfaces
+﻿namespace BooksStore.Infrastructure.Interfaces
 {
     public interface ICacheManager
     {

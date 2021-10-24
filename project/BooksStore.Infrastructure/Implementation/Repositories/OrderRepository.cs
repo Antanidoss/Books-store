@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
 {
-    public class OrderRepository : IOrderRepository
+    internal class OrderRepository : IOrderRepository
     {
         private readonly EFDbContext _context;
         public OrderRepository(EFDbContext context) => _context = context;

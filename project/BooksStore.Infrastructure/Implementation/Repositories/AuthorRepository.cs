@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
 {
-    public class AuthorRepository : IAuthorRepository
+    internal class AuthorRepository : IAuthorRepository
     {
         private readonly EFDbContext _context;
         public AuthorRepository(EFDbContext context) => _context = context;
