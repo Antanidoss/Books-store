@@ -32,12 +32,9 @@ namespace BooksStore.Web.Controllers
         {
             var book = await _bookManager.GetBookByIdAsync(bookId.Value);
             var comments = (await _commentService.GetCommentsAsync(pageNum, bookId.Value)).ToList();
-
             string userId = (await _currentUser.GetCurrentUser(HttpContext)).Id;
-            CommentListViewModel bookComment = new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId),
-                pageNum, PageSizes.Comments, comments.Count(), comments);
 
-            return View(bookComment);
+            return View(new CommentListViewModel(book.Title, book.Id, comments.Any(p => p.AppUserId == userId), pageNum, PageSizes.Comments, comments.Count(), comments));
         }
 
         [HttpPost]

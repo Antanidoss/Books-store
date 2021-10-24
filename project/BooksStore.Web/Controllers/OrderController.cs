@@ -29,9 +29,7 @@ namespace BooksStore.Web.Controllers
         {
             var orders = (await _orderService.GetOrdersAsync(pageNum)).ToList();
 
-            var orderListViewModel = new OrderListViewModel(pageNum, PageSizes.Orders, orders.Count(), orders);
-
-            return View(orderListViewModel);
+            return View(new OrderListViewModel(pageNum, PageSizes.Orders, orders.Count(), orders));
         }
 
         [HttpGet]
