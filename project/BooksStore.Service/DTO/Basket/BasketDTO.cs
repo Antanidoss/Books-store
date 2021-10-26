@@ -1,8 +1,7 @@
-﻿using System;
+﻿using BooksStore.Services.DTO.Book;
 using System.Collections.Generic;
-using System.Text;
 
-namespace BooksStore.Services.DTO
+namespace BooksStore.Services.DTO.Basket
 {
     public class BasketDTO
     {

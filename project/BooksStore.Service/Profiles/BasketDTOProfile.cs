@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Basket;
+using BooksStore.Services.DTO.Book;
 using System.Linq;
 
 namespace BooksStore.Services.Profiles

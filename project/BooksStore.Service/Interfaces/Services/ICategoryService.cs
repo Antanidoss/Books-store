@@ -1,8 +1,5 @@
-﻿using BooksStore.Core.Entities;
-using BooksStore.Services.DTO;
-using System;
+﻿using BooksStore.Services.DTO.Category;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BooksStore.Services.Interfaces

@@ -1,8 +1,6 @@
 ﻿using BooksStore.Infrastructure;
-using BooksStore.Services.DTO;
-using System;
+using BooksStore.Services.DTO.Role;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BooksStore.Services.Interfaces.IdentityServices

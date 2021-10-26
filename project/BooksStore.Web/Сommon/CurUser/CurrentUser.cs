@@ -1,4 +1,5 @@
 ﻿using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.AppUser;
 using BooksStore.Services.Interfaces.IdentityServices;
 using BooksStore.Web.Interfaces;
 using Microsoft.AspNetCore.Http;

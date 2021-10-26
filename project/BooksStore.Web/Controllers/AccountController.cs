@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.AppUser;
 using BooksStore.Services.Interfaces.IdentityServices;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces;

@@ -2,6 +2,7 @@
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure;
 using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.AppUser;
 using BooksStore.Services.Interfaces.IdentityServices;
 using Microsoft.AspNetCore.Identity;
 using System;

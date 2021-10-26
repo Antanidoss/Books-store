@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Role;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 
 namespace BooksStore.Web.Сommon.Profiles

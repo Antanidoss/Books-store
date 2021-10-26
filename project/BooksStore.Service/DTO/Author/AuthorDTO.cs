@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BooksStore.Services.DTO
+﻿namespace BooksStore.Services.DTO.Author
 {
     public class AuthorDTO
     {

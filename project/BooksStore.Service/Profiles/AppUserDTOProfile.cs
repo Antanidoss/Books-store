@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.AppUser;
 
 namespace BooksStore.Services.Profiles
 {
