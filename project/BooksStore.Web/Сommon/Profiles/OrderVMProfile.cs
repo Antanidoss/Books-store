@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Order;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 
 namespace BooksStore.Web.Сommon.Profiles
@@ -8,8 +8,7 @@ namespace BooksStore.Web.Сommon.Profiles
     {
         public OrderVMProfile()
         {
-            CreateMap<OrderDTO, OrderViewModel>()
-                    .ForMember(p => p.BooksViewModel, conf => conf.MapFrom(o => o.OrderBooks));
+            CreateMap<OrderDTO, OrderViewModel>().ForMember(p => p.BooksViewModel, conf => conf.MapFrom(o => o.OrderBooks));
         }
     }
 }

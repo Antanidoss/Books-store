@@ -1,5 +1,5 @@
 ﻿using BooksStore.Infrastructure;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.AppUser;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

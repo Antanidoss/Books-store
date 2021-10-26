@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Book;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using BooksStore.Web.Сommon.ViewModel.UpdateModel;

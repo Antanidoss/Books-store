@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Role;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BooksStore.Services.Profiles
 {

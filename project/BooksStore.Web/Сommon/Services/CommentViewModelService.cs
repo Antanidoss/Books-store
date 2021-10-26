@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Comment;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Managers;

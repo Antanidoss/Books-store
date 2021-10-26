@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Infrastructure;
 using BooksStore.Infrastructure.Exceptions;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Role;
 using BooksStore.Services.Interfaces.IdentityServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

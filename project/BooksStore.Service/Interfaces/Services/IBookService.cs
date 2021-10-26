@@ -1,9 +1,5 @@
-﻿using BooksStore.Core.Entities;
-using BooksStore.Services.DTO;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using BooksStore.Services.DTO.Book;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BooksStore.Services.Interfaces

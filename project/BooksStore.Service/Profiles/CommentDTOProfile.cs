@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Services.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using BooksStore.Services.DTO.Comment;
 
 namespace BooksStore.Services.Profiles
 {

@@ -3,6 +3,7 @@ using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Basket;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System.Linq;

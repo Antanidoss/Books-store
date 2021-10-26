@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Services.DTO.Category;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces.Managers;
 using BooksStore.Web.Сommon.Pagination;
