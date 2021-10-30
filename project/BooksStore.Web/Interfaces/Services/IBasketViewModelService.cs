@@ -1,7 +1,7 @@
 ﻿using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Interfaces.Managers
+namespace BooksStore.Web.Interfaces.Services
 {
     public interface IBasketViewModelService
     {

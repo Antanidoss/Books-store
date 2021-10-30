@@ -5,7 +5,7 @@ using BooksStore.Services;
 using BooksStore.Services.Profiles;
 using BooksStore.Web.Common.CurUser;
 using BooksStore.Web.Interfaces;
-using BooksStore.Web.Interfaces.Managers;
+using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Ñommon.Profiles;
 using BooksStore.Web.Ñommon.Services;
 using Microsoft.AspNetCore.Builder;

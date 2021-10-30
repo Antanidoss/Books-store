@@ -11,7 +11,7 @@ namespace BooksStore.Web.Сommon.ViewModel.CreateModel
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Введите описания книги")]
-        [StringLength(1500, MinimumLength = 200, ErrorMessage = "Описания может быть от 20 до 400 символов")]
+        [StringLength(1500, MinimumLength = 20, ErrorMessage = "Описания может быть от 20 до 400 символов")]
         public string Descriptions { get; set; }
 
         [Required(ErrorMessage = "Введите цену книги")]
@@ -23,17 +23,10 @@ namespace BooksStore.Web.Сommon.ViewModel.CreateModel
         public int NumberOfPages { get; set; }
         public bool InStock { get; set; }
 
-        [Required(ErrorMessage = "Введите названия категории книги")]
-        public string CategoryName { get; set; }
-
-        [Required(ErrorMessage = "Введите имя автора книги")]
-        public string AuthorFirstname { get; set; }
-
-        [Required(ErrorMessage = "Введите фамилию автора книги")]
-        public string AuthorSurname { get; set; }
-
         [Required(ErrorMessage = "Выберите изображения")]
         public IFormFile ImgFile { get; set; }
         public string ImgPath { get; set; }
+        public int AuthorId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using BooksStore.Services.DTO.Comment;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
-using BooksStore.Web.Interfaces.Managers;
+using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;

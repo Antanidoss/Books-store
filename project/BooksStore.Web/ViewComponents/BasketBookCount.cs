@@ -20,13 +20,14 @@ namespace BooksStore.Web.ViewComponents
             _currentUser = currentUser;
             _httpContextAccessor = httpContextAccessor;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            int basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;           
+            int basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
 
-            var  a = (await _basketService.GetBasketBookCount(basketId)).ToString();
+            var basketBookCount = (await _basketService.GetBasketBookCount(basketId)).ToString();
 
-            return Content(a);
+            return Content(basketBookCount);
         }
     }
 }
