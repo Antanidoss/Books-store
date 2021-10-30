@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BooksStore.Web.Filters;
-using BooksStore.Web.Interfaces.Managers;
+using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.Index;
@@ -45,7 +45,6 @@ namespace BooksStore.Web.Controllers
             var categories = await _categoryService.GetCategories(pageNum);
 
             return View(new IndexViewModel<CategoryViewModel>(pageNum, PageSizes.Categories, await _categoryService.GetCountCategories(), categories));
-
         }
 
         [HttpPost]

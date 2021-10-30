@@ -18,12 +18,14 @@
                     <div>
                         @if (Model.BookIndexModel.PageInfo.PageNumber > 1)
                         {
-                <a asp-action="IndexBooks" asp-controller="Book" asp-route-pageNum="@(Model.BookIndexModel.PageInfo.PageNumber - 1)">Назад</a>}
+                            <a asp-action="IndexBooksAdmin" asp-controller="Book" asp-route-pageNum="@(Model.BookIndexModel.PageInfo.PageNumber - 1)">Назад</a>
+                        }
                     </div>
                     <div>
                         @if (Model.BookIndexModel.PageInfo.TotalPage > Model.BookIndexModel.PageInfo.PageNumber)
                         {
-                <a asp-action="IndexBooks" asp-controller="Book" asp-route-pageNum="@(Model.BookIndexModel.PageInfo.PageNumber + 1)">Вперед</a>}
+                            <a asp-action="IndexBooksAdmin" asp-controller="Book" asp-route-pageNum="@(Model.BookIndexModel.PageInfo.PageNumber + 1)">Вперед</a>
+                        }
                     </div>
                 </div>
             </div>

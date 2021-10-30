@@ -27,32 +27,9 @@ namespace BooksStore.Services
             _cacheManager = cacheManager;
         }
 
-        public async Task AddBookAsync(BookDTO bookDTO)
+        public async Task AddBookAsync(BookDTOCreateModel bookCreateModel)
         {
-            Category category = await _repositoryFactory.CreateCategoryRepository().GetByNameAsync(bookDTO.CategoryName);
-            if (category == null)
-            {
-                category = new Category(bookDTO.CategoryName);
-            }
-
-            Author author = await _repositoryFactory.CreateAuthorRepository().GetByNameAsync(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
-            if (author == null)
-            {
-                author = new Author(bookDTO.AuthorFirstname, bookDTO.AuthorSurname);
-            }
-
-            Book book = new Book(
-                title: bookDTO.Title,
-                price: bookDTO.Price,
-                inStock: bookDTO.InStock,
-                numberOfPages: bookDTO.NumberOfPages,
-                descriptions: bookDTO.Descriptions,
-                img: new Img(bookDTO.ImgPath),
-                author: author,
-                category: category
-            );
-
-            await _repositoryFactory.CreateBookRepository().AddAsync(book);
+            await _repositoryFactory.CreateBookRepository().AddAsync(_mapper.Map<BookDTOCreateModel, Book>(bookCreateModel));
         }
 
         public async Task<BookDTO> GetBookByIdAsync(int bookId)

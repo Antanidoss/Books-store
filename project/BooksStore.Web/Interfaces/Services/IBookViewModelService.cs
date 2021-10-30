@@ -4,7 +4,7 @@ using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Interfaces.Managers
+namespace BooksStore.Web.Interfaces.Services
 {
     public interface IBookViewModelService
     {

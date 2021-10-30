@@ -6,7 +6,7 @@ namespace BooksStore.Services.Interfaces
 {
     public interface IBookService
     {
-        Task AddBookAsync(BookDTO bookDTO);
+        Task AddBookAsync(BookDTOCreateModel bookCreateModel);
         Task<BookDTO> GetBookByIdAsync(int bookId);
         Task RemoveBookAsync(int bookId);
         Task<IEnumerable<BookDTO>> GetBooks(int skip, int take);

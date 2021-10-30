@@ -15,6 +15,7 @@ namespace BooksStore.Web.Сommon.Profiles
             CreateMap<BookCreateModel, BookDTO>();
             CreateMap<BookUpdateModel, BookDTO>();
             CreateMap<BookViewModel, BookUpdateModel>();
+            CreateMap<BookCreateModel, BookDTOCreateModel>();
         }
     }
 }
