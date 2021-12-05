@@ -1,18 +1,20 @@
 ﻿@model RoleCreateModel 
 
-<div class="addRole-main">
-    <div class="addRole-form">
+<div class="addRole-main col-md-12">
+    <div class="addRole-form col-md-2">
         <form asp-action="AddRole" asp-controller="Role" method="post">
             <div>
                 <label asp-for="@Model.Name">Названия:</label>
-                <input class="addRole-inputName" asp-for="@Model.Name" />
+                <input class="form-control" asp-for="@Model.Name" />
             </div>
-            <div class="addRole-submit">
-                <input value="Создать" type="submit" class="button" />
+            <div class="row">
+                <div class="addRole-submit">
+                    <input value="Создать" type="submit" class="button" />
+                </div>
+                <div class="indexRole-link">
+                    <a asp-action="IndexRole" asp-controller="Role">Просмотреть роли</a>
+                </div>
             </div>
         </form>
-    </div>
-    <div class="indexRole-link">
-        <a asp-action="IndexRole" asp-controller="Role">Просмотреть роли</a>
     </div>
 </div>
