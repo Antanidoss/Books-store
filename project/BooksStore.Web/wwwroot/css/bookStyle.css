@@ -145,8 +145,7 @@
 }
 
 .indexBooks-bookStock-div {
-    position: relative;
-    margin-left: 180px;
+    text-align: center;
 }
 
 .indexBooks-removeBook-div .indexBooks-updateBook-div {
