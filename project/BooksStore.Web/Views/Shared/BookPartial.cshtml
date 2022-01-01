@@ -1,4 +1,4 @@
-﻿@model (BookViewModel Book, bool IsAdmin)
+﻿@model (BookViewModel Book, bool IsAdmin, bool IsBasketBook)
 
 <div class="indexBooks-book-div col-md-3">
     <div class="indexBooks-bookTitle-div col-md-12">
@@ -39,32 +39,54 @@
             }
             else 
             {
-                @if (!Model.Book.IsAddToBasket)
+                @if (!Model.IsBasketBook)
                 {
-                    <div class="indexBooks-AddBasket-div col-auto">
-                        <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
-                            <input type="hidden" value="@Model.Book.Id" name="bookId" />
-                            <input type="submit" value="Добавить в корзину" class="btn btn-primary btn-sm" />
-                        </form>
-                    </div> 
+                    @if (!Model.Book.IsAddToBasket)
+                    {
+                        <div class="indexBooks-AddBasket-div col-auto">
+                            <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
+                                <input type="hidden" value="@Model.Book.Id" name="bookId" />
+                                <input type="submit" value="Добавить в корзину" class="btn btn-primary btn-sm" />
+                            </form>
+                        </div> 
+                    }
+                    else
+                    {
+                        <div class="bookInBasket-div col-md-5">
+                            <a class="button" asp-action="IndexBasket" asp-controller="Basket">
+                                Уже в корзине<i class="fas fa-check"></i>
+                            </a>
+                        </div>
+                    }
                 }
                 else
                 {
-                   <div class="bookInBasket-div col-md-5">
-                       <a class="button" asp-action="IndexBasket" asp-controller="Basket">
-                           Уже в корзине<i class="fas fa-check"></i>
-                       </a>
-                   </div>
-                }   
+                     <div class="basketIndex-buy col-md-2">
+                         <form asp-action="AddOrder" asp-controller="Order" method="get">
+                             <input name="booksIds" value="@Model.Book.Id" type="hidden" />
+                             <div>
+                                 <input type="submit" value="Купить" class="btn btn-primary btn-sm" />
+                             </div>
+                         </form>
+                     </div>
+
+                     <div class="basketIndex-remove col-md-auto">
+                         <form asp-action="RemoveBasketBook" asp-controller="Basket" method="post">
+                             <input value="@Model.Book.Id" type="hidden" name="bookId" />
+                             <input type="submit" value="Убрать с корзины" class="btn btn-primary btn-sm" />
+                         </form>
+                     </div>
+                }
+
             }
 
-             <div class="indexBooks-bookPrice-div col-md-3">
-                 @Model.Book.Price.ToString("c")
-             </div>
+            <div class="indexBooks-bookPrice-div col-md-2">
+                @Model.Book.Price.ToString("c")
+            </div>
 
-             <div class="indexBooks-bookAuthName-div col-auto">
-                 @Model.Book.AuthorFullName
-             </div>
+            <div class="indexBooks-bookAuthName-div col-auto">
+                @Model.Book.AuthorFullName
+            </div>
         </div> 
      }
      else

@@ -26,6 +26,8 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .Include(p => p.BasketBooks)
                 .ThenInclude(p => p.Book)
                 .ThenInclude(p => p.Img)
+                .Include(p => p.BasketBooks)
+                .ThenInclude(p => p.Book.Author)
                 .FirstOrDefaultAsync(p => p.Id == basketId);
 
             return basket != default ? basket : null;

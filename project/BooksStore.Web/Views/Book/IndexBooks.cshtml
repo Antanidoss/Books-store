@@ -9,7 +9,8 @@
             <div class="indexBooks-div">
                 @foreach (var book in Model.BookIndexModel.Objects)
                 {
-                    @await Html.PartialAsync("../Shared/BookPartial", new ValueTuple<BookViewModel, bool>(book, false))
+                    (BookViewModel Book, bool IsAdmin, bool IsBasket) bookInfo = (Book: book, IsAdmin: false, IsBasket: false);
+                    @await Html.PartialAsync("../Shared/BookPartial", bookInfo)
                 }
             </div>
             <div class="indexBooks-pagination-div">
