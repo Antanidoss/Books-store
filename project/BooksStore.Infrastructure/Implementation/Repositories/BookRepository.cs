@@ -67,11 +67,6 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> GetCountAsync()
-        {
-            return await _context.Books.CountAsync();
-        }
-
         public async Task<IEnumerable<Book>> GetAsync(int skip, int take, Func<Book, bool> func)
         {
             return _context.Books
@@ -81,6 +76,11 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .Where(func)
                 .Skip(skip)
                 .Take(take);
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Books.CountAsync();
         }
     }
 }
