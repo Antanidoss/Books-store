@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
+using BooksStore.Service.Models;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
@@ -27,10 +27,12 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> IndexBooks(int pageNum = 1)
+        public async Task<IActionResult> IndexBooks(FilterModel filterModel, int pageNum = 1)
         {
             int booksCount = await _bookService.GetCountAsync();
-            var books = await _bookService.GetBooksAsync(pageNum);
+            var books = await _bookService.GetBooksWithFilter(pageNum, filterModel);
+
+            ViewBag.FilterModel = filterModel;
 
             return View(new BookListViewModel(pageNum, PageSizes.Books, booksCount, books));
         }
@@ -46,9 +48,9 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexBooksAdmin(int pageNum = 1)
+        public async Task<IActionResult> IndexBooksAdmin(FilterModel filterModel = null, int pageNum = 1)
         {
-            return await IndexBooks(pageNum);
+            return await IndexBooks(filterModel, pageNum);
         }
 
         [HttpGet]
@@ -86,30 +88,6 @@ namespace BooksStore.Web.Controllers
             await _bookService.UpdateBookAsync(model);
 
             return RedirectToAction(nameof(IndexBooksAdmin));
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [IdValidationFilter("categoryId")]
-        public async Task<IActionResult> IndexByCategory(int? categoryId, int pageNum = 1)
-        {
-            var booksCategory = await _bookService.GetBooksByCategoryAsync(pageNum, categoryId.Value);
-
-            return View(nameof(IndexBooks), new BookListViewModel(pageNum, PageSizes.Books, booksCategory.Count(), booksCategory));
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> IndexBooksByName(string bookName, int pageNum = 1)
-        {
-            var books = await _bookService.GetBooksByNameAsync(pageNum, bookName);
-
-            if (books.Count() == 0)
-            {
-                return View("NotFoundBook", new NotFountBookModel("Не удалось найти книгу по названию", bookName));
-            }
-
-            return View(nameof(IndexBooks), new BookListViewModel(pageNum, PageSizes.Books, books.Count(), books));
         }
     }
 }

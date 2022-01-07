@@ -1,4 +1,5 @@
-﻿using BooksStore.Web.Сommon.ViewModel.CreateModel;
+﻿using BooksStore.Service.Models;
+using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using System.Collections.Generic;
@@ -11,8 +12,7 @@ namespace BooksStore.Web.Interfaces.Services
         Task AddBookAsync(BookCreateModel bookCreateModel);
         Task<BookViewModel> GetBookByIdAsync(int bookId);
         Task<IEnumerable<BookViewModel>> GetBooksAsync(int pageNum);
-        Task<IEnumerable<BookViewModel>> GetBooksByCategoryAsync(int pageNum, int categoryId);
-        Task<IEnumerable<BookViewModel>> GetBooksByNameAsync(int pageNum, string bookName);
+        Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, FilterModel filterModel);
         Task RemoveBookAsync(int bookId);
         Task UpdateBookAsync(BookUpdateModel bookUpdateModel);
         Task<int> GetCountAsync();

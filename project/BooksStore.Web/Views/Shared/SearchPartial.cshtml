@@ -1,9 +1,11 @@
-﻿<div class="search col-md-2">
+﻿@model BooksStore.Service.Models.FilterModel
+
+<div class="search col-md-2">
     <div class="serchByName">
-        <form asp-action="IndexBooksByName" asp-controller="Book" method="get">
+        <form asp-action="IndexBooks" asp-controller="Book" method="get">
             <div class="col-md-12 row btn-group">
                 <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Название" name="bookName" />
+                    <input class="form-control" type="search" placeholder="Название" asp-for="BookName" />
                     <div class="input-group-btn">
                         <input type="submit" value="Поиск" class="btn btn-primary" />
                     </div>

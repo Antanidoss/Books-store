@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.DTO;
+using BooksStore.Service.Models;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
@@ -67,7 +67,7 @@ namespace BooksStore.Web.Сommon.Services
             }
 
             int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
-            var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooks(take, PageSizes.Books));
+            var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAsync(PageSizes.Books, take));
 
             foreach (var book in books)
             {
@@ -75,6 +75,18 @@ namespace BooksStore.Web.Сommon.Services
             }
 
             return books;
+        }
+
+        public async Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, FilterModel filterModel)
+        {
+            if (!PaginationInfo.PageNumberIsValid(pageNum))
+            {
+                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
+            }
+
+            int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
+
+            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksWithFilterAsync(PageSizes.Books, take, filterModel));
         }
 
         public async Task RemoveBookAsync(int bookId)
@@ -87,33 +99,9 @@ namespace BooksStore.Web.Сommon.Services
             await _bookService.UpdateBookAsync(_mapper.Map<BookDTO>(bookUpdateModel));
         }
 
-        public async Task<IEnumerable<BookViewModel>> GetBooksByNameAsync(int pageNum, string bookName)
-        {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
-            var books = await _bookService.GetBooksByNameAsync(PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books), PageSizes.Books, bookName);
-
-            return _mapper.Map<IEnumerable<BookViewModel>>(books);
-        }
-
-        public async Task<IEnumerable<BookViewModel>> GetBooksByCategoryAsync(int pageNum, int categoryId)
-        {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
-            var books = await _bookService.GetBooksByCategoryAsync(PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books), PageSizes.Books, categoryId);
-
-            return _mapper.Map<IEnumerable<BookViewModel>>(books);
-        }
-
         public async Task<int> GetCountAsync()
         {
-            return await _bookService.GetCountBooks();
+            return await _bookService.GetCountBooksAsync();
         }
 
         private async Task BookInBasketAsync(BookViewModel book)

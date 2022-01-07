@@ -2,6 +2,7 @@
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
+using BooksStore.Service.Models;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
@@ -49,11 +50,25 @@ namespace BooksStore.Services
             return _mapper.Map<BookDTO>(book);
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBooks(int skip, int take)
+        public async Task<IEnumerable<BookDTO>> GetBooksAsync(int skip, int take)
         {
             var books = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take);
 
             return _mapper.Map<IEnumerable<BookDTO>>(books);
+        }
+
+        public async Task<IEnumerable<BookDTO>> GetBooksWithFilterAsync(int take, int skip, FilterModel filterModel)
+        {
+            if (filterModel.FilterIsNull())
+            {
+                return await GetBooksAsync(skip, take);
+            }
+
+            filterModel.BookName = string.IsNullOrEmpty(filterModel.BookName) ? string.Empty : filterModel.BookName.ToLower().Replace(" ", "");
+
+            var result = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, GetFilterCondition(filterModel));
+
+            return _mapper.Map<IEnumerable<BookDTO>>(result);
         }
 
         public async Task RemoveBookAsync(int bookId)
@@ -77,33 +92,26 @@ namespace BooksStore.Services
         {
             var book = await _repositoryFactory.CreateBookRepository().GetByIdAsync(bookId);
 
-            return book != null && (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default
-                ? true
-                : false;
+            return book != null && (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default;
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBooksByCategoryAsync(int skip, int take, int categoryId)
-        {
-            Category category = await _repositoryFactory.CreateCategoryRepository().GetByIdAsync(categoryId);
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(Category));
-            }
-
-            return _mapper.Map<IEnumerable<BookDTO>>(await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, (b) => b.CategoryId == categoryId));
-        }
-
-        public async Task<int> GetCountBooks()
+        public async Task<int> GetCountBooksAsync()
         {
             return await _repositoryFactory.CreateBookRepository().GetCountAsync();
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBooksByNameAsync(int skip, int take, string bookName)
+        private Func<Book, bool> GetFilterCondition(FilterModel filterModel)
         {
-            bookName = bookName.ToLower().Replace(" ", "");
-            var books = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, (b) => b.Title.ToLower().Replace(" ", "") == bookName);
-
-            return _mapper.Map<IEnumerable<BookDTO>>(books);
+            if (filterModel.CategoryIds != null && filterModel.CategoryIds.Any())
+            {
+                return b => b.Title.ToLower().Replace(" ", "").Contains(filterModel.BookName) &&
+                    b.Price >= filterModel.BookPrice &&
+                    filterModel.CategoryIds.FirstOrDefault(i => i == b.CategoryId) != default;
+            }
+            else
+            {
+                return b => b.Title.ToLower().Replace(" ", "").Contains(filterModel.BookName) && b.Price >= filterModel.BookPrice;
+            }
         }
     }
 }
