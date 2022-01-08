@@ -1,21 +1,46 @@
 ﻿@model BooksStore.Service.Models.FilterModel
+@inject BooksStore.Services.Interfaces.ICategoryService categoryService
+
+@{ 
+    int categoryCount = await categoryService.GetCountCategories();
+    var categories = await categoryService.GetCategories(0, categoryCount);
+    int categoriesCounter = default;
+}
 
 <div class="search col-md-2">
     <div class="serchByName">
-        <form asp-action="IndexBooks" asp-controller="Book" method="get">
-            <div class="col-md-12 row btn-group">
-                <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Название" asp-for="BookName" />
-                    <div class="input-group-btn">
-                        <input type="submit" value="Поиск" class="btn btn-primary" />
-                    </div>
+        <form asp-action="IndexBooks" asp-controller="Book" method="get" style="margin-top: 20px;">
+            <div style="text-align: center;"><h4>Название книги</h4></div>
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="Название" asp-for="BookName" />
+            </div>
+
+            <div style="margin-top: 20px; text-align: center">
+                <h4>Цена</h4>
+                <div class="polzunok-container-5">
+                    <input asp-for="BookPriceFrom" type="number" class="polzunok-input-5-left" value="@Model.BookPriceFrom" />
+                    <input asp-for="BookPriceTo" type="number" class="polzunok-input-5-right" value="@Model.BookPriceTo" />
+                    <div class="polzunok-5"></div>
                 </div>
             </div>
+
+            <div style="margin-top: 20px;">
+                <h4 style="text-align: center">Категории</h4>
+                @foreach (var category in categories)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" id="@categoriesCounter" class="form-check-input categoryFilter-checkbox" value="@category.Id" />
+                        <input type="hidden" name="CategoryIds[@categoriesCounter]" value="@(Model.CategoryIds != null && Model.CategoryIds.Contains(category.Id) ? category.Id : 0)" />
+                        <label class="form-check-label categoryFilter-label">@category.Name</label>
+                    </div>
+
+                    categoriesCounter++;
+                }
+            </div>
+
+            <div class="text-center" style="margin-top: 30px">
+                <input type="submit" value="Применить" class="btn btn-primary" />
+            </div>
         </form>
-    </div>
-    <div class="serchByCategory">
-        <div>
-            @Html.ActionLink("Поиск по категориям", "IndexCategories", "Category")
-        </div>
     </div>
 </div>

@@ -6,12 +6,13 @@ namespace BooksStore.Service.Models
     public class FilterModel
     {
         public string BookName { get; set; }
-        public decimal BookPrice { get; set; }
-        public IEnumerable<int> CategoryIds { get; set; }
+        public decimal BookPriceFrom { get; set; }
+        public decimal BookPriceTo { get; set; }
+        public List<int> CategoryIds { get; set; }
 
         public bool FilterIsNull()
         {
-            return string.IsNullOrEmpty(BookName) && BookPrice == default && (CategoryIds == null || !CategoryIds.Any());
+            return string.IsNullOrEmpty(BookName) && BookPriceFrom == default && BookPriceTo == default && (CategoryIds == null || !CategoryIds.Any());
         }
     }
 }

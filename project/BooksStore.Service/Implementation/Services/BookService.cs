@@ -2,13 +2,16 @@
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
+using BooksStore.Service.Interfaces.FilterBuilders;
 using BooksStore.Service.Models;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
+using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BooksStore.Services
@@ -21,11 +24,14 @@ namespace BooksStore.Services
 
         private readonly ICacheManager _cacheManager;
 
-        public BookService(IMapper mapper, ICacheManager cacheManager, IRepositoryFactory repositoryFactory)
+        private readonly IBookFilterBuilder _bookFilterBuilder;
+
+        public BookService(IMapper mapper, ICacheManager cacheManager, IRepositoryFactory repositoryFactory, IBookFilterBuilder bookFilterBuilder)
         {
             _repositoryFactory = repositoryFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
+            _bookFilterBuilder = bookFilterBuilder;
         }
 
         public async Task AddBookAsync(BookDTOCreateModel bookCreateModel)
@@ -100,18 +106,22 @@ namespace BooksStore.Services
             return await _repositoryFactory.CreateBookRepository().GetCountAsync();
         }
 
-        private Func<Book, bool> GetFilterCondition(FilterModel filterModel)
+        private Expression<Func<Book, bool>> GetFilterCondition(FilterModel filterModel)
         {
-            if (filterModel.CategoryIds != null && filterModel.CategoryIds.Any())
+            if (!string.IsNullOrEmpty(filterModel.BookName))
             {
-                return b => b.Title.ToLower().Replace(" ", "").Contains(filterModel.BookName) &&
-                    b.Price >= filterModel.BookPrice &&
-                    filterModel.CategoryIds.FirstOrDefault(i => i == b.CategoryId) != default;
+                _bookFilterBuilder.BuildWithFilterName(filterModel.BookName);
             }
-            else
+
+            filterModel.CategoryIds.RemoveAll(i => i == default);
+            if (filterModel.CategoryIds.Any())
             {
-                return b => b.Title.ToLower().Replace(" ", "").Contains(filterModel.BookName) && b.Price >= filterModel.BookPrice;
+                _bookFilterBuilder.BuildWithFilterCategories(filterModel.CategoryIds);
             }
+
+            _bookFilterBuilder.BuildWithFilterPrice(filterModel.BookPriceFrom, filterModel.BookPriceTo);
+
+            return _bookFilterBuilder.GetResult();
         }
     }
 }
