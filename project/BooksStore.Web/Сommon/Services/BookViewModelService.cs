@@ -86,7 +86,14 @@ namespace BooksStore.Web.Сommon.Services
 
             int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
 
-            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksWithFilterAsync(PageSizes.Books, take, filterModel));
+            var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksWithFilterAsync(PageSizes.Books, take, filterModel));
+
+            foreach (var book in books)
+            {
+                await BookInBasketAsync(book);
+            }
+
+            return books;
         }
 
         public async Task RemoveBookAsync(int bookId)

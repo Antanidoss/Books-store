@@ -9,6 +9,7 @@
       "BooksStore.Infrastructure/1.0.0": {
         "dependencies": {
           "BooksStore.Core": "1.0.0",
+          "LinqKit.Core": "1.1.27",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "BooksStore.Infrastructure.dll": {}
+        }
+      },
+      "LinqKit.Core/1.1.27": {
+        "runtime": {
+          "lib/netstandard2.1/LinqKit.Core.dll": {
+            "assemblyVersion": "1.1.27.0",
+            "fileVersion": "1.1.27.0"
+          }
         }
       },
       "Microsoft.AspNetCore.Authentication/2.2.0": {
@@ -1229,6 +1238,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "LinqKit.Core/1.1.27": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HjAlsomOjPLY/rI19MXLLxBdkbvxPCd3ZVpM/nOUEz/o/n9tSehV+amKQ2exAFvup+kbkNt7sJrXhVZnnzoGHA==",
+      "path": "linqkit.core/1.1.27",
+      "hashPath": "linqkit.core.1.1.27.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication/2.2.0": {
       "type": "package",

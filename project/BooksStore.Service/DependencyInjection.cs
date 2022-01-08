@@ -1,6 +1,8 @@
 ﻿using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Service.Implementation;
+using BooksStore.Service.Implementation.Builders;
+using BooksStore.Service.Interfaces.FilterBuilders;
 using BooksStore.Services.AuthorSer;
 using BooksStore.Services.Implementation.IdentityServices;
 using BooksStore.Services.Interfaces;
@@ -29,7 +31,8 @@ namespace BooksStore.Services
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
-           
+
+            services.AddScoped<IBookFilterBuilder, BookFilterBuilder>();
             
             return services;
         }

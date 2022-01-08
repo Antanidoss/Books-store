@@ -78,7 +78,6 @@ namespace BooksStore.Web
             services.AddScoped<IRoleViewModelService, RoleViewModelService>();
         }
 
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
