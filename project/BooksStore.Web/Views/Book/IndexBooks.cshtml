@@ -1,4 +1,7 @@
 ﻿@model BookListViewModel
+@{ 
+    ViewBag.SubmitAction = "IndexBooks";
+}
 
 @await Html.PartialAsync("SearchPartial", ViewBag.FilterModel as BooksStore.Service.Models.FilterModel)
 

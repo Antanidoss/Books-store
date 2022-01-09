@@ -1,6 +1,9 @@
 ﻿@model BookListViewModel
+@{ 
+    ViewBag.SubmitAction = "IndexBooksAdmin";
+}
 
-@await Html.PartialAsync("SearchPartial")
+@await Html.PartialAsync("SearchPartial", ViewBag.FilterModel as BooksStore.Service.Models.FilterModel)
 
 @if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)
 {
