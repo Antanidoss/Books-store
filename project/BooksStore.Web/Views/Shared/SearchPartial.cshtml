@@ -5,11 +5,13 @@
     int categoryCount = await categoryService.GetCountCategories();
     var categories = await categoryService.GetCategories(0, categoryCount);
     int categoriesCounter = default;
+
+    string action = ViewBag.SubmitAction;
 }
 
 <div class="search col-md-2">
     <div class="serchByName">
-        <form asp-action="IndexBooks" asp-controller="Book" method="get" style="margin-top: 20px;">
+        <form asp-action="@action" asp-controller="Book" method="get" style="margin-top: 20px;">
             <div style="text-align: center;"><h4>Название книги</h4></div>
             <div class="input-group">
                 <input class="form-control" type="search" placeholder="Название" asp-for="BookName" />
