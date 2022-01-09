@@ -216,32 +216,7 @@
 }
 
 .updateBook-form {
-    position: relative;
-    left: 700px;
     padding-bottom: 100px;
-}
-
-.updateBook-form div {
-    margin-top: 30px;
-}
-
-.updateForm-group input {
-    width: 250px;
-    height: 50px;
-    border-radius: 10px;
-    border-color: #5477cb;
-}
-
-.updateForm-group textarea {
-    width: 450px;
-    height: 300px;
-    border: 2px solid #5477cb;
-    resize: none;
-}
-
-.checkbox-updateBook input {
-    width: 20px;
-    height: 20px;
 }
 
 /*                                                                   Создание книги                                       */

@@ -2,49 +2,45 @@
 
 @if (Model != null)
 {
-    <div class="updateBook-div">
-        <div class="updateBook-currentData">            
-        </div>
-        <div class="updateBook-updateForm-div">
-            <form asp-action="UpdateBook" asp-controller="Book" method="post" class="updateBook-form">
+    <div class="col-md-12">
+        <form asp-action="UpdateBook" asp-controller="Book" method="post" class="updateBook-form">
+            <div class="row">
                 <input type="hidden" asp-for="Id" />
-                <div class="updateForm-group">
-                    <label asp-for="Title">Назваие:</label><br />
-                    <input asp-for="Title" />
+                <div class="form-group col-md-6">
+                    <label asp-for="Title">Название</label><br />
+                    <input class="form-control" asp-for="Title" />
                 </div>
-                <div class="updateForm-group">
-                    <label asp-for="Descriptions">Описания:</label><br />
-                    <textarea asp-for="Descriptions">@Model.Descriptions</textarea>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="NumberOfPages">Количество страниц</label><br />
+                    <input asp-for="NumberOfPages" class="form-control" type="number" />
                 </div>
-                <div class="updateForm-group">
-                    <label asp-for="NumberOfPages">Количество страниц:</label><br />
-                    <input asp-for="NumberOfPages" type="number" />
+
+                <div class="form-group col-auto">
+                    <label asp-for="Price">Цена</label><br />
+                    <input class="form-control" asp-for="Price" />
                 </div>
-                <div class="updateForm-group checkbox-updateBook">
-                    <div>
-                        <label asp-for="InStock">
-                            В наличии:
-                            @if (Model.InStock)
-                            {
-                                <text>да</text>
-                            }
-                            else
-                            {
-                                <text>нет</text>
-                            }
-                        </label>
-                    </div>
-                    <input asp-for="InStock" type="checkbox" />
+            </div>
+
+            <div class="row">
+                <div class="form-text col-md-6">
+                    <label asp-for="Descriptions">Описания</label><br />
+                    <textarea class="form-control" asp-for="Descriptions" rows="5">@Model.Descriptions</textarea>
                 </div>
-                <div class="updateForm-group">
-                    <label asp-for="Price">Цена:</label><br />
-                    <input asp-for="Price" />
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="InStock" type="checkbox" />
+                    <label class="form-check-label" asp-for="InStock">В наличии</label>
                 </div>
-                <div class="vailidate-div" asp-validation-summary="All"></div>
-                <div class="updateForm-group">
-                    <input type="submit" class="button" value="Обновить" />
-                </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="vailidate-div" asp-validation-summary="All"></div>
+
+            <div class="col text-center">
+                <input type="submit" value="Обновить" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
 }
