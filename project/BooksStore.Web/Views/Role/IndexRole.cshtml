@@ -1,5 +1,7 @@
 ﻿@model IndexViewModel<RoleViewModel>
 
+<link rel="stylesheet" href="~/css/roleStyle.css" />
+
 <div class="indexRoles-main">
     @if (Model.Objects != null && Model.Objects.Count() != 0)
     {
@@ -16,9 +18,11 @@
                  </div>
              }
          </div>
+
          <div class="indexRoles-addRole">
               <a asp-action="AddRole" asp-controller="Role">Создать роль</a>
          </div>
+
          <div>
              <div>
                  @if (Model.PageInfo.TotalPage != Model.PageInfo.PageNumber)

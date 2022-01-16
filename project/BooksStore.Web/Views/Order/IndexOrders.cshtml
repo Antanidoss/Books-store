@@ -1,82 +1,82 @@
 ﻿@model OrderListViewModel
 
+<link rel="stylesheet" href="~/css/orderStyle.css" />
 
-    <div class="indexOrder-main">
-        @if (Model.OrderIndexModel.Objects != null && Model.OrderIndexModel.PageInfo.TotalItems != 0)
-        {
-            <div class="indexOrder-orders">
-                @foreach (var order in Model.OrderIndexModel.Objects)
-                {
-                    <div class="indexOrder-order">
-                        <div class="indexOrder-timeCreate">
+<div class="indexOrder-main">
+    @if (Model.OrderIndexModel.Objects != null && Model.OrderIndexModel.PageInfo.TotalItems != 0)
+    {
+        <div class="indexOrder-orders">
+            @foreach (var order in Model.OrderIndexModel.Objects)
+            {
+                <div class="indexOrder-order">
+                    <div class="indexOrder-timeCreate">
+                        <text>
+                            Заказ оформлен: @order.TimeOfCreate.ToString("D")
+                        </text>
+                    </div>                       
+                    <div>
+                        <text>Содержание заказа:</text>
+                        @foreach (var book in order.BooksViewModel)
+                        {
+                            <div>
+                                <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a>
+                            </div>
+                        }
+                    </div>
+                    <div class="indexOrder-orderPlaced">
+                        @if (order.OrderPlaced)
+                        {
                             <text>
-                                Заказ оформлен: @order.TimeOfCreate.ToString("D")
+                                Заказ сделан
                             </text>
-                        </div>                       
-                        <div>
-                            <text>Содержание заказа:</text>
-                            @foreach (var book in order.BooksViewModel)
-                            {
-                                <div>
-                                    <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@book.Id">@book.Title</a>
-                                </div>
-                            }
-                        </div>
-                        <div class="indexOrder-orderPlaced">
-                            @if (order.OrderPlaced)
-                            {
-                                <text>
-                                    Заказ сделан
-                                </text>
-                                <form asp-action="RemoveOrder" asp-controller="Order" method="post">
-                                    <input name="orderId" value="@order.Id" type="hidden" />
-                                    <input type="submit" value="Удалить" class="button" />
-                                </form>
-                            }
-                            else
-                            {
-                                <text>
-                                    Заказ будет сделан @order.TimeOfDelivery.ToString("D")
-                                </text>
-                                <form asp-action="RemoveOrder" asp-controller="Order" method="post">
-                                    <input name="orderId" value="@order.Id" type="hidden" />
-                                    <input type="submit" value="Отменить заказ" class="button" />
-                                </form>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="removeAndPaginationOrder-div">
-                <div class="removeCompleteOrders-div">
-                    <form asp-action="RemoveCompleteOrders" asp-controller="Order" method="post">
-                        <input class="button" type="submit" value="Убрать выполненные заказы" />
-                    </form>
-                </div>
-
-                <div class="indexOrder-pagination-div">
-                    <div>
-                        @if (Model.OrderIndexModel.PageInfo.PageNumber > 1)
-                        {
-                            <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.OrderIndexModel.PageInfo.PageNumber - 1)">
-                                Назад
-                            </a>
+                            <form asp-action="RemoveOrder" asp-controller="Order" method="post">
+                                <input name="orderId" value="@order.Id" type="hidden" />
+                                <input type="submit" value="Удалить" class="button" />
+                            </form>
                         }
-                    </div>
-                    <div>
-                        @if (Model.OrderIndexModel.PageInfo.TotalPage > Model.OrderIndexModel.PageInfo.PageNumber)
+                        else
                         {
-                            <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.OrderIndexModel.PageInfo.PageNumber + 1)">
-                                Вперед
-                            </a>
+                            <text>
+                                Заказ будет сделан @order.TimeOfDelivery.ToString("D")
+                            </text>
+                            <form asp-action="RemoveOrder" asp-controller="Order" method="post">
+                                <input name="orderId" value="@order.Id" type="hidden" />
+                                <input type="submit" value="Отменить заказ" class="button" />
+                            </form>
                         }
                     </div>
                 </div>
+            }
+        </div>
+        <div class="removeAndPaginationOrder-div">
+            <div class="removeCompleteOrders-div">
+                <form asp-action="RemoveCompleteOrders" asp-controller="Order" method="post">
+                    <input class="button" type="submit" value="Убрать выполненные заказы" />
+                </form>
             </div>
-        }
-        else
-        {
-            <div class="NoOrders-text-div"><h3>У вас нет заказов</h3></div>
-        }
-    </div>
 
+            <div class="indexOrder-pagination-div">
+                <div>
+                    @if (Model.OrderIndexModel.PageInfo.PageNumber > 1)
+                    {
+                        <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.OrderIndexModel.PageInfo.PageNumber - 1)">
+                            Назад
+                        </a>
+                    }
+                </div>
+                <div>
+                    @if (Model.OrderIndexModel.PageInfo.TotalPage > Model.OrderIndexModel.PageInfo.PageNumber)
+                    {
+                        <a asp-action="IndexOrders" asp-controller="Order" asp-route-pageNum="@(Model.OrderIndexModel.PageInfo.PageNumber + 1)">
+                            Вперед
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="NoOrders-text-div"><h3>У вас нет заказов</h3></div>
+    }
+</div>

@@ -1,23 +1,21 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>    
-    @await Html.PartialAsync("MetaPartial")
-    @await Html.PartialAsync("LinkPartial")
-    @await Html.PartialAsync("TitlePartial")
-</head>
-<body>
+    <head>    
+        @await Html.PartialAsync("MetaPartial")
+        @await Html.PartialAsync("LinkPartial")
+        @await Html.PartialAsync("TitlePartial")
+    </head>
+    <body>
+        <div class="wrapper">
+            @await Html.PartialAsync("MenuPartial")
 
-    <div class="wrapper">
-        @await Html.PartialAsync("MenuPartial")
+            <div class="container-fluid row">
+                @RenderBody()
+            </div>
 
-        <div class="container-fluid row">
-            @RenderBody()
+            @await Html.PartialAsync("FooterPartial")
         </div>
-
-        @await Html.PartialAsync("FooterPartial")
-    </div>
-
-        @await Html.PartialAsync("SkriptsPartial")
-        @RenderSection("Scripts", required: false)
-</body>
+            @await Html.PartialAsync("SkriptsPartial")
+            @RenderSection("Scripts", required: false)
+    </body>
 </html>
