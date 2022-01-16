@@ -1,5 +1,7 @@
 ﻿@model AppUserViewModel  
 
+<link rel="stylesheet" href="~/css/accountStyle.css" />
+
 <div class="indexAccountInfo-div">
     @if(Model.RoleName == "admin")
     {
@@ -30,5 +32,4 @@
     <div class="info-group-div">
         <a asp-action="Logout" asp-controller="Account">Выйти</a>
     </div>
-    
 </div>

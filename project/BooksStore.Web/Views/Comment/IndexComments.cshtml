@@ -1,74 +1,78 @@
 ﻿@model CommentListViewModel
 
-    <div class="col-md-12">
-        <div class="addCommnet-div">
-            @if (!Model.UserIsComment)
-            {
-                <button type="reset" class="indexBook-clickAddCommentForm-button button" onclick="showAddCommentForm()">
-                    Добавить отзыв
-                </button>
+<link rel="stylesheet" href="~/css/commnetStyle.css" />
 
-                <form asp-action="AddComment" asp-controller="Comment" method="post" id="addCommnet-form">
-                    <div class="addCommentTextarea-div">
-                        <textarea name="model.Descriptions" placeholder="Напишите ваш отзыв"></textarea>
-                    </div>
-                    <input type="hidden" name="model.BookId" value="@Model.BookId" />
-                    <div class="hideAddComment-div">
-                        <div>
-                            <input type="submit" value="Добавить" class="button" />
-                        </div>
-                        <div>
-                            <button id="hideCommnetForm" class="button" type="reset" onclick="hideAddCommentForm()">
-                                Скрыть
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            }
-            else
-            {
-                <button type="reset" class="button">
-                    Вы оставили отзыв по данной книге
-                </button>
-            }
-        </div>
-        <div class="indexComments-bookName">
-            <h4>Отзывы для книги: <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.BookId">@Model.BookName</a></h4>
-        </div>
-        @if (Model.IndexCommentModel.Objects != null && Model.IndexCommentModel.Objects.Count() != 0)
+<div class="col-md-12">
+    <div class="addCommnet-div">
+        @if (!Model.UserIsComment)
         {
-            <div class="indexComments-div">
-                @foreach (var comment in Model.IndexCommentModel.Objects)
-                {
-                    <div class="indexComments-comment">
-                        <div class="indexComments-userName-div">
-                            @comment.AppUserName
-                        </div>
-                        <div class="indexComments-timeCrate-div">
-                            @comment.TimeOfCreate
-                        </div>
-                        <div class="indexComments-descriptions-div">
-                            @comment.Descriptions
-                        </div>
+            <button type="reset" class="indexBook-clickAddCommentForm-button button" onclick="showAddCommentForm()">
+                Добавить отзыв
+            </button>
+
+            <form asp-action="AddComment" asp-controller="Comment" method="post" id="addCommnet-form">
+                <div class="addCommentTextarea-div">
+                    <textarea name="model.Descriptions" placeholder="Напишите ваш отзыв"></textarea>
+                </div>
+                <input type="hidden" name="model.BookId" value="@Model.BookId" />
+                <div class="hideAddComment-div">
+                    <div>
+                        <input type="submit" value="Добавить" class="button" />
                     </div>
-                }
-            </div>
-            <div>
-
-                @if (Model.IndexCommentModel.PageInfo.TotalPage != Model.IndexCommentModel.PageInfo.PageNumber)
-                {
-                    @Html.ActionLink("Вперед", "IndexBook", "Book", new { bookId = Model.BookId, pageNum = (Model.IndexCommentModel.PageInfo.PageNumber + 1) })
-                }
-
-                @if (Model.IndexCommentModel.PageInfo.PageNumber > 1)
-                {
-                    @Html.ActionLink("Назад", "IndexBook", "Book", new { bookId = Model.BookId, pageNum = (Model.IndexCommentModel.PageInfo.PageNumber - 1) })
-                }
-
-            </div>
+                    <div>
+                        <button id="hideCommnetForm" class="button" type="reset" onclick="hideAddCommentForm()">
+                            Скрыть
+                        </button>
+                    </div>
+                </div>
+            </form>
         }
         else
         {
-            <div class="noComment-div"><h3>Кометарии отсутсвуют</h3></div>
+            <button type="reset" class="button">
+                Вы оставили отзыв по данной книге
+            </button>
         }
     </div>
+
+    <div class="indexComments-bookName">
+        <h4>Отзывы для книги: <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.BookId">@Model.BookName</a></h4>
+    </div>
+
+    @if (Model.IndexCommentModel.Objects != null && Model.IndexCommentModel.Objects.Count() != 0)
+    {
+        <div class="indexComments-div">
+            @foreach (var comment in Model.IndexCommentModel.Objects)
+            {
+                <div class="indexComments-comment">
+                    <div class="indexComments-userName-div">
+                        @comment.AppUserName
+                    </div>
+                    <div class="indexComments-timeCrate-div">
+                        @comment.TimeOfCreate
+                    </div>
+                    <div class="indexComments-descriptions-div">
+                        @comment.Descriptions
+                    </div>
+                </div>
+            }
+        </div>
+        <div>
+
+            @if (Model.IndexCommentModel.PageInfo.TotalPage != Model.IndexCommentModel.PageInfo.PageNumber)
+            {
+                @Html.ActionLink("Вперед", "IndexBook", "Book", new { bookId = Model.BookId, pageNum = (Model.IndexCommentModel.PageInfo.PageNumber + 1) })
+            }
+
+            @if (Model.IndexCommentModel.PageInfo.PageNumber > 1)
+            {
+                @Html.ActionLink("Назад", "IndexBook", "Book", new { bookId = Model.BookId, pageNum = (Model.IndexCommentModel.PageInfo.PageNumber - 1) })
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="noComment-div"><h3>Кометарии отсутсвуют</h3></div>
+    }
+</div>
