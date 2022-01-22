@@ -26,14 +26,14 @@
                 <div class="indexBooks-removeBook-div">
                     <form asp-action="RemoveBook" asp-controller="Book" method="post">
                         <input type="hidden" value="@Model.Book.Id" name="bookId" />
-                        <input class="indexAdmin-removeBook-button button " value="Удалить" type="submit" />
+                        <input class="btn btn-primary btn-sm" value="Удалить" type="submit" />
                     </form>
                 </div>
 
                 <div class="indexBooks-updateBook-div">
                     <form asp-action="UpdateBook" asp-controller="Book" method="get">
                         <input type="hidden" value="@Model.Book.Id" name="bookId" />
-                        <input type="submit" value="Обновить" class="indexAdmin-updateBook-button button" />
+                        <input type="submit" value="Обновить" class="btn btn-primary btn-sm" />
                     </form>
                 </div>
             }

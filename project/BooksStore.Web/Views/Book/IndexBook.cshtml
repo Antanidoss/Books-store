@@ -44,14 +44,14 @@
                     <div>
                         <form asp-action="AddBasketBook" asp-controller="Basket" method="post">
                             <input type="hidden" value="@Model.Id" name="bookId" />
-                            <input type="submit" value="Добавить в корзину" class="button" />
+                            <input type="submit" value="Добавить в корзину" class="btn btn-primary btn-sm" />
                         </form>
                     </div>
                 }
                 else
                 {
                     <div class="bookInBasket-div">
-                        <a class="button" asp-action="IndexBasket" asp-controller="Basket">
+                        <a class="btn btn-primary btn-sm" asp-action="IndexBasket" asp-controller="Basket">
                             Уже в корзине<i class="fas fa-check"></i>
                         </a>
                     </div>
@@ -67,8 +67,7 @@
             </div>
 
             <div class="indexBook-categoryBook">
-                Категория: <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@Model.CategoryId" 
-                              asp-route-categoryName="@Model.CategoryName">@Model.CategoryName</a>
+                Категория: <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@Model.CategoryId" asp-route-categoryName="@Model.CategoryName">@Model.CategoryName</a>
             </div>
 
             <div class="indexBook-pageNumBook">
@@ -76,6 +75,5 @@
             </div>
             
         </div>
-   
     </div>
 </div>

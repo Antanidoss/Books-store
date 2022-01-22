@@ -2,26 +2,17 @@
 
 <link rel="stylesheet" href="~/css/categoryStyle.css" />
 
-<div>
-    <div class="addCategory-div col-md-12">
-        <form asp-action="AddCategory" asp-controller="Category" method="post" class="addCategory-form">
-            <div class="col-md-12 form-group row" style="margin-top:100px">
-                <div class="col-md-2"></div>
-
-                <div class="col-form-label">
-                    @Html.ValidationMessageFor(c => c.Name)
-                </div>
-
-                <div class="col-md-1"></div>
-
-                <label asp-for="Name" class="col-form-label">Название</label>
-                <div class="col-md-6">
-                    <input asp-for="Name" class="form-control" />
-                </div>
+<div class="col-md-12">
+    <form asp-action="AddCategory" asp-controller="Category" method="post" class="addCategory-form">
+        <div class="col-md-6" style="margin: 0 auto; padding-top: 50px">
+            <label asp-for="Name" class="col-form-label">Название</label>
+            <div>
+                @Html.ValidationMessageFor(c => c.Name)
             </div>
-            <div class="col text-center">
-                <input type="submit" class="btn btn-primary" value="Создать" />
-            </div>
-        </form>
-    </div>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div class="col text-center" style="margin-top: 50px;">
+            <input type="submit" class="btn btn-primary" value="Создать" />
+        </div>
+    </form>
 </div>

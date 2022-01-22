@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="~/css/accountStyle.css" />
 
-<div class="regLog-div">
+<div class="regLog-div" style="height: 500px;">
     <form method="post" asp-action="Login" asp-controller="Account" class="regLog-form">
         <div asp-validation-summary="All"></div>            
     
@@ -20,6 +20,7 @@
             <label asp-for="IsParsistent" class="logReg-label">Запомнить:</label>
             <input asp-for="IsParsistent" class="regLog-input" style="width: 20px" type="checkbox" />
         </div>
+
         <div class="row col-auto" style="margin-top: 100px">
             <div class="col-md-6">
                 <input class="regLog-submit" value="Войти" type="submit" />

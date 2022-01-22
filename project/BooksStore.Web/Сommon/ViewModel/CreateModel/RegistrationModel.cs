@@ -19,6 +19,6 @@ namespace BooksStore.Web.Сommon.ViewModel.CreateModel
         [Required(ErrorMessage = "Введите пароль")]
         [StringLength(100, MinimumLength = 10, ErrorMessage = "Длина пароля должна быть от 10 до 100 символов")]
         public string Password { get; set; }
-        public bool IsPasrsistent { get; set; }
+        public bool IsParsistent { get; set; }
     }
 }
