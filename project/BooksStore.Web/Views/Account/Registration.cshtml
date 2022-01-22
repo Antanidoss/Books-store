@@ -23,9 +23,15 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="IsPasrsistent" class="logReg-label" style="width: 20px">Запомнить:</label>
-            <input asp-for="IsPasrsistent" class="regLog-input" type="checkbox" />
+            <input asp-for="ConfirmPassword" class="regLog-input" type="password" placeholder=" " />
+            <label asp-for="ConfirmPassword" class="regLog-label">Подтверждение пароля:</label>
         </div>
+
+        <div class="form_group">
+            <label asp-for="IsParsistent" class="logReg-label">Запомнить:</label>
+            <input asp-for="IsParsistent" class="regLog-input" style="width: 20px" type="checkbox" />
+        </div>
+
         <div class="col-auto row">
             <div class="col-md-9">
                 <input class="regLog-submit" value="Зарегестрироваться" type="submit" />

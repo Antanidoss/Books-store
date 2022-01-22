@@ -60,7 +60,7 @@ namespace BooksStore.Web.Controllers
                 return View(regModel);
             }
 
-            await _userService.SignInAsync(result.AppUserId, regModel.IsPasrsistent);
+            await _userService.SignInAsync(result.AppUserId, regModel.IsParsistent);
 
             return RedirectToAction("IndexBooks", "Book");
         }

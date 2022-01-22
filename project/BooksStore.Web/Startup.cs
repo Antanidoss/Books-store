@@ -63,6 +63,7 @@ namespace BooksStore.Web
                 mc.AddProfile(new RoleDTOProfile());
                 mc.AddProfile(new CommentDTOProfile());
             });
+
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 

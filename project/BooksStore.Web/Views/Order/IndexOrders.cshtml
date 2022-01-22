@@ -5,11 +5,11 @@
 <div class="indexOrder-main">
     @if (Model.OrderIndexModel.Objects != null && Model.OrderIndexModel.PageInfo.TotalItems != 0)
     {
-        <div class="indexOrder-orders">
+        <div class="indexOrder-orders col-md-12">
             @foreach (var order in Model.OrderIndexModel.Objects)
             {
-                <div class="indexOrder-order">
-                    <div class="indexOrder-timeCreate">
+                <div class="indexOrder-order col-md-12">
+                    <div class="col-md-12 indexOrder-timeCreate">
                         <text>
                             Заказ оформлен: @order.TimeOfCreate.ToString("D")
                         </text>
@@ -23,7 +23,7 @@
                             </div>
                         }
                     </div>
-                    <div class="indexOrder-orderPlaced">
+                    <div class="col-md-12 indexOrder-orderPlaced">
                         @if (order.OrderPlaced)
                         {
                             <text>
@@ -31,7 +31,7 @@
                             </text>
                             <form asp-action="RemoveOrder" asp-controller="Order" method="post">
                                 <input name="orderId" value="@order.Id" type="hidden" />
-                                <input type="submit" value="Удалить" class="button" />
+                                <input type="submit" value="Удалить" class="btn btn-primary btn-sm" />
                             </form>
                         }
                         else
@@ -41,17 +41,18 @@
                             </text>
                             <form asp-action="RemoveOrder" asp-controller="Order" method="post">
                                 <input name="orderId" value="@order.Id" type="hidden" />
-                                <input type="submit" value="Отменить заказ" class="button" />
+                                <input type="submit" value="Отменить заказ" class="btn btn-primary btn-sm" />
                             </form>
                         }
                     </div>
                 </div>
             }
         </div>
+
         <div class="removeAndPaginationOrder-div">
             <div class="removeCompleteOrders-div">
                 <form asp-action="RemoveCompleteOrders" asp-controller="Order" method="post">
-                    <input class="button" type="submit" value="Убрать выполненные заказы" />
+                    <input class="btn btn-primary btn-sm" type="submit" value="Убрать выполненные заказы" />
                 </form>
             </div>
 
