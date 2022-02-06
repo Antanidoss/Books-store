@@ -2,19 +2,17 @@
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
-using BooksStore.Service.Interfaces.FilterBuilders;
 using BooksStore.Service.Models;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
-using LinqKit;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using BooksStore.Service.Interfaces.Filter;
+using LinqKit;
 
-namespace BooksStore.Services
+namespace BooksStore.Service.Implementation.Services
 {
     public class BookService : IBookService
     {
@@ -24,9 +22,9 @@ namespace BooksStore.Services
 
         private readonly ICacheManager _cacheManager;
 
-        private readonly IBookFilterBuilder _bookFilterBuilder;
+        private readonly ISpecificationFilterBuilder<Book> _bookFilterBuilder;
 
-        public BookService(IMapper mapper, ICacheManager cacheManager, IRepositoryFactory repositoryFactory, IBookFilterBuilder bookFilterBuilder)
+        public BookService(IMapper mapper, ICacheManager cacheManager, IRepositoryFactory repositoryFactory, ISpecificationFilterBuilder<Book> bookFilterBuilder)
         {
             _repositoryFactory = repositoryFactory;
             _mapper = mapper;
@@ -63,16 +61,13 @@ namespace BooksStore.Services
             return _mapper.Map<IEnumerable<BookDTO>>(books);
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBooksWithFilterAsync(int take, int skip, FilterModel filterModel)
+        public async Task<IEnumerable<BookDTO>> GetBooksWithFilterAsync(int take, int skip, BookFilterModel filterModel)
         {
             if (filterModel.FilterIsNull())
-            {
                 return await GetBooksAsync(skip, take);
-            }
 
-            filterModel.BookName = string.IsNullOrEmpty(filterModel.BookName) ? string.Empty : filterModel.BookName.ToLower().Replace(" ", "");
-
-            var result = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, GetFilterCondition(filterModel));
+            var specification = _bookFilterBuilder.GetResult(filterModel);
+            var result = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, b => specification.GetSpecification().Invoke(b));
 
             return _mapper.Map<IEnumerable<BookDTO>>(result);
         }
@@ -104,24 +99,6 @@ namespace BooksStore.Services
         public async Task<int> GetCountBooksAsync()
         {
             return await _repositoryFactory.CreateBookRepository().GetCountAsync();
-        }
-
-        private Expression<Func<Book, bool>> GetFilterCondition(FilterModel filterModel)
-        {
-            if (!string.IsNullOrEmpty(filterModel.BookName))
-            {
-                _bookFilterBuilder.BuildWithFilterName(filterModel.BookName);
-            }
-
-            filterModel.CategoryIds.RemoveAll(i => i == default);
-            if (filterModel.CategoryIds.Any())
-            {
-                _bookFilterBuilder.BuildWithFilterCategories(filterModel.CategoryIds);
-            }
-
-            _bookFilterBuilder.BuildWithFilterPrice(filterModel.BookPriceFrom, filterModel.BookPriceTo);
-
-            return _bookFilterBuilder.GetResult();
         }
     }
 }

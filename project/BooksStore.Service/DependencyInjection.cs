@@ -1,8 +1,10 @@
-﻿using BooksStore.Infrastructure.Implementation;
+﻿using BooksStore.Core.Entities;
+using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Service.Implementation;
-using BooksStore.Service.Implementation.Builders;
-using BooksStore.Service.Interfaces.FilterBuilders;
+using BooksStore.Service.Implementation.Filters.BookFilters;
+using BooksStore.Service.Implementation.Services;
+using BooksStore.Service.Interfaces.Filter;
 using BooksStore.Services.AuthorSer;
 using BooksStore.Services.Implementation.IdentityServices;
 using BooksStore.Services.Interfaces;
@@ -32,7 +34,7 @@ namespace BooksStore.Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
 
-            services.AddScoped<IBookFilterBuilder, BookFilterBuilder>();
+            services.AddScoped<ISpecificationFilterBuilder<Book>, BookFilterBuilder>();
             
             return services;
         }

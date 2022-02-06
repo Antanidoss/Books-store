@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BooksStore.Service.Models
 {
-    public class FilterModel
+    public class BookFilterModel
     {
         public string BookName { get; set; }
         public decimal BookPriceFrom { get; set; }
