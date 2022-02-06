@@ -77,15 +77,17 @@ namespace BooksStore.Web.Сommon.Services
             return books;
         }
 
-        public async Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, FilterModel filterModel)
+        public async Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, BookFilterModel filterModel)
         {
             if (!PaginationInfo.PageNumberIsValid(pageNum))
             {
                 throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
             }
 
-            int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
+            if (filterModel.CategoryIds != null)
+                filterModel.CategoryIds.RemoveAll(i => i == default);
 
+            int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
             var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksWithFilterAsync(PageSizes.Books, take, filterModel));
 
             foreach (var book in books)
