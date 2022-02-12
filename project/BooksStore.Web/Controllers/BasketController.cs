@@ -18,6 +18,7 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [PageNumValidationFilter]
         public async Task<IActionResult> IndexBasket(int pageNum = 1)
         {
             return View(await _basketService.GetBasketAsync(pageNum));

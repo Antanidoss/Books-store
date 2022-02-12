@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -50,11 +51,6 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum, int bookId)
         {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
             int pageSize = PageSizes.Comments;
             int skip = (pageNum - 1) * pageSize;
             var comments = await _commentService.GetComments(skip, pageSize, bookId);

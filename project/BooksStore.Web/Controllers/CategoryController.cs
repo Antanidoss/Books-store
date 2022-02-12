@@ -40,6 +40,7 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [PageNumValidationFilter]
         public async Task<IActionResult> IndexCategories(int pageNum = 1)
         {
             var categories = await _categoryService.GetCategories(pageNum);

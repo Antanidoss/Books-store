@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -38,11 +39,6 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<BasketViewModel> GetBasketAsync(int pageNum)
         {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
             var basket = await _basketService.GetBasketByIdAsync(basketId);
             var pageSize = PageSizes.Basket;

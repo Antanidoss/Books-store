@@ -27,6 +27,7 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [PageNumValidationFilter]
         [IdValidationFilter("bookId")]
         public async Task<IActionResult> IndexComments(int? bookId, int pageNum = 1)
         {
