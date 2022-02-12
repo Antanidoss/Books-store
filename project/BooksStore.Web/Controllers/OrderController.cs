@@ -25,6 +25,7 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [PageNumValidationFilter]
         public async Task<IActionResult> IndexOrders(int pageNum = 1)
         {
             var orders = (await _orderService.GetOrdersAsync(pageNum)).ToList();

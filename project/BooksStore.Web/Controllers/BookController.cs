@@ -27,6 +27,7 @@ namespace BooksStore.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [PageNumValidationFilter]
         public async Task<IActionResult> IndexBooks(BookFilterModel filterModel, int pageNum = 1)
         {
             int booksCount = await _bookService.GetCountAsync();
@@ -48,6 +49,7 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [PageNumValidationFilter]
         public async Task<IActionResult> IndexBooksAdmin(BookFilterModel filterModel = null, int pageNum = 1)
         {
             return await IndexBooks(filterModel, pageNum);

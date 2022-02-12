@@ -5,7 +5,6 @@ using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -40,11 +39,6 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum)
         {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
             var roles = await _roleManagerService.GetRolesAsync(PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Roles), PageSizes.Roles);
 
             return _mapper.Map<IEnumerable<RoleViewModel>>(roles);

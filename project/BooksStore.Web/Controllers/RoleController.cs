@@ -33,6 +33,7 @@ namespace BooksStore.Web.Controllers
         }
 
         [HttpGet]
+        [PageNumValidationFilter]
         public async Task<IActionResult> IndexRole(int pageNum = 1)
         {
             var roles = await _roleService.GetRolesAsync(pageNum);

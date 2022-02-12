@@ -9,6 +9,7 @@ using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -30,12 +31,8 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<CategoryViewModel>> GetCategories(int pageNum)
         {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
             var pageSize = PageSizes.Categories;
+
             return _mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.GetCategories((pageNum - 1) * pageSize, pageSize));
         }
 

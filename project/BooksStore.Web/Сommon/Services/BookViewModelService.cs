@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -61,11 +62,6 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<BookViewModel>> GetBooksAsync(int pageNum)
         {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
             int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
             var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAsync(PageSizes.Books, take));
 
@@ -79,11 +75,6 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, BookFilterModel filterModel)
         {
-            if (!PaginationInfo.PageNumberIsValid(pageNum))
-            {
-                throw new ArgumentException("Номер страницы не может быть равен или меньше нуля");
-            }
-
             if (filterModel.CategoryIds != null)
                 filterModel.CategoryIds.RemoveAll(i => i == default);
 
