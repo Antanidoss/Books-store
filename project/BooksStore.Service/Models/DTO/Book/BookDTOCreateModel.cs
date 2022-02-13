@@ -1,4 +1,6 @@
-﻿namespace BooksStore.Services.DTO.Book
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BooksStore.Services.DTO.Book
 {
     public class BookDTOCreateModel
     {
@@ -7,8 +9,8 @@
         public decimal Price { get; set; }
         public int NumberOfPages { get; set; }
         public bool InStock { get; set; }
-        public string ImgPath { get; set; }
         public int AuthorId { get; set; }
         public int CategoryId { get; set; }
+        public IFormFile ImgFile { get; set; }
     }
 }

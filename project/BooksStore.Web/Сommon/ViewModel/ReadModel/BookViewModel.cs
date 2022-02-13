@@ -12,7 +12,7 @@
         public int CategoryId { get; set; }
         public string AuthorFullName { get; set; }
         public int AuthorId { get; set; }
-        public string ImgPath { get; set; }
+        public byte[] ImageData { get; set; }
         public bool IsAddToBasket { get; set; }
     }
 }

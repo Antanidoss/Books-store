@@ -13,9 +13,9 @@
 
         <div class="indexBook-flexDiv col-md-12">
             <div class="indexBook-bookImg-div col-md-5">
-                @if (!string.IsNullOrEmpty(Model.ImgPath))
+                @if (Model.ImageData != null && Model.ImageData.Any())
                 {
-                    <img src="@Url.Content(Model.ImgPath)" />
+                    @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.ImageData) + "\" />")
                 }
             </div>
 

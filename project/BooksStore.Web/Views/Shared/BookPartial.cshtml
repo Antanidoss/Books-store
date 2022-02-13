@@ -6,10 +6,10 @@
     </div>
 
     <div class="indexBooks-bookImg-div col-md-12">
-        @if (!string.IsNullOrEmpty(Model.Book.ImgPath))
+        @if (Model.Book.ImageData != null && Model.Book.ImageData.Any())
         {
             <a asp-action="IndexBook" asp-controller="Book" asp-route-bookId="@Model.Book.Id">
-                <img src="@Url.Content(Model.Book.ImgPath)" />
+                @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Book.ImageData) + "\" />")
             </a>
          }
     </div>
@@ -80,7 +80,7 @@
 
             }
 
-            <div class="indexBooks-bookPrice-div col-md-2">
+            <div class="indexBooks-bookPrice-div col-md-3">
                 @Model.Book.Price.ToString("c")
             </div>
 

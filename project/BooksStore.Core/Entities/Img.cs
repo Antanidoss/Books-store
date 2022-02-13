@@ -4,24 +4,25 @@ namespace BooksStore.Core.Entities
 {
     public class Img : BaseEntity
     {
-        public string Path { get; set; }
+        public string Name { get; set; }
+        public byte[] ImageData { get; set; }
         public Book Book { get; set; }
         public int BookId { get; set; }
 
         private Img() : base() { }
 
-        public Img(string path) : base()
+        public Img(string name) : base()
         {
-            ValidateArgumentConstructor(path);
+            ValidateArgumentConstructor(name);
 
-            Path = path;
+            Name = name;
         }
 
-        private void ValidateArgumentConstructor(string path)
+        private void ValidateArgumentConstructor(string name)
         {
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Путь картинки не может быть пустой либо равен null", nameof(path));
+                throw new ArgumentException("Image name cannot be empty", nameof(name));
             }
         }
     }
