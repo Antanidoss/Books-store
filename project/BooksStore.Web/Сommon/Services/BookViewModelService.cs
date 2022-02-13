@@ -10,11 +10,8 @@ using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -41,14 +38,6 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task AddBookAsync(BookCreateModel bookCreateModel)
         {
-            string path = "/img/" + bookCreateModel.ImgFile.FileName;
-            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-            {
-                await bookCreateModel.ImgFile.CopyToAsync(fileStream);
-            }
-
-            bookCreateModel.ImgPath = path;
-
             await _bookService.AddBookAsync(_mapper.Map<BookDTOCreateModel>(bookCreateModel));
         }
 

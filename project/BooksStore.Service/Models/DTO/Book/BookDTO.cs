@@ -15,7 +15,8 @@ namespace BooksStore.Services.DTO.Book
         public string AuthorFirstname { get; set; }
         public string AuthorSurname { get; set; }
         public int AuthorId { get; set; }
-        public string ImgPath { get; set; }
+        public string ImageName { get; set; }
+        public byte[] ImageData { get; set; }
         public int ImgId { get; set; }
         public DateTime TimeOfCreate { get; set; }
         public DateTime UpdateTime { get; set; }
