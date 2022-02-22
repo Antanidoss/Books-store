@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using BooksStore.Core.Entities;
 using BooksStore.Web.Ñommon.Initializer;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -16,12 +14,7 @@ namespace BooksStore.Web
 
             using (var scope = host.Services.CreateScope())
             {
-                var service = scope.ServiceProvider;
-
-                var userManager = service.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-
-                await RoleInitializer.InitializeAsync(userManager, roleManager);
+                await AppInitializer.InitializeAsync(scope.ServiceProvider);
 
                 host.Run();
             }
