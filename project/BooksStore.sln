@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Service", "BooksStore.Service\BooksStore.Service.csproj", "{6160474A-D73D-4044-BC4E-D301A2313241}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Services", "BooksStore.Service\BooksStore.Services.csproj", "{6160474A-D73D-4044-BC4E-D301A2313241}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Web", "BooksStore.Web\BooksStore.Web.csproj", "{BB375FA2-12A1-49E0-9334-AA728BF6E271}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Core", "BooksSto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Infrastructure", "BooksStore.Infrastructure\BooksStore.Infrastructure.csproj", "{8C22A9BA-6BF6-4E32-AB0E-9F3064E7CB69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksStore.Common", "BooksStore.Common\BooksStore.Common.csproj", "{A22869A3-F8B1-4580-9760-8F7DA0F0DB52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Common", "BooksStore.Common\BooksStore.Common.csproj", "{A22869A3-F8B1-4580-9760-8F7DA0F0DB52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

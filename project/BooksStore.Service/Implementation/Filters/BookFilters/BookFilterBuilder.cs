@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using BooksStore.Core.Entities;
-using BooksStore.Service.Implementation.Filters.BookFilters.Specifications;
-using BooksStore.Service.Interfaces.Filter;
-using BooksStore.Service.Models;
+using BooksStore.Services.Implementation.Filters.BookFilters.Specifications;
+using BooksStore.Services.Interfaces.Filter;
+using BooksStore.Services.Models;
 
-namespace BooksStore.Service.Implementation.Filters.BookFilters
+namespace BooksStore.Services.Implementation.Filters.BookFilters
 {
     public class BookFilterBuilder : ISpecificationFilterBuilder<Book>
     {

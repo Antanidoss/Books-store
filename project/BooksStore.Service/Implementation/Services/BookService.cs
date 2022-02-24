@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Interfaces;
-using BooksStore.Service.Models;
+using BooksStore.Services.Models;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Service.Interfaces.Filter;
+using BooksStore.Services.Interfaces.Filter;
 using LinqKit;
 using BooksStore.Common.Exceptions;
 
-namespace BooksStore.Service.Implementation.Services
+namespace BooksStore.Services.Implementation.Services
 {
     public class BookService : IBookService
     {

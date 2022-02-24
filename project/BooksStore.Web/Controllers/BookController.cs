@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using BooksStore.Service.Models;
+using BooksStore.Services.Models;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;

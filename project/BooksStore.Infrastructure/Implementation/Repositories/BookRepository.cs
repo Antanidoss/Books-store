@@ -69,16 +69,17 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetAsync(int skip, int take, Expression<Func<Book, bool>> func)
+        public async Task<IEnumerable<Book>> GetAsync(int skip, int take, Expression<Func<Book, bool>> condition)
         {
-            return _context.Books
+            return await _context.Books
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)
                 .AsExpandable()
-                .Where(func)
+                .Where(condition)
                 .Skip(skip)
-                .Take(take);
+                .Take(take)
+                .ToListAsync();
         }
 
         public async Task<int> GetCountAsync()

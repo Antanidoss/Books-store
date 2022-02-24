@@ -1,9 +1,12 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces.Repositories;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
@@ -44,11 +47,14 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Author> GetByNameAsync(string firstName, string surname)
+        public async Task<IEnumerable<Author>> GetAsync(int skip, int take, Expression<Func<Author, bool>> condition)
         {
-            var author = await _context.Authors.FirstOrDefaultAsync(p => p.Firstname == firstName);
-
-            return author != default ? author : null;
+            return await _context.Authors
+                .AsExpandable()
+                .Where(condition)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
         }
 
         public async Task<int> GetCountAsync()

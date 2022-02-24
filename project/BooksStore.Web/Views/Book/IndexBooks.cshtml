@@ -3,7 +3,7 @@
     ViewBag.SubmitAction = "IndexBooks";
 }
 
-@await Html.PartialAsync("SearchPartial", ViewBag.FilterModel as BooksStore.Service.Models.BookFilterModel)
+@await Html.PartialAsync("SearchPartial", ViewBag.FilterModel as BooksStore.Services.Models.BookFilterModel)
 
 <div class="row col-md-10">
     @if (Model.BookIndexModel.Objects != null && Model.BookIndexModel.Objects.Count() != 0)

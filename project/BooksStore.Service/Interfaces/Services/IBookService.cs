@@ -1,4 +1,4 @@
-﻿using BooksStore.Service.Models;
+﻿using BooksStore.Services.Models;
 using BooksStore.Services.DTO.Book;
 using System.Collections.Generic;
 using System.Threading.Tasks;

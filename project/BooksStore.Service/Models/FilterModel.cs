@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BooksStore.Service.Models
+namespace BooksStore.Services.Models
 {
     public class BookFilterModel
     {
