@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BooksStore.Infrastructure.Exceptions
+namespace BooksStore.Common.Exceptions
 {
     public class NotFoundException : Exception
     {
