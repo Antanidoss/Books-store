@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using BooksStore.Core.Entities;
-using BooksStore.Service.Interfaces.Filter;
+using BooksStore.Services.Interfaces.Filter;
 
-namespace BooksStore.Service.Implementation.Filters.BookFilters.Specifications
+namespace BooksStore.Services.Implementation.Filters.BookFilters.Specifications
 {
     public class BookNameFilterSpecification : IFilterSpecification<Book>
     {

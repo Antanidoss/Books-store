@@ -3,7 +3,7 @@ using BooksStore.Infrastructure.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace BooksStore.Service.Implementation
+namespace BooksStore.Services.Implementation
 {
     public class RepositoryFactory : IRepositoryFactory
     {

@@ -1,6 +1,6 @@
 ﻿using BooksStore.Core.Entities;
 
-namespace BooksStore.Service.Interfaces.Filter
+namespace BooksStore.Services.Interfaces.Filter
 {
     public interface ISpecificationFilterBuilder<T> where T : BaseEntity
     {

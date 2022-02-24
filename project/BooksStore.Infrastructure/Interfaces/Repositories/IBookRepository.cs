@@ -9,7 +9,7 @@ namespace BooksStore.Infastructure.Interfaces.Repositories
 {
     public interface IBookRepository : IRepository<Book>
     {
-        Task<IEnumerable<Book>> GetAsync(int skip, int take, Expression<Func<Book, bool>> predicate);
+        Task<IEnumerable<Book>> GetAsync(int skip, int take, Expression<Func<Book, bool>> condition);
         Task<IEnumerable<Book>> GetAsync(int skip, int take);
         Task<int> GetCountAsync();
     }

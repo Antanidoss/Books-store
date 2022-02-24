@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using BooksStore.Core.Entities;
-using BooksStore.Service.Interfaces.Filter;
+using BooksStore.Services.Interfaces.Filter;
 using LinqKit;
 
-namespace BooksStore.Service.Implementation.Filters
+namespace BooksStore.Services.Implementation.Filters
 {
     public class AndFilterSpecification<T> : IFilterSpecification<T> where T : BaseEntity
     {

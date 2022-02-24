@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Service.Models;
+using BooksStore.Services.Models;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;

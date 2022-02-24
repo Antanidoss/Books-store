@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using BooksStore.Core.Entities;
 
-namespace BooksStore.Service.Interfaces.Filter
+namespace BooksStore.Services.Interfaces.Filter
 {
     public interface IFilterSpecification<T> where T : BaseEntity
     {

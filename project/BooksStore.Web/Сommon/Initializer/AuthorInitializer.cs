@@ -17,7 +17,7 @@ namespace BooksStore.Web.Сommon.Initializer
         {
             foreach (var author in _baseAuthors)
             {
-                if (await authorRepository.GetByNameAsync(author.Firstname, author.Surname) == null)
+                if (await authorRepository.GetAsync(0, 0, a => a.Firstname == author.Firstname && a.Surname == author.Surname) == null)
                 {
                     await authorRepository.AddAsync(author);
                 }

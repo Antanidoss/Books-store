@@ -8,7 +8,7 @@ namespace BooksStore.Infrastructure.Interfaces.Repositories
 {
     public interface IDiscountRepository : IRepository<Discount>
     {
-        public Task<IEnumerable<Discount>> GetAsync(int skip, int take);
-        public Task<Discount> GetByBookIdAsync(int bookId);
+        Task<IEnumerable<Discount>> GetAsync(int skip, int take);
+        Task<Discount> GetByBookIdAsync(int bookId);
     }
 }

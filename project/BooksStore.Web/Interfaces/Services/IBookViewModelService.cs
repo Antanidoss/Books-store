@@ -1,4 +1,4 @@
-﻿using BooksStore.Service.Models;
+﻿using BooksStore.Services.Models;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using BooksStore.Web.Сommon.ViewModel.UpdateModel;

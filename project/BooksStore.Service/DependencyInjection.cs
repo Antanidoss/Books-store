@@ -1,10 +1,10 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
-using BooksStore.Service.Implementation;
-using BooksStore.Service.Implementation.Filters.BookFilters;
-using BooksStore.Service.Implementation.Services;
-using BooksStore.Service.Interfaces.Filter;
+using BooksStore.Services.Implementation;
+using BooksStore.Services.Implementation.Filters.BookFilters;
+using BooksStore.Services.Implementation.Services;
+using BooksStore.Services.Interfaces.Filter;
 using BooksStore.Services.AuthorSer;
 using BooksStore.Services.Implementation.IdentityServices;
 using BooksStore.Services.Interfaces;
