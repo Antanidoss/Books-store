@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Exceptions;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Service.Models;
 using BooksStore.Services.DTO.Book;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BooksStore.Service.Interfaces.Filter;
 using LinqKit;
+using BooksStore.Common.Exceptions;
 
 namespace BooksStore.Service.Implementation.Services
 {
