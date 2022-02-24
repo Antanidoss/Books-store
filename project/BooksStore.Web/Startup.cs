@@ -2,12 +2,11 @@ using AutoMapper;
 using BooksStore.Infastructure;
 using BooksStore.Infastructure.Data;
 using BooksStore.Services;
-using BooksStore.Services.Profiles;
 using BooksStore.Web.Common.CurUser;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
-using BooksStore.Web.Ñommon.Profiles;
-using BooksStore.Web.Ñommon.Services;
+using BooksStore.Web.Сommon.Profiles;
+using BooksStore.Web.Сommon.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -33,8 +32,11 @@ namespace BooksStore.Web
 
             //Infastructure layer configuration 
             services.AddInfastructure(Configuration);
+
+            var mapperConfigureExpression = new AutoMapper.Configuration.MapperConfigurationExpression();
+
             //Service layer configuration 
-            services.AddService();
+            services.AddService(mapperConfigureExpression);
 
             //Antiforgery configuration 
             services.AddAntiforgery();
@@ -44,25 +46,14 @@ namespace BooksStore.Web
             services.AddAuthorization();
 
             // Auto mapper configuration
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                //View model profiles
-                mc.AddProfile(new AppUserVMProfile());
-                mc.AddProfile(new BookVMProfile());
-                mc.AddProfile(new CommentVMProfile());
-                mc.AddProfile(new CategoryVMProfile());
-                mc.AddProfile(new RoleVMProfile());
-                mc.AddProfile(new OrderVMProfile());
-                //DTO profiles
-                mc.AddProfile(new AuthorDTOProfile());
-                mc.AddProfile(new BookDTOProfile());
-                mc.AddProfile(new CategoryDTOProfile());
-                mc.AddProfile(new BasketDTOProfile());
-                mc.AddProfile(new OrderDTOProfile());
-                mc.AddProfile(new AppUserDTOProfile());
-                mc.AddProfile(new RoleDTOProfile());
-                mc.AddProfile(new CommentDTOProfile());
-            });
+            mapperConfigureExpression.AddProfile(new AppUserVMProfile());
+            mapperConfigureExpression.AddProfile(new BookVMProfile());
+            mapperConfigureExpression.AddProfile(new CommentVMProfile());
+            mapperConfigureExpression.AddProfile(new CategoryVMProfile());
+            mapperConfigureExpression.AddProfile(new RoleVMProfile());
+            mapperConfigureExpression.AddProfile(new OrderVMProfile());
+
+            var mappingConfig = new MapperConfiguration(mapperConfigureExpression);
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

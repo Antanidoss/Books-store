@@ -1,8 +1,0 @@
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\bin\Debug\netcoreapp3.1\BooksStore.BL.deps.json
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\bin\Debug\netcoreapp3.1\BooksStore.BL.dll
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\obj\Debug\netcoreapp3.1\BooksStore.BL.csprojAssemblyReference.cache
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\obj\Debug\netcoreapp3.1\BooksStore.BL.AssemblyInfoInputs.cache
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\obj\Debug\netcoreapp3.1\BooksStore.BL.AssemblyInfo.cs
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\bin\Debug\netcoreapp3.1\BooksStore.BL.pdb
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\obj\Debug\netcoreapp3.1\BooksStore.BL.dll
-C:\IT\c#\Проекты\BookStore\BooksStore.BL\obj\Debug\netcoreapp3.1\BooksStore.BL.pdb

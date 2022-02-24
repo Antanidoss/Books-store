@@ -1,8 +1,0 @@
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\bin\Release\netcoreapp3.1\BooksStore.Core.deps.json
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\bin\Release\netcoreapp3.1\BooksStore.Core.dll
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\bin\Release\netcoreapp3.1\BooksStore.Core.pdb
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\obj\Release\netcoreapp3.1\BooksStore.Core.csprojAssemblyReference.cache
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\obj\Release\netcoreapp3.1\BooksStore.Core.AssemblyInfoInputs.cache
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\obj\Release\netcoreapp3.1\BooksStore.Core.AssemblyInfo.cs
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\obj\Release\netcoreapp3.1\BooksStore.Core.dll
-C:\IT\c#\Проекты\BooksStore\project\BooksStore.Core\obj\Release\netcoreapp3.1\BooksStore.Core.pdb
