@@ -2,40 +2,51 @@
 
 <link rel="stylesheet" href="~/css/roleStyle.css" />
 
-<div class="indexRoles-main">
+<div class="indexRoles-main col-md-3">
     @if (Model.Objects != null && Model.Objects.Count() != 0)
     {
-         <div class="indexRoles-roles">
-             @foreach (var role in Model.Objects)
-             {
-                 <div class="indexRoles-role">
-                     <div>
-                         <p><h4>Названия: @role.Name</h4></p>
-                     </div>
-                     <div>
-                         <a asp-action="RemoveRole" asp-controller="Role" asp-route-roleId="@role.Id">Удалить</a>
-                     </div>
-                 </div>
-             }
-         </div>
+        <div style="text-align: center;"><h4>Роли</h4></div>
 
-         <div class="indexRoles-addRole">
-              <a asp-action="AddRole" asp-controller="Role">Создать роль</a>
-         </div>
+        <div class="col-md-12">
+            @foreach (var role in Model.Objects)
+            {
+               <div style="margin-top: 60px;" class="row">
+                   <div class="col-md-6">
+                       @role.Name
+                   </div>
+                   <div class="col-md-3">
+                        <form asp-action="RemoveRole" asp-controller="Role" method="post">
+                            <input name="roleId" type="hidden" value="@role.Id" />
+                            <input type="submit" value="Удалить" class="btn btn-primary" />
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <form asp-action="RemoveRole" asp-controller="Role" method="get">
+                            <input name="roleId" type="hidden" value="@role.Id" />
+                            <input type="submit" value="Обновить" class="btn btn-primary" />
+                        </form>
+                    </div>
+               </div>
+            }
+        </div>
 
-         <div>
-             <div>
-                 @if (Model.PageInfo.TotalPage != Model.PageInfo.PageNumber)
-                 {
-                     <a asp-action="Index" asp-controller="Role" asp-route-page="@(Model.PageInfo.PageNumber + 1)">Вперед</a>
-                 }
-             </div>
-             <div>
-                 @if (Model.PageInfo.PageNumber > 1)
-                 {
-                     <a asp-action="Index" asp-controller="Role" asp-route-page="@(Model.PageInfo.PageNumber - 1)">Назад</a>
-                 }
-             </div>
-         </div>
+        <div class="indexRoles-addRole">
+            <a asp-action="AddRole" asp-controller="Role">Создать роль</a>
+        </div>
+
+        <div>
+            <div>
+                @if (Model.PageInfo.TotalPage != Model.PageInfo.PageNumber)
+                {
+                    <a asp-action="Index" asp-controller="Role" asp-route-page="@(Model.PageInfo.PageNumber + 1)">Вперед</a>
+                }
+            </div>
+            <div>
+                @if (Model.PageInfo.PageNumber > 1)
+                {
+                    <a asp-action="Index" asp-controller="Role" asp-route-page="@(Model.PageInfo.PageNumber - 1)">Назад</a>
+                }
+            </div>
+        </div>
     }
 </div>

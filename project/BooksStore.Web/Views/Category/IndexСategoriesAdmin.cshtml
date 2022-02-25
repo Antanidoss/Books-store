@@ -5,7 +5,9 @@
 <div class="indexCategories-main">
     @if (Model?.Objects != null && Model.Objects?.Count() != 0)
     {
-        <div class="col-md-12 indexCategories-categories">
+        <div style="text-align: center;"><h4>Категории</h4></div>
+
+        <div class="col-md-12">
             @foreach (var category in Model.Objects)
             {
                 <div class="indexCategories-category row">
@@ -48,6 +50,7 @@
             <h3>Категории отсутсвуют</h3>
         </div>
     }
+
     <div class="indexCategories-addCategory">
         <a asp-action="AddCategory" asp-controller="Category">Создать категорию</a>
     </div>

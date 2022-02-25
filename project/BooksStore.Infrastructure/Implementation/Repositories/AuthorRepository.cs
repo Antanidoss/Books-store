@@ -49,12 +49,11 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
         public async Task<IEnumerable<Author>> GetAsync(int skip, int take, Expression<Func<Author, bool>> condition)
         {
-            return await _context.Authors
+            return _context.Authors
                 .AsExpandable()
                 .Where(condition)
                 .Skip(skip)
-                .Take(take)
-                .ToListAsync();
+                .Take(take);
         }
 
         public async Task<int> GetCountAsync()
