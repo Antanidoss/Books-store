@@ -11,16 +11,16 @@
             @foreach (var role in Model.Objects)
             {
                <div style="margin-top: 60px;" class="row">
-                   <div class="col-md-6">
+                   <div class="col-md-4">
                        @role.Name
                    </div>
-                   <div class="col-md-3">
+                   <div class="col-md-4">
                         <form asp-action="RemoveRole" asp-controller="Role" method="post">
                             <input name="roleId" type="hidden" value="@role.Id" />
                             <input type="submit" value="Удалить" class="btn btn-primary" />
                         </form>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <form asp-action="RemoveRole" asp-controller="Role" method="get">
                             <input name="roleId" type="hidden" value="@role.Id" />
                             <input type="submit" value="Обновить" class="btn btn-primary" />

@@ -85,7 +85,17 @@ namespace BooksStore.Services.Implementation.Services
 
         public async Task UpdateBookAsync(BookDTO bookDTO)
         {
-            await _repositoryFactory.CreateBookRepository().UpdateAsync(_mapper.Map<Book>(bookDTO));
+            var bookRepository = _repositoryFactory.CreateBookRepository();
+            var book = await bookRepository.GetByIdAsync(bookDTO.Id);
+
+            book.Descriptions = bookDTO.Descriptions;
+            book.NumberOfPages = bookDTO.NumberOfPages;
+            book.Title = bookDTO.Title;
+            book.InStock = bookDTO.InStock;
+            book.Price = bookDTO.Price;
+
+            await bookRepository.UpdateAsync(book);
+
             _cacheManager.Remove(CacheKeys.GetBookKey(bookDTO.Id));
         }
 

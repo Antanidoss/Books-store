@@ -67,7 +67,7 @@
             </div>
 
             <div class="indexBook-categoryBook">
-                Категория: <a asp-action="IndexByCategory" asp-controller="Book" asp-route-categoryId="@Model.CategoryId" asp-route-categoryName="@Model.CategoryName">@Model.CategoryName</a>
+                Категория: <a asp-action="IndexBooks" asp-controller="Book" asp-route-filterModel.CategoryIds[0]="@Model.CategoryId" asp-route-categoryName="@Model.CategoryName">@Model.CategoryName</a>
             </div>
 
             <div class="indexBook-pageNumBook">
