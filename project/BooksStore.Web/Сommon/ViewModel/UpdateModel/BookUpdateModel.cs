@@ -10,7 +10,7 @@ namespace BooksStore.Web.Сommon.ViewModel.UpdateModel
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Введите описания книги")]
-        [StringLength(1500, MinimumLength = 200, ErrorMessage = "Описания может быть от 20 до 400 символов")]
+        [StringLength(1500, MinimumLength = 20, ErrorMessage = "Описания может быть от 20 до 400 символов")]
         public string Descriptions { get; set; }
 
         [Required(ErrorMessage = "Введите цену книги")]

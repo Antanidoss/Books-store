@@ -47,12 +47,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         {
             var updateBook = await _context.Books.FirstOrDefaultAsync(p => p.Id == book.Id);
 
-            updateBook.Title = book.Title;
-            updateBook.Descriptions = book.Descriptions;
-            updateBook.Price = book.Price;
             updateBook.UpdateTime = DateTime.Now;
-            updateBook.NumberOfPages = book.NumberOfPages;
-            updateBook.InStock = book.InStock;
 
             _context.Books.Update(updateBook);
             await _context.SaveChangesAsync();

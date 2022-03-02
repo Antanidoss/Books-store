@@ -62,12 +62,12 @@ namespace BooksStore.Web
             services.AddScoped<ICurrentUser, CurrentUser>();
 
             //ViewModelServices configuration
-            services.AddScoped<IBookViewModelService, BookViewModelService>();
-            services.AddScoped<ICommentViewModelService, CommentViewModelService>();
-            services.AddScoped<IOrderViewModelService, OrderViewModelService>();
-            services.AddScoped<IBasketViewModelService, BasketViewModelService>();
-            services.AddScoped<ICategoryViewModelService, CategoryViewModelService>();
-            services.AddScoped<IRoleViewModelService, RoleViewModelService>();
+            services.AddScoped<IBookViewModelService, BookViewService>();
+            services.AddScoped<ICommentViewModelService, CommentViewService>();
+            services.AddScoped<IOrderViewModelService, OrderViewService>();
+            services.AddScoped<IBasketViewModelService, BasketViewService>();
+            services.AddScoped<ICategoryViewModelService, CategoryViewService>();
+            services.AddScoped<IRoleViewModelService, RoleViewService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
