@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure;
-using BooksStore.Services.DTO;
 using BooksStore.Services.DTO.AppUser;
 using BooksStore.Services.Interfaces.IdentityServices;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services.Implementation.IdentityServices
 {
-    public class UserService : IUserService
+    internal sealed class UserService : IUserService
     {
         private readonly UserManager<AppUser> _userManager;
 

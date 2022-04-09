@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BooksStore.Services.Profiles
 {
-    public class OrderDTOProfile : Profile
+    internal sealed class OrderDTOProfile : Profile
     {
         public OrderDTOProfile()
         {

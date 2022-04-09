@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services
 {
-    public class OrderService : IOrderService
+    internal sealed class OrderService : IOrderService
     {
         private readonly IRepositoryFactory _repositoryFactory;
 

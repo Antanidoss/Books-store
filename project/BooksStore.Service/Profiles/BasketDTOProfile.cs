@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BooksStore.Services.Profiles
 {
-    public class BasketDTOProfile : Profile
+    internal sealed class BasketDTOProfile : Profile
     {
         public BasketDTOProfile()
         {

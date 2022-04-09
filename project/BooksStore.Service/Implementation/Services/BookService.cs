@@ -14,7 +14,7 @@ using BooksStore.Common.Exceptions;
 
 namespace BooksStore.Services.Implementation.Services
 {
-    public class BookService : IBookService
+    internal sealed class BookService : IBookService
     {
         private readonly IRepositoryFactory _repositoryFactory;
 

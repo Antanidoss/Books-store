@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services.AuthorSer
 {
-    public class AuthorService : IAuthorService
+    internal sealed class AuthorService : IAuthorService
     {
         private readonly ICacheManager _cacheManager;
 
