@@ -4,7 +4,7 @@ using BooksStore.Services.DTO.AppUser;
 
 namespace BooksStore.Services.Profiles
 {
-    public class AppUserDTOProfile : Profile
+    internal sealed class AppUserDTOProfile : Profile
     {     
         public AppUserDTOProfile()
         {

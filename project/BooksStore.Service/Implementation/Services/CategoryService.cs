@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services
 {
-    public class CategoryService : ICategoryService
+    internal sealed class CategoryService : ICategoryService
     {
         private readonly IRepositoryFactory _repositoryFactory;
 

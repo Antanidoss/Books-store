@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services
 {
-    public class BasketService : IBasketService
+    internal sealed class BasketService : IBasketService
     {
         private readonly IRepositoryFactory _repositoryFactory;
 

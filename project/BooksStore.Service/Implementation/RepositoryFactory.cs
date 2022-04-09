@@ -5,7 +5,7 @@ using System;
 
 namespace BooksStore.Services.Implementation
 {
-    public class RepositoryFactory : IRepositoryFactory
+    internal sealed class RepositoryFactory : IRepositoryFactory
     {
         private readonly IServiceProvider _serviceProvider;
 

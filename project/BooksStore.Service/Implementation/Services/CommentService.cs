@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services
 {
-    public class CommentService : ICommentService
+    internal sealed class CommentService : ICommentService
     {
         private readonly IRepositoryFactory _repositoryFactory;
 

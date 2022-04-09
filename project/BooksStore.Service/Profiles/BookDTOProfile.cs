@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BooksStore.Services.Profiles
 {
-    public class BookDTOProfile : Profile
+    internal sealed class BookDTOProfile : Profile
     {
         public BookDTOProfile()
         {

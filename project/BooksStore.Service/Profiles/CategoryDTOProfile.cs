@@ -4,7 +4,7 @@ using BooksStore.Services.DTO.Category;
 
 namespace BooksStore.Services.Profiles
 {
-    public class CategoryDTOProfile : Profile
+    internal sealed class CategoryDTOProfile : Profile
     {
         public CategoryDTOProfile()
         {

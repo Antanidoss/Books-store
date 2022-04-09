@@ -4,7 +4,7 @@ using BooksStore.Services.DTO.Author;
 
 namespace BooksStore.Services.Profiles
 {
-    public class AuthorDTOProfile: Profile
+    internal sealed class AuthorDTOProfile: Profile
     {
         public AuthorDTOProfile()
         {

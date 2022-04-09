@@ -4,7 +4,7 @@ using BooksStore.Services.DTO.Comment;
 
 namespace BooksStore.Services.Profiles
 {
-    public class CommentDTOProfile : Profile
+    internal sealed class CommentDTOProfile : Profile
     {
         public CommentDTOProfile()
         {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BooksStore.Services.Profiles
 {
-    public class RoleDTOProfile : Profile
+    internal sealed class RoleDTOProfile : Profile
     {
         public RoleDTOProfile()
         {

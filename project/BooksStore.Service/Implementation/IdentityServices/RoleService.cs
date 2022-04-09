@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BooksStore.Services.Implementation.IdentityServices
 {
-    public class RoleService : IRoleService
+    internal sealed class RoleService : IRoleService
     {
         private readonly RoleManager<IdentityRole> _roleManager;
 

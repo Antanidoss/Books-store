@@ -1,13 +1,10 @@
 ﻿using BooksStore.Infrastructure;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BooksStore.Services.Implementation.IdentityServices
 {
-    public static class IdentityResultExtensions
+    internal static class IdentityResultExtensions
     {
         public static Result ToApplicationResult(this IdentityResult result)
         {
