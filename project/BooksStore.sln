@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Services", "BooksStore.Service\BooksStore.Services.csproj", "{6160474A-D73D-4044-BC4E-D301A2313241}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Infrastructure", "BooksStore.Infrastructure\BooksStore.Infrastructure.csproj", "{8C22A9BA-6BF6-4E32-AB0E-9F3064E7CB69}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Common", "BooksStore.Common\BooksStore.Common.csproj", "{A22869A3-F8B1-4580-9760-8F7DA0F0DB52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksStore.AppConfigure", "BooksStore.AppConfigure\BooksStore.AppConfigure.csproj", "{361E62B3-31FC-4821-A294-BB9CDFEB402B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{A22869A3-F8B1-4580-9760-8F7DA0F0DB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A22869A3-F8B1-4580-9760-8F7DA0F0DB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A22869A3-F8B1-4580-9760-8F7DA0F0DB52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361E62B3-31FC-4821-A294-BB9CDFEB402B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361E62B3-31FC-4821-A294-BB9CDFEB402B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361E62B3-31FC-4821-A294-BB9CDFEB402B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361E62B3-31FC-4821-A294-BB9CDFEB402B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{8B8473F0-1317-458E-B0F2-54BDF9ED5942} = {FED2C03B-DB62-40BA-A7C8-DD3CF656C968}
 		{8C22A9BA-6BF6-4E32-AB0E-9F3064E7CB69} = {FED2C03B-DB62-40BA-A7C8-DD3CF656C968}
 		{A22869A3-F8B1-4580-9760-8F7DA0F0DB52} = {FED2C03B-DB62-40BA-A7C8-DD3CF656C968}
+		{361E62B3-31FC-4821-A294-BB9CDFEB402B} = {FED2C03B-DB62-40BA-A7C8-DD3CF656C968}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D8BC7D0-8379-41FC-BFBB-5B3621828197}

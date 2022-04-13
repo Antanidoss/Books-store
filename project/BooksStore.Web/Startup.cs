@@ -1,19 +1,17 @@
 using AutoMapper;
-using BooksStore.Infastructure;
-using BooksStore.Infastructure.Data;
-using BooksStore.Services;
+using BooksStore.AppConfigure;
 using BooksStore.Web.Common.CurUser;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
+using BooksStore.Web.Сommon.Initializer;
 using BooksStore.Web.Сommon.Profiles;
 using BooksStore.Web.Сommon.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace BooksStore.Web
 {
@@ -30,14 +28,6 @@ namespace BooksStore.Web
         {
             services.AddControllersWithViews();
 
-            //Infastructure layer configuration 
-            services.AddInfastructure(Configuration);
-
-            var mapperConfigureExpression = new AutoMapper.Configuration.MapperConfigurationExpression();
-
-            //Service layer configuration 
-            services.AddService(mapperConfigureExpression);
-
             //Antiforgery configuration 
             services.AddAntiforgery();
 
@@ -45,41 +35,23 @@ namespace BooksStore.Web
             services.AddAuthentication();
             services.AddAuthorization();
 
-            // Auto mapper configuration
-            mapperConfigureExpression.AddProfile(new AppUserVMProfile());
-            mapperConfigureExpression.AddProfile(new BookVMProfile());
-            mapperConfigureExpression.AddProfile(new CommentVMProfile());
-            mapperConfigureExpression.AddProfile(new CategoryVMProfile());
-            mapperConfigureExpression.AddProfile(new RoleVMProfile());
-            mapperConfigureExpression.AddProfile(new OrderVMProfile());
+            var mapperConfigureExpression = new AutoMapper.Configuration.MapperConfigurationExpression();
+            AppConfigureManager.BaseConfigure(new AppConfigure.Models.BaseConfigureModel(services, Configuration, mapperConfigureExpression));
+            AddViewMapperProfiles(mapperConfigureExpression);
 
-            var mappingConfig = new MapperConfiguration(mapperConfigureExpression);
-
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            services.AddSingleton(new MapperConfiguration(mapperConfigureExpression).CreateMapper());
 
             //Current user configuration 
             services.AddScoped<ICurrentUser, CurrentUser>();
 
-            //ViewModelServices configuration
-            services.AddScoped<IBookViewModelService, BookViewService>();
-            services.AddScoped<ICommentViewModelService, CommentViewService>();
-            services.AddScoped<IOrderViewModelService, OrderViewService>();
-            services.AddScoped<IBasketViewModelService, BasketViewService>();
-            services.AddScoped<ICategoryViewModelService, CategoryViewService>();
-            services.AddScoped<IRoleViewModelService, RoleViewService>();
+            AddViewServices(services);
+
+            Task.Run(() => { AppInitializer.InitializeAsync(services.BuildServiceProvider()); } );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<EFDbContext>();
-                if ((context.GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists())
-                {
-                    context.Database.EnsureCreated();
-                }
-            }
+            AppConfigureManager.CreateDBIfNotExist(app);
 
             if (env.IsDevelopment())
             {
@@ -105,6 +77,26 @@ namespace BooksStore.Web
                     name: "default",
                     pattern: "{controller=Book}/{action=IndexBooks}/{id?}");
             });
+        }
+
+        private void AddViewMapperProfiles(AutoMapper.Configuration.MapperConfigurationExpression mapperConfigurationExpression)
+        {
+            mapperConfigurationExpression.AddProfile(new AppUserVMProfile());
+            mapperConfigurationExpression.AddProfile(new BookVMProfile());
+            mapperConfigurationExpression.AddProfile(new CommentVMProfile());
+            mapperConfigurationExpression.AddProfile(new CategoryVMProfile());
+            mapperConfigurationExpression.AddProfile(new RoleVMProfile());
+            mapperConfigurationExpression.AddProfile(new OrderVMProfile());
+        }
+
+        private void AddViewServices(IServiceCollection services)
+        {
+            services.AddScoped<IBookViewModelService, BookViewService>();
+            services.AddScoped<ICommentViewModelService, CommentViewService>();
+            services.AddScoped<IOrderViewModelService, OrderViewService>();
+            services.AddScoped<IBasketViewModelService, BasketViewService>();
+            services.AddScoped<ICategoryViewModelService, CategoryViewService>();
+            services.AddScoped<IRoleViewModelService, RoleViewService>();
         }
     }
 }
