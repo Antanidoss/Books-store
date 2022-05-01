@@ -2,9 +2,9 @@
 #### This project has been designed to teach and apply skills.
 ---
 # Technologies
-- .NET Core 3
-- ASP.NET Core 3
-- Entity Framework Core 3
+- .NET Core 3.1
+- ASP.NET Core 3.1
+- Entity Framework Core 3.1
 - Identity
 - AutoMapper
 
