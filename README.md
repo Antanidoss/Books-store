@@ -1,4 +1,4 @@
-# **BooksStoreProject**
+# **Books store**
 #### This project has been designed to teach and apply skills.
 ---
 # Technologies
