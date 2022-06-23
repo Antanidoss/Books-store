@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using BooksStore.Core.Entities;
-using BooksStore.Services.Interfaces.Filter;
+using QueryableFilterSpecification.Interfaces;
 
 namespace BooksStore.Services.Implementation.Filters.BookFilters.Specifications
 {
-    public class BookPriceFilterSpecification : IFilterSpecification<Book>
+    public class BookPriceFilterSpecification : IQueryableFilterSpec<Book>
     {
         private readonly decimal _booPriceFrom;
 
@@ -17,7 +18,12 @@ namespace BooksStore.Services.Implementation.Filters.BookFilters.Specifications
             _booPriceFrom = booPriceFrom;
         }
 
-        public Expression<Func<Book, bool>> GetSpecification()
+        public IQueryable<Book> ApplyFilter(IQueryable<Book> books)
+        {
+            return books.Where(ToExpression());
+        }
+
+        public Expression<Func<Book, bool>> ToExpression()
         {
             return b => b.Price >= _booPriceFrom && b.Price <= _booPriceTo;
         }

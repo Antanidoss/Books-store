@@ -1,15 +1,14 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Interfaces.Repositories;
-using System;
+using QueryableFilterSpecification.Interfaces;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Interfaces.Repositories
 {
     public interface IBookRepository : IRepository<Book>
     {
-        Task<IEnumerable<Book>> GetAsync(int skip, int take, Expression<Func<Book, bool>> condition);
+        Task<IEnumerable<Book>> GetByFilterAsync(int skip, int take, IQueryableFilterSpec<Book> filter);
         Task<IEnumerable<Book>> GetAsync(int skip, int take);
         Task<int> GetCountAsync();
     }

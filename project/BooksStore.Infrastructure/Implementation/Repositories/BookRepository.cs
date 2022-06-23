@@ -3,10 +3,10 @@ using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces.Repositories;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using QueryableFilterSpecification.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
@@ -64,16 +64,16 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetAsync(int skip, int take, Expression<Func<Book, bool>> condition)
+        public async Task<IEnumerable<Book>> GetByFilterAsync(int skip, int take, IQueryableFilterSpec<Book> filter)
         {
-            return _context.Books
+            return await filter.ApplyFilter(_context.Books)
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)
                 .AsExpandable()
-                .Where(condition)
                 .Skip(skip)
-                .Take(take);
+                .Take(take)
+                .ToListAsync();
         }
 
         public async Task<int> GetCountAsync()
