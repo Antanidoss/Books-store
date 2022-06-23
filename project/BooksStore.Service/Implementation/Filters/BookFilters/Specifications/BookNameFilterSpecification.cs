@@ -1,22 +1,28 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using BooksStore.Core.Entities;
-using BooksStore.Services.Interfaces.Filter;
+using QueryableFilterSpecification.Interfaces;
 
 namespace BooksStore.Services.Implementation.Filters.BookFilters.Specifications
 {
-    public class BookNameFilterSpecification : IFilterSpecification<Book>
+    public class BookNameFilterSpecification : IQueryableFilterSpec<Book>
     {
         private readonly string _bookName;
 
         public BookNameFilterSpecification(string bookName)
         {
-            _bookName = bookName.ToLower().Replace(oldValue: " ", newValue: "");
+            _bookName = bookName.ToLower().Replace(" ", string.Empty);
         }
 
-        public Expression<Func<Book, bool>> GetSpecification()
+        public IQueryable<Book> ApplyFilter(IQueryable<Book> books)
         {
-            return b => b.Title.ToLower().Replace(" ", "").Contains(_bookName);
+            return books.Where(ToExpression());
+        }
+
+        public Expression<Func<Book, bool>> ToExpression()
+        {
+            return b => b.Title.ToLower().Replace(" ", string.Empty).Contains(_bookName);
         }
     }
 }

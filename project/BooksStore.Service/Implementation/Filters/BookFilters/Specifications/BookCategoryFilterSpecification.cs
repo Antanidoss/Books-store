@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using BooksStore.Core.Entities;
-using BooksStore.Services.Interfaces.Filter;
+using QueryableFilterSpecification.Interfaces;
 
 namespace BooksStore.Services.Implementation.Filters.BookFilters.Specifications
 {
-    public class BookCategoryFilterSpecification : IFilterSpecification<Book>
+    public class BookCategoryFilterSpecification : IQueryableFilterSpec<Book>
     {
         private readonly IEnumerable<int> _categoriesId;
 
@@ -16,7 +16,12 @@ namespace BooksStore.Services.Implementation.Filters.BookFilters.Specifications
             _categoriesId = categoriesId;
         }
 
-        public Expression<Func<Book, bool>> GetSpecification()
+        public IQueryable<Book> ApplyFilter(IQueryable<Book> books)
+        {
+            return books.Where(ToExpression());
+        }
+
+        public Expression<Func<Book, bool>> ToExpression()
         {
             return b => _categoriesId.ToList().Contains(b.CategoryId);
         }

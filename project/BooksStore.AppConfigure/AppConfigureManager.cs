@@ -1,21 +1,38 @@
 ﻿using BooksStore.AppConfigure.Models;
+using BooksStore.Core.Entities;
 using BooksStore.Infastructure;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Services;
+using BooksStore.Web.Сommon.Initializer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace BooksStore.AppConfigure
 {
     public static class AppConfigureManager
     {
-        public static void BaseConfigure(BaseConfigureModel configureModel)
+        public static void RegisterDependencies(BaseConfigureModel configureModel)
         {
             ConfigureInfrastructure(configureModel);
             ConfigureServices(configureModel);
         }
 
-        public static void CreateDBIfNotExist(IApplicationBuilder app)
+        public async static Task CreateDBIfNotExistAsync(IApplicationBuilder app)
         {
             new InfrastructureConfigureModule().ConfigureDB(app);
+
+            var serviceProvider = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope().ServiceProvider;
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var categoryRepository = serviceProvider.GetRequiredService<ICategoryRepository>();
+            var authorRepository = serviceProvider.GetRequiredService<IAuthorRepository>();
+
+            await RoleInitializer.InitializeAsync(userManager, roleManager);
+            await CategoryInitializer.InitializeAsync(categoryRepository);
+            await AuthorInitializer.InitializeAsync(authorRepository);
         }
 
         private static void ConfigureInfrastructure(BaseConfigureModel configureModel)

@@ -8,9 +8,11 @@ using BooksStore.Web.CacheOptions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Services.Interfaces.Filter;
 using LinqKit;
 using BooksStore.Common.Exceptions;
+using QueryableFilterSpecification;
+using QueryableFilterSpecification.Implementation;
+using BooksStore.Services.Implementation.Filters.BookFilters.Specifications;
 
 namespace BooksStore.Services.Implementation.Services
 {
@@ -22,14 +24,11 @@ namespace BooksStore.Services.Implementation.Services
 
         private readonly ICacheManager _cacheManager;
 
-        private readonly ISpecificationFilterBuilder<Book> _bookFilterBuilder;
-
-        public BookService(IMapper mapper, ICacheManager cacheManager, IRepositoryFactory repositoryFactory, ISpecificationFilterBuilder<Book> bookFilterBuilder)
+        public BookService(IMapper mapper, ICacheManager cacheManager, IRepositoryFactory repositoryFactory)
         {
             _repositoryFactory = repositoryFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
-            _bookFilterBuilder = bookFilterBuilder;
         }
 
         public async Task AddBookAsync(BookDTOCreateModel bookCreateModel)
@@ -66,8 +65,17 @@ namespace BooksStore.Services.Implementation.Services
             if (filterModel.FilterIsNull())
                 return await GetBooksAsync(skip, take);
 
-            var specification = _bookFilterBuilder.GetResult(filterModel);
-            var result = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, b => specification.GetSpecification().Invoke(b));
+            var filter = new EmptyQueryableFilterSpec<Book>();
+
+            if (!string.IsNullOrEmpty(filterModel.BookName))
+                filter.And(new BookNameFilterSpecification(filterModel.BookName));
+
+            if (filterModel.CategoryIds.Any())
+                filter.And(new BookCategoryFilterSpecification(filterModel.CategoryIds));
+
+            filter.And(new BookPriceFilterSpecification(filterModel.BookPriceTo, filterModel.BookPriceFrom));
+
+            var result = await _repositoryFactory.CreateBookRepository().GetByFilterAsync(skip, take, filter);
 
             return _mapper.Map<IEnumerable<BookDTO>>(result);
         }

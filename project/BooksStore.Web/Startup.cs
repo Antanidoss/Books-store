@@ -1,9 +1,9 @@
 using AutoMapper;
 using BooksStore.AppConfigure;
+using BooksStore.AppConfigure.Models;
 using BooksStore.Web.Common.CurUser;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
-using BooksStore.Web.Сommon.Initializer;
 using BooksStore.Web.Сommon.Profiles;
 using BooksStore.Web.Сommon.Services;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +36,7 @@ namespace BooksStore.Web
             services.AddAuthorization();
 
             var mapperConfigureExpression = new AutoMapper.Configuration.MapperConfigurationExpression();
-            AppConfigureManager.BaseConfigure(new AppConfigure.Models.BaseConfigureModel(services, Configuration, mapperConfigureExpression));
+            AppConfigureManager.RegisterDependencies(new BaseConfigureModel(services, Configuration, mapperConfigureExpression));
             AddViewMapperProfiles(mapperConfigureExpression);
 
             services.AddSingleton(new MapperConfiguration(mapperConfigureExpression).CreateMapper());
@@ -45,13 +45,11 @@ namespace BooksStore.Web
             services.AddScoped<ICurrentUser, CurrentUser>();
 
             AddViewServices(services);
-
-            Task.Run(() => { AppInitializer.InitializeAsync(services.BuildServiceProvider()); } );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AppConfigureManager.CreateDBIfNotExist(app);
+            Task.Run(async () => await AppConfigureManager.CreateDBIfNotExistAsync(app));
 
             if (env.IsDevelopment())
             {
