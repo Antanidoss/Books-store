@@ -1,9 +1,10 @@
-﻿using BooksStore.Infrastructure;
+﻿using BooksStore.Common;
+using BooksStore.Infrastructure;
 using BooksStore.Services.DTO.Role;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Interfaces.IdentityServices
+namespace BooksStore.Services.Interfaces.Services
 {
     public interface IRoleService
     {

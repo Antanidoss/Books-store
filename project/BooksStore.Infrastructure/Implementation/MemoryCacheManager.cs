@@ -31,9 +31,7 @@ namespace BooksStore.Infrastructure.Implementation
         public void Set<T>(string key, object data, int cacheTime)
         {
             if (string.IsNullOrEmpty(key) | data == null | cacheTime <= 0)
-            {
                 return;
-            }
 
             var memoryCacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(cacheTime));
             _memoryCache.Set(key, data, memoryCacheEntryOptions);

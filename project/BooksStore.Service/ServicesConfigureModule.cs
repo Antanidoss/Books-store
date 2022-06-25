@@ -4,14 +4,14 @@ using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.Implementation;
 using BooksStore.Services.Implementation.Services;
 using BooksStore.Services.AuthorSer;
-using BooksStore.Services.Implementation.IdentityServices;
+using BooksStore.Services.Implementation.Services;
 using BooksStore.Services.Interfaces;
-using BooksStore.Services.Interfaces.IdentityServices;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using BooksStore.Services.Profiles;
 using BooksStore.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
+using BooksStore.Services.Interfaces.Services;
 
 namespace BooksStore.Services
 {

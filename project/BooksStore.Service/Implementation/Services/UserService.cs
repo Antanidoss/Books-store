@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
+using BooksStore.Common;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure;
 using BooksStore.Services.DTO.AppUser;
-using BooksStore.Services.Interfaces.IdentityServices;
+using BooksStore.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Implementation.IdentityServices
+namespace BooksStore.Services.Implementation.Services
 {
     internal sealed class UserService : IUserService
     {

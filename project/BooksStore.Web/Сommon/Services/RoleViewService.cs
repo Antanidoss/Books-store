@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BooksStore.Infrastructure;
-using BooksStore.Services.Interfaces.IdentityServices;
+using BooksStore.Common;
+using BooksStore.Services.Interfaces.Services;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
