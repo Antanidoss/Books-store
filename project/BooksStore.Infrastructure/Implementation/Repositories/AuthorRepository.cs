@@ -1,12 +1,10 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces.Repositories;
-using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using System;
+using QueryableFilterSpecification.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Implementation.Repositories
@@ -47,18 +45,22 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Author>> GetAsync(int skip, int take, Expression<Func<Author, bool>> condition)
+        public async Task<IEnumerable<Author>> GetAsync(int skip, int take, IQueryableFilterSpec<Author> filter)
         {
-            return _context.Authors
-                .AsExpandable()
-                .Where(condition)
+            return await filter.ApplyFilter(_context.Authors.AsNoTracking())
                 .Skip(skip)
-                .Take(take);
+                .Take(take)
+                .ToListAsync();
         }
 
         public async Task<int> GetCountAsync()
         {
             return await _context.Authors.CountAsync();
+        }
+
+        public async Task<Author> GetAsync(IQueryableFilterSpec<Author> filter)
+        {
+            return await _context.Authors.AsNoTracking().FirstOrDefaultAsync(filter.ToExpression());
         }
     }
 }

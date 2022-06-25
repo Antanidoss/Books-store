@@ -1,7 +1,8 @@
-﻿using BooksStore.Infastructure.Interfaces.Repositories;
+﻿using BooksStore.Core.Entities;
+using BooksStore.Infastructure.Interfaces.Repositories;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Сommon.Initializer
+namespace BooksStore.AppConfigure.EntityInitializer
 {
     public static class CategoryInitializer
     {
@@ -20,9 +21,7 @@ namespace BooksStore.Web.Сommon.Initializer
                 var category = await categoryRepository.GetByNameAsync(catgoryName);
 
                 if (category == null)
-                {
-                    await categoryRepository.AddAsync(new Core.Entities.Category(catgoryName));
-                }
+                    await categoryRepository.AddAsync(new Category(catgoryName));
             }
         }
     }

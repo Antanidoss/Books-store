@@ -1,9 +1,9 @@
-﻿using BooksStore.AppConfigure.Models;
+﻿using BooksStore.AppConfigure.EntityInitializer;
+using BooksStore.AppConfigure.Models;
 using BooksStore.Core.Entities;
 using BooksStore.Infastructure;
 using BooksStore.Infastructure.Interfaces.Repositories;
 using BooksStore.Services;
-using BooksStore.Web.Сommon.Initializer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
