@@ -1,8 +1,10 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Interfaces.Repositories;
+using BooksStore.Services.Implementation.Filters.AuthorFilters;
+using QueryableFilterSpecification;
 using System.Threading.Tasks;
 
-namespace BooksStore.Web.Сommon.Initializer
+namespace BooksStore.AppConfigure.EntityInitializer
 {
     public static class AuthorInitializer
     {
@@ -17,10 +19,10 @@ namespace BooksStore.Web.Сommon.Initializer
         {
             foreach (var author in _baseAuthors)
             {
-                if (await authorRepository.GetAsync(0, 0, a => a.Firstname == author.Firstname && a.Surname == author.Surname) == null)
-                {
+                var filter = new AuthorBySurnameFilterSpec(author.Surname).And(new AuthorByFirstNameFilterSpec(author.Firstname));
+
+                if (await authorRepository.GetAsync(filter) == null)
                     await authorRepository.AddAsync(author);
-                }
             }
         }
     }
