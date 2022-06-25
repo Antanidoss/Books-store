@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BooksStore.Infrastructure
+namespace BooksStore.Common
 {
     public class Result
     {

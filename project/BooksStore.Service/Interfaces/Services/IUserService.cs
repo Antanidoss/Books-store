@@ -1,9 +1,9 @@
-﻿using BooksStore.Infrastructure;
+﻿using BooksStore.Common;
 using BooksStore.Services.DTO.AppUser;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Interfaces.IdentityServices
+namespace BooksStore.Services.Interfaces.Services
 {
     public interface IUserService
     {

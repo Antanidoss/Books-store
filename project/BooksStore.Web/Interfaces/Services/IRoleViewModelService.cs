@@ -1,4 +1,4 @@
-﻿using BooksStore.Infrastructure;
+﻿using BooksStore.Common;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using System.Collections.Generic;

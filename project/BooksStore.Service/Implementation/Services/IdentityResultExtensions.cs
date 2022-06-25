@@ -1,8 +1,9 @@
-﻿using BooksStore.Infrastructure;
+﻿using BooksStore.Common;
+using BooksStore.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace BooksStore.Services.Implementation.IdentityServices
+namespace BooksStore.Services.Implementation.Services
 {
     internal static class IdentityResultExtensions
     {
