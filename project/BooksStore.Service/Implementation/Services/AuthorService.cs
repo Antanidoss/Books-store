@@ -3,6 +3,7 @@ using BooksStore.Common.Exceptions;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Author;
+using BooksStore.Services.Implementation.Filters.AuthorFilters;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System.Collections.Generic;
@@ -33,18 +34,16 @@ namespace BooksStore.Services.AuthorSer
         public async Task<AuthorDTO> GetAuthorByIdAsync(int authorId)
         {
             if (_cacheManager.IsSet(CacheKeys.GetAuthorKey(authorId)))
-            {
                 return _mapper.Map<AuthorDTO>(_cacheManager.Get<Author>(CacheKeys.GetAuthorKey(authorId)));
-            }
 
-            var author = await _repositoryFactory.CreateAuthorRepository().GetByIdAsync(authorId);
+            var filter = new AuthorByIdFilterSpec(authorId);
+            var author = await _repositoryFactory.CreateAuthorRepository().GetAsync(filter);
 
             if (author == null)
-            {
                 throw new NotFoundException(nameof(Author), author);
-            }
 
             _cacheManager.Set<Author>(CacheKeys.GetAuthorKey(author.Id), author, CacheTimes.AuthorCacheTime);
+
             return _mapper.Map<AuthorDTO>(author);
         }
 
@@ -57,7 +56,8 @@ namespace BooksStore.Services.AuthorSer
         {
             if (authorId >= 1)
             {
-                var author = await _repositoryFactory.CreateAuthorRepository().GetByIdAsync(authorId);
+                var filter = new AuthorByIdFilterSpec(authorId);
+                var author = await _repositoryFactory.CreateAuthorRepository().GetAsync(filter);
                 if (author != null)
                 {
                     await _repositoryFactory.CreateAuthorRepository().RemoveAsync(author);

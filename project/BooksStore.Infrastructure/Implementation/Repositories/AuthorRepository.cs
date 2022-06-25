@@ -13,16 +13,11 @@ namespace BooksStore.Infastructure.Implementation.Repositories
     {
         private readonly EFDbContext _context;
         public AuthorRepository(EFDbContext context) => _context = context;
+
         public async Task AddAsync(Author author)
         {
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<Author> GetByIdAsync(int id)
-        {
-            var author = await _context.Authors.FirstOrDefaultAsync(p => p.Id == id);
-            return author != default ? author : null;
         }
 
         public async Task RemoveAsync(Author author)
@@ -53,14 +48,14 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> GetCountAsync()
-        {
-            return await _context.Authors.CountAsync();
-        }
-
         public async Task<Author> GetAsync(IQueryableFilterSpec<Author> filter)
         {
             return await _context.Authors.AsNoTracking().FirstOrDefaultAsync(filter.ToExpression());
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Authors.CountAsync();
         }
     }
 }

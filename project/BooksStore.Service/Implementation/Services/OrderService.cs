@@ -3,6 +3,7 @@ using BooksStore.Common.Exceptions;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Order;
+using BooksStore.Services.Implementation.Filters.OrderFilters;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System;
@@ -37,16 +38,12 @@ namespace BooksStore.Services
         public async Task<OrderDTO> GetOrderByIdAsync(int orderId)
         {
             if (_cacheManager.IsSet(CacheKeys.GetOrderKey(orderId)))
-            {
                 return _mapper.Map<OrderDTO>(_cacheManager.Get<Order>(CacheKeys.GetOrderKey(orderId)));
-            }
 
-            var order = await _repositoryFactory.CreateOrderRepository().GetByIdAsync(orderId);
+            var order = await _repositoryFactory.CreateOrderRepository().GetAsync(new OrderByIdFilterSpec(orderId));
 
             if (order == null)
-            {
                 throw new NotFoundException(nameof(OrderDTO), order);
-            }
 
             _cacheManager.Set<Order>(CacheKeys.GetOrdersKey(order.AppUserId), order, CacheTimes.OrdersCacheTime);
             return _mapper.Map<OrderDTO>(order);
@@ -62,13 +59,13 @@ namespace BooksStore.Services
                 return _mapper.Map<IEnumerable<OrderDTO>>(orders);
             }
 
-            orders = (await _repositoryFactory.CreateOrderRepository().GetAsync(appUserId, skip, take)).ToList() ?? new List<Order>();
+            orders = (await _repositoryFactory.CreateOrderRepository().GetAsync(skip, take, new OrderByUserIdFilterSpec(appUserId))).ToList() ?? new List<Order>();
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }
 
         public async Task RemoveOrderAsync(int orderId)
         {
-            var order = await _repositoryFactory.CreateOrderRepository().GetByIdAsync(orderId);
+            var order = await _repositoryFactory.CreateOrderRepository().GetAsync(new OrderByIdFilterSpec(orderId));
 
             if (order == null)
             {
@@ -81,8 +78,9 @@ namespace BooksStore.Services
 
         public async Task RemoveCompleteOrder(string appUserId)
         {
-            int orderCount = await _repositoryFactory.CreateOrderRepository().GetCountAsync(appUserId);
-            var orders = await _repositoryFactory.CreateOrderRepository().GetAsync(appUserId, 0, orderCount);
+            var filter = new OrderByUserIdFilterSpec(appUserId);
+            int orderCount = await _repositoryFactory.CreateOrderRepository().GetCountAsync(filter);
+            var orders = await _repositoryFactory.CreateOrderRepository().GetAsync(0, orderCount, filter);
 
             foreach (var order in orders)
             {
@@ -97,7 +95,9 @@ namespace BooksStore.Services
 
         public async Task<int> GetCountOrders(string appUserId)
         {
-            return await _repositoryFactory.CreateOrderRepository().GetCountAsync(appUserId);
+            var filter = new OrderByUserIdFilterSpec(appUserId);
+
+            return await _repositoryFactory.CreateOrderRepository().GetCountAsync(filter);
         }
     }
 }

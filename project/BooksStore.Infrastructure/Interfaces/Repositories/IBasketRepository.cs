@@ -1,11 +1,13 @@
 ﻿using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces.Repositories;
+using QueryableFilterSpecification.Interfaces;
 using System.Threading.Tasks;
 
 namespace BooksStore.Infastructure.Interfaces.Repositories
 {
-    public interface IBasketRepository : IRepository<Basket>
+    public interface IBasketRepository
     {
+        Task<Basket> GetAsync(IQueryableFilterSpec<Basket> filter);
+        Task UpdateAsync(Basket basket);
         Task<int> GetCountAsync(int basketId);
     }
 }

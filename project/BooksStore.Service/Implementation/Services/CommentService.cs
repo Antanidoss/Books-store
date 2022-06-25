@@ -2,6 +2,7 @@
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Comment;
+using BooksStore.Services.Implementation.Filters.CommentFilters;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System;
@@ -38,7 +39,7 @@ namespace BooksStore.Services
                 return _mapper.Map<CommentDTO>(_cacheManager.Get<Comment>(CacheKeys.GetCommentKey(commentId)));
             }
 
-            var comment = await _repositoryFactory.CreateCommentRepository().GetByIdAsync(commentId);
+            var comment = await _repositoryFactory.CreateCommentRepository().GetAsync(new CommentByIdFilterSpec(commentId));
             if (comment == null)
             {
                 throw new ArgumentNullException(nameof(Comment));
@@ -49,14 +50,14 @@ namespace BooksStore.Services
 
         public async Task<IEnumerable<CommentDTO>> GetComments(int skip, int take, int bookId)
         {
-            var comments = await _repositoryFactory.CreateCommentRepository().GetAsync(skip, take, bookId);
+            var comments = await _repositoryFactory.CreateCommentRepository().GetAsync(skip, take, new CommentByBookIdFilterSpec(bookId));
 
             return _mapper.Map<IEnumerable<CommentDTO>>(comments);
         }
 
         public async Task RemoveCommentAsync(int commentId)
         {
-            var comment = await _repositoryFactory.CreateCommentRepository().GetByIdAsync(commentId);
+            var comment = await _repositoryFactory.CreateCommentRepository().GetAsync(new CommentByIdFilterSpec(commentId));
 
             if (comment == null)
             {

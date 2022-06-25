@@ -12,7 +12,8 @@ using LinqKit;
 using BooksStore.Common.Exceptions;
 using QueryableFilterSpecification;
 using QueryableFilterSpecification.Implementation;
-using BooksStore.Services.Implementation.Filters.BookFilters.Specifications;
+using BooksStore.Services.Implementation.Filters.BookFilters;
+using QueryableFilterSpecification.Interfaces;
 
 namespace BooksStore.Services.Implementation.Services
 {
@@ -39,16 +40,13 @@ namespace BooksStore.Services.Implementation.Services
         public async Task<BookDTO> GetBookByIdAsync(int bookId)
         {
             if (_cacheManager.IsSet(CacheKeys.GetBookKey(bookId)))
-            {
                 return _mapper.Map<BookDTO>(_cacheManager.Get<Book>(CacheKeys.GetBookKey(bookId)));
-            }
 
-            var book = await _repositoryFactory.CreateBookRepository().GetByIdAsync(bookId);
+            var filter = new BookByIdFilterSpec(bookId);
+            var book = await _repositoryFactory.CreateBookRepository().GetAsync(filter);
 
             if (book == null)
-            {
                 throw new NotFoundException(nameof(Book), book);
-            }
 
             return _mapper.Map<BookDTO>(book);
         }
@@ -65,24 +63,23 @@ namespace BooksStore.Services.Implementation.Services
             if (filterModel.FilterIsNull())
                 return await GetBooksAsync(skip, take);
 
-            var filter = new EmptyQueryableFilterSpec<Book>();
+            IQueryableFilterSpec<Book> filter = new BookPriceFilterSpecification(filterModel.BookPriceFrom, filterModel.BookPriceTo);
 
             if (!string.IsNullOrEmpty(filterModel.BookName))
-                filter.And(new BookNameFilterSpecification(filterModel.BookName));
+                filter = filter.And(new BookNameFilterSpecification(filterModel.BookName));
 
-            if (filterModel.CategoryIds.Any())
-                filter.And(new BookCategoryFilterSpecification(filterModel.CategoryIds));
+            if (filterModel.CategoryIds != null && filterModel.CategoryIds.Any())
+                filter = filter.And(new BookCategoryFilterSpecification(filterModel.CategoryIds));
 
-            filter.And(new BookPriceFilterSpecification(filterModel.BookPriceTo, filterModel.BookPriceFrom));
-
-            var result = await _repositoryFactory.CreateBookRepository().GetByFilterAsync(skip, take, filter);
+            var result = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, filter);
 
             return _mapper.Map<IEnumerable<BookDTO>>(result);
         }
 
         public async Task RemoveBookAsync(int bookId)
         {
-            var book = await _repositoryFactory.CreateBookRepository().GetByIdAsync(bookId);
+            var filter = new BookByIdFilterSpec(bookId);
+            var book = await _repositoryFactory.CreateBookRepository().GetAsync(filter);
 
             if (book != default)
             {
@@ -94,7 +91,8 @@ namespace BooksStore.Services.Implementation.Services
         public async Task UpdateBookAsync(BookDTO bookDTO)
         {
             var bookRepository = _repositoryFactory.CreateBookRepository();
-            var book = await bookRepository.GetByIdAsync(bookDTO.Id);
+            var filter = new BookByIdFilterSpec(bookDTO.Id);
+            var book = await bookRepository.GetAsync(filter);
 
             book.Descriptions = bookDTO.Descriptions;
             book.NumberOfPages = bookDTO.NumberOfPages;
@@ -109,9 +107,10 @@ namespace BooksStore.Services.Implementation.Services
 
         public async Task<bool> IsBookInBasketAsync(int basketId, int bookId)
         {
-            var book = await _repositoryFactory.CreateBookRepository().GetByIdAsync(bookId);
+            var filter = new BookByIdFilterSpec(bookId);
+            var book = await _repositoryFactory.CreateBookRepository().GetAsync(filter);
 
-            return book != null && (book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId)) != default;
+            return book != null && book.BookBaskets.FirstOrDefault(p => p.BookId == bookId && basketId == p.BasketId) != null;
         }
 
         public async Task<int> GetCountBooksAsync()
