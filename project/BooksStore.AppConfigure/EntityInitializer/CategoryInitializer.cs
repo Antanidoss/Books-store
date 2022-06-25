@@ -1,5 +1,6 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Interfaces.Repositories;
+using BooksStore.Services.Implementation.Filters.CategoryFilters;
 using System.Threading.Tasks;
 
 namespace BooksStore.AppConfigure.EntityInitializer
@@ -18,7 +19,8 @@ namespace BooksStore.AppConfigure.EntityInitializer
         {
             foreach (var catgoryName in _baseCatrgories)
             {
-                var category = await categoryRepository.GetByNameAsync(catgoryName);
+                var filter = new CategoryByNameFilterSpec(catgoryName);
+                var category = await categoryRepository.GetAsync(filter);
 
                 if (category == null)
                     await categoryRepository.AddAsync(new Category(catgoryName));

@@ -18,23 +18,8 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
         public async Task AddAsync(Book book)
         {
-            if (book != null && book != default)
-            {
-                _context.Books.Add(book);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<Book> GetByIdAsync(int bookId)
-        {
-            var book = await _context.Books
-                .Include(p => p.BookBaskets)
-                .Include(p => p.Author)
-                .Include(p => p.Category)
-                .Include(p => p.Img)
-                .FirstOrDefaultAsync(p => p.Id == bookId);
-
-            return book != default ? book : null;
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(Book book)
@@ -46,8 +31,6 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         public async Task UpdateAsync(Book book)
         {
             var updateBook = await _context.Books.FirstOrDefaultAsync(p => p.Id == book.Id);
-
-            updateBook.UpdateTime = DateTime.Now;
 
             _context.Books.Update(updateBook);
             await _context.SaveChangesAsync();
@@ -64,16 +47,25 @@ namespace BooksStore.Infastructure.Implementation.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetByFilterAsync(int skip, int take, IQueryableFilterSpec<Book> filter)
+        public async Task<IEnumerable<Book>> GetAsync(int skip, int take, IQueryableFilterSpec<Book> filter)
         {
             return await filter.ApplyFilter(_context.Books)
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)
-                .AsExpandable()
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
+        }
+
+        public async Task<Book> GetAsync(IQueryableFilterSpec<Book> filter)
+        {
+            return await _context.Books
+                .AsNoTracking()
+               .Include(p => p.Category)
+               .Include(p => p.Img)
+               .Include(p => p.Author)
+               .FirstOrDefaultAsync(filter.ToExpression());
         }
 
         public async Task<int> GetCountAsync()

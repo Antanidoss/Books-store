@@ -2,6 +2,7 @@
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using QueryableFilterSpecification.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,14 +43,19 @@ namespace BooksStore.Infastructure.Implementation.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Comment>> GetAsync(int skip, int take, int bookId)
+        public async Task<IEnumerable<Comment>> GetAsync(int skip, int take, IQueryableFilterSpec<Comment> filter)
         {
-            return await _context.Comments
-                .Where(c => c.BookId == bookId)
+            return await filter.ApplyFilter(_context.Comments.AsNoTracking())
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.AppUser)
                 .ToListAsync();
+
+        }
+
+        public async Task<Comment> GetAsync(IQueryableFilterSpec<Comment> filter)
+        {
+            return await _context.Comments.FirstOrDefaultAsync(filter.ToExpression());
         }
 
         public async Task<int> GetCountAsync()

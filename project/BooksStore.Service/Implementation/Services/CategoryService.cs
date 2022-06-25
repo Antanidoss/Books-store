@@ -3,6 +3,7 @@ using BooksStore.Common.Exceptions;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Category;
+using BooksStore.Services.Implementation.Filters.CategoryFilters;
 using BooksStore.Services.Interfaces;
 using BooksStore.Web.CacheOptions;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace BooksStore.Services
 
         public async Task<CategoryDTO> GetCategoryById(int categoryId)
         {
-            var category = await _repositoryFactory.CreateCategoryRepository().GetByIdAsync(categoryId);
+            var category = await _repositoryFactory.CreateCategoryRepository().GetAsync(new CategoryByIdFilterSpec(categoryId));
 
             if (category == null)
             {
@@ -53,7 +54,7 @@ namespace BooksStore.Services
 
         public async Task RemoveCategoryAsync(int categoryId)
         {
-            var category = await _repositoryFactory.CreateCategoryRepository().GetByIdAsync(categoryId);
+            var category = await _repositoryFactory.CreateCategoryRepository().GetAsync(new CategoryByIdFilterSpec(categoryId));
 
             if (category == null)
             {
@@ -73,7 +74,7 @@ namespace BooksStore.Services
 
         public async Task<int> GetCountCategories()
         {
-            return await _repositoryFactory.CreateCategoryRepository().GetCount();
+            return await _repositoryFactory.CreateCategoryRepository().GetCountAsync();
         }
     }
 }

@@ -2,6 +2,8 @@
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using QueryableFilterSpecification.Implementation;
+using QueryableFilterSpecification.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +19,6 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<Category> GetByIdAsync(int categoryId)
-        {
-            var category = await _context.Categories.FirstOrDefaultAsync(p => p.Id == categoryId);
-            return category != default ? category : null;
         }
 
         public async Task RemoveAsync(Category category)
@@ -46,21 +42,28 @@ namespace BooksStore.Infastructure.Implementation.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Category>> GetAsync(int skip, int take)
+        public async Task<IEnumerable<Category>> GetAsync(int skip, int take, IQueryableFilterSpec<Category> filter)
         {
-            return await _context.Categories
+            return await filter.ApplyFilter(_context.Categories.AsNoTracking())
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
         }
 
-        public async Task<Category> GetByNameAsync(string categoryName)
+        public async Task<IEnumerable<Category>> GetAsync(int skip, int take)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(p => p.Name == categoryName);
-            return category != default ? category : null;
+            return await _context.Categories.AsNoTracking()
+               .Skip(skip)
+               .Take(take)
+               .ToListAsync();
         }
 
-        public async Task<int> GetCount()
+        public async Task<Category> GetAsync(IQueryableFilterSpec<Category> filter)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(filter.ToExpression());
+        }
+
+        public async Task<int> GetCountAsync()
         {
             return await _context.Categories.CountAsync();
         }
