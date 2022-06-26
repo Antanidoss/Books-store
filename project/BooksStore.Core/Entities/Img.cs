@@ -21,9 +21,7 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(string name)
         {
             if (string.IsNullOrEmpty(name))
-            {
                 throw new ArgumentException("Image name cannot be empty", nameof(name));
-            }
         }
     }
 }

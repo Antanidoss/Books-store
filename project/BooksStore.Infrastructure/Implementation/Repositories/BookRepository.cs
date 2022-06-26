@@ -30,15 +30,14 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
         public async Task UpdateAsync(Book book)
         {
-            var updateBook = await _context.Books.FirstOrDefaultAsync(p => p.Id == book.Id);
-
-            _context.Books.Update(updateBook);
+            _context.Books.Update(book);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Book>> GetAsync(int skip, int take)
         {
             return await _context.Books
+                .AsNoTracking()
                 .Skip(skip)
                 .Take(take)
                 .Include(p => p.Category)
@@ -49,7 +48,7 @@ namespace BooksStore.Infastructure.Implementation.Repositories
 
         public async Task<IEnumerable<Book>> GetAsync(int skip, int take, IQueryableFilterSpec<Book> filter)
         {
-            return await filter.ApplyFilter(_context.Books)
+            return await filter.ApplyFilter(_context.Books.AsNoTracking())
                 .Include(p => p.Category)
                 .Include(p => p.Img)
                 .Include(p => p.Author)
@@ -61,11 +60,11 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         public async Task<Book> GetAsync(IQueryableFilterSpec<Book> filter)
         {
             return await _context.Books
-                .AsNoTracking()
-               .Include(p => p.Category)
-               .Include(p => p.Img)
-               .Include(p => p.Author)
-               .FirstOrDefaultAsync(filter.ToExpression());
+                .Include(b => b.BookBaskets)
+                .Include(p => p.Category)
+                .Include(p => p.Img)
+                .Include(p => p.Author)
+                .FirstOrDefaultAsync(filter.ToExpression());
         }
 
         public async Task<int> GetCountAsync()

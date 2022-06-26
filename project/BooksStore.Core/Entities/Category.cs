@@ -26,9 +26,7 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(string name)
         {
             if (string.IsNullOrEmpty(name))
-            {
                 throw new ArgumentException("Названия категории не может быть равна null либо пустой", nameof(name));
-            }
         }
     }
 }

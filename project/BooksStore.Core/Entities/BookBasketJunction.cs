@@ -22,13 +22,10 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(int basketId, int bookId)
         {
             if (basketId <= 0)
-            {
                 throw new ArgumentException("Id корзина не может быть равен либо меньше 0", nameof(basketId));
-            }
+
             if (bookId <= 0)
-            {
                 throw new ArgumentException("Id книги не может быть равен либо меньше 0", nameof(bookId));
-            }
         }
     }
 }

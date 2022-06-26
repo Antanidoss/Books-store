@@ -24,17 +24,13 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(string descriptions, int bookId, string appUserId)
         {
             if (string.IsNullOrEmpty(descriptions))
-            {
                 throw new ArgumentException("Описания коментария не может быть пустой либо равен null", nameof(descriptions));
-            }
+
             if (bookId <= 0)
-            {
                 throw new ArgumentException("Id книги не может быть равен либо меньше 0", nameof(bookId));
-            }
+
             if (string.IsNullOrEmpty(appUserId))
-            {
                 throw new ArgumentException("Id пользователя не может быть пустой либо равен null", nameof(appUserId));
-            }
         }
     }
 }
