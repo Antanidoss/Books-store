@@ -44,33 +44,25 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(string title, decimal price, bool inStock, int numberOfPages, string descriptions, Img img, Author author, Category category)
         {
             if (string.IsNullOrEmpty(title))
-            {
                 throw new ArgumentException("Названия книги не может быть пустой либо равным null", nameof(title));
-            }
+
             if (price < 0)
-            {
                 throw new ArgumentException("Цена не может быть меньше 0", nameof(price));
-            }
+
             if (numberOfPages <= 0)
-            {
                 throw new ArgumentException("Количество страниц не может быть меньше либо равным 0", nameof(numberOfPages));
-            }
+
             if (string.IsNullOrEmpty(descriptions))
-            {
                 throw new ArgumentException("Описания книги не может быть пустым либо равным null", nameof(descriptions));
-            }
+
             if (img == null)
-            {
                 throw new ArgumentException("Картинка книги не может быть равным null", nameof(img));
-            }
+
             if (author == null)
-            {
                 throw new ArgumentException("Автор книги книги не может быть равным null", nameof(author));
-            }
+
             if (category == null)
-            {
                 throw new ArgumentException("Категория книги книги не может быть равным null", nameof(author));
-            }
         }
     }
 }

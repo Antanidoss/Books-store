@@ -32,7 +32,6 @@ namespace BooksStore.Infastructure.Implementation.Repositories
         public async Task<Basket> GetAsync(IQueryableFilterSpec<Basket> filter)
         {
             return await _context.Baskets
-                .AsNoTracking()
                 .Include(p => p.BasketBooks)
                 .ThenInclude(p => p.Book)
                 .ThenInclude(p => p.Img)

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BooksStore.Core.Entities
 {
@@ -24,13 +22,10 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(int percentage, DateTime expirationDate)
         {
             if (percentage <= 0)
-            {
                 throw new ArgumentException("Процент скидки не может быть меньше либо равен 0", nameof(Percentage));
-            }
+
             if (expirationDate <= DateTime.Now)
-            {
                 throw new ArgumentException("Дата окончания скидки не может быть прошлой либо текущей 0", nameof(expirationDate));
-            }
         }
     }
 }

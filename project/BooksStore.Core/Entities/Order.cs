@@ -27,18 +27,13 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(IEnumerable<BookOrderJunction> orderBooks, string appUserId, DateTime timeOfDelivery)
         {
             if (orderBooks == null)
-            {
                 throw new ArgumentException("Обьект представляющий книги заказа не может быть равен null", nameof(orderBooks));
-            }
+
             if (string.IsNullOrEmpty(appUserId))
-            {
                 throw new ArgumentException("Id пользователя не может быть пустым либо равным null", nameof(appUserId));
-            }
+
             if (timeOfDelivery == null || timeOfDelivery < DateTime.Now)
-            {
-                throw new ArgumentException("Время доставки не может быть равным null либо иметь прошлую форму времени",
-                    nameof(timeOfDelivery));
-            }
+                throw new ArgumentException("Время доставки не может быть равным null либо иметь прошлую форму времени", nameof(timeOfDelivery));
         }
     }
 }

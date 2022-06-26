@@ -66,7 +66,8 @@ namespace BooksStore.Services
 
         public async Task RemoveBasketBookAsync(int basketId, int bookId)
         {
-            Basket basket = await _repositoryFactory.CreateBasketRepository().GetAsync(new BasketByIdFilterSpec(basketId));
+            var basketRepository = _repositoryFactory.CreateBasketRepository();
+            Basket basket = await basketRepository.GetAsync(new BasketByIdFilterSpec(basketId));
             if (basket == null)
                 throw new NotFoundException(nameof(Basket), basket);
  
@@ -77,15 +78,15 @@ namespace BooksStore.Services
             var bookBasket = basket.BasketBooks.ToList();
             BookBasketJunction bookBasketJunction = bookBasket.FirstOrDefault(p => p.BookId == bookId);
 
-            if (bookBasketJunction != default)
-            {
-                bookBasket.Remove(bookBasketJunction);
-                basket.BasketBooks = bookBasket;
+            if (bookBasketJunction == null)
+                return;
 
-                await _repositoryFactory.CreateBasketRepository().UpdateAsync(basket);
+            bookBasket.Remove(bookBasketJunction);
+            basket.BasketBooks = bookBasket;
 
-                _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
-            }
+            await basketRepository.UpdateAsync(basket);
+
+            _cacheManager.Remove(CacheKeys.GetBasketKey(basketId));
         }
 
         public async Task RemoveAllBasketBooksAsync(int basketId)

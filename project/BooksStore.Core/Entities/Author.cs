@@ -28,13 +28,10 @@ namespace BooksStore.Core.Entities
         private void ValidateArgumentConstructor(string firstname, string surname)
         {
             if (string.IsNullOrEmpty(firstname))
-            {
                 throw new ArgumentException("Имя автора не может быть пустой либо равен null", nameof(firstname));
-            }
+
             if (string.IsNullOrEmpty(surname))
-            {
                 throw new ArgumentException("Фамилия автора не может быть пустой либо равен null", nameof(surname));
-            }
         }
 
         public override string ToString()
