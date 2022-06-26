@@ -31,9 +31,10 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task<IEnumerable<CategoryViewModel>> GetCategories(int pageNum)
         {
-            var pageSize = PageSizes.Categories;
+            var take = PageSizes.Categories;
+            var skip = PaginationInfo.GetCountSkipItems(pageNum, take);
 
-            return _mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.GetCategories((pageNum - 1) * pageSize, pageSize));
+            return _mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.GetCategories(skip, take));
         }
 
         public async Task<CategoryViewModel> GetCategoryById(int categoryId)

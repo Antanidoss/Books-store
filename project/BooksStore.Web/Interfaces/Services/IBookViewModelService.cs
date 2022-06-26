@@ -11,8 +11,7 @@ namespace BooksStore.Web.Interfaces.Services
     {
         Task AddBookAsync(BookCreateModel bookCreateModel);
         Task<BookViewModel> GetBookByIdAsync(int bookId);
-        Task<IEnumerable<BookViewModel>> GetBooksAsync(int pageNum);
-        Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, BookFilterModel filterModel);
+        Task<IEnumerable<BookViewModel>> GetBooks(int pageNum, BookFilterModel filterModel);
         Task RemoveBookAsync(int bookId);
         Task UpdateBookAsync(BookUpdateModel bookUpdateModel);
         Task<int> GetCountAsync();

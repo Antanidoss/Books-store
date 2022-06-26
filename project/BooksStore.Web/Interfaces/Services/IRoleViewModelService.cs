@@ -10,7 +10,6 @@ namespace BooksStore.Web.Interfaces.Services
     {
         Task<Result> CreateRoleAsync(RoleCreateModel model);
         Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum);
-        Task<RoleViewModel> FindRoleByIdAsync(string roleId);
         Task<Result> DeleteAsync(string roleId);
     }
 }

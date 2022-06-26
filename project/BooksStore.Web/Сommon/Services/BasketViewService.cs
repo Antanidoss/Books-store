@@ -5,11 +5,9 @@ using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -41,10 +39,9 @@ namespace BooksStore.Web.Сommon.Services
         {
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
             var basket = await _basketService.GetBasketByIdAsync(basketId);
-            var pageSize = PageSizes.Basket;
             var books = _mapper.Map<IEnumerable<BookViewModel>>(basket.BasketBooks);
 
-            return new BasketViewModel(pageNum, pageSize, basket.BasketBooks.Count(), basketId, books);
+            return new BasketViewModel(pageNum, PageSizes.Basket, basket.BasketBooks.Count(), basketId, books);
         }
 
         public async Task RemoveAllBasketBooksAsync()

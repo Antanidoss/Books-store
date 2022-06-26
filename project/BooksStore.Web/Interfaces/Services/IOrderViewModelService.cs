@@ -8,7 +8,6 @@ namespace BooksStore.Web.Interfaces.Services
     public interface IOrderViewModelService
     {
         Task AddOrderAsync(OrderCreateModel model);
-        Task<OrderViewModel> GetOrderByIdAsync(int orderId);
         Task RemoveOrderAsync(int orderId);
         Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum);
         Task RemoveCompleteOrderAsync();

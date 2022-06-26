@@ -8,7 +8,6 @@ using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
 using BooksStore.Web.Сommon.ViewModel.UpdateModel;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -41,36 +40,22 @@ namespace BooksStore.Web.Сommon.Services
         public async Task<BookViewModel> GetBookByIdAsync(int bookId)
         {
             var book = _mapper.Map<BookViewModel>(await _bookService.GetBookByIdAsync(bookId));
-            await BookInBasketAsync(book);
+            await SetIsAddToBasketStatus(book);
 
             return book;
         }
 
-        public async Task<IEnumerable<BookViewModel>> GetBooksAsync(int pageNum)
-        {
-            int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
-            var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAsync(PageSizes.Books, take));
-
-            foreach (var book in books)
-            {
-                await BookInBasketAsync(book);
-            }
-
-            return books;
-        }
-
-        public async Task<IEnumerable<BookViewModel>> GetBooksWithFilter(int pageNum, BookFilterModel filterModel)
+        public async Task<IEnumerable<BookViewModel>> GetBooks(int pageNum, BookFilterModel filterModel)
         {
             if (filterModel.CategoryIds != null)
                 filterModel.CategoryIds.RemoveAll(i => i == default);
 
-            int take = PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Books);
-            var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksWithFilterAsync(PageSizes.Books, take, filterModel));
+            var take = PageSizes.Books;
+            var skip = PaginationInfo.GetCountSkipItems(pageNum, take);
+            var books = _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAsync(skip, take, filterModel));
 
             foreach (var book in books)
-            {
-                await BookInBasketAsync(book);
-            }
+                await SetIsAddToBasketStatus(book);
 
             return books;
         }
@@ -82,7 +67,9 @@ namespace BooksStore.Web.Сommon.Services
 
         public async Task UpdateBookAsync(BookUpdateModel bookUpdateModel)
         {
-            await _bookService.UpdateBookAsync(_mapper.Map<BookDTO>(bookUpdateModel));
+            var bookDTO = _mapper.Map<BookDTO>(bookUpdateModel);
+
+            await _bookService.UpdateBookAsync(bookDTO);
         }
 
         public async Task<int> GetCountAsync()
@@ -90,17 +77,13 @@ namespace BooksStore.Web.Сommon.Services
             return await _bookService.GetCountBooksAsync();
         }
 
-        private async Task BookInBasketAsync(BookViewModel book)
+        private async Task SetIsAddToBasketStatus(BookViewModel book)
         {
-            if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-            {
-                int basketid = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
+            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                return;
 
-                if (await _bookService.IsBookInBasketAsync(basketid, book.Id))
-                {
-                    book.IsAddToBasket = true;
-                }
-            }
+            int basketid = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
+            book.IsAddToBasket = await _bookService.IsBookInBasketAsync(basketid, book.Id);
         }
     }
 }

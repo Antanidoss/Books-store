@@ -51,17 +51,12 @@ namespace BooksStore.Services.Implementation.Services
             return _mapper.Map<BookDTO>(book);
         }
 
-        public async Task<IEnumerable<BookDTO>> GetBooksAsync(int skip, int take)
+        public async Task<IEnumerable<BookDTO>> GetBooksAsync(int skip, int take, BookFilterModel filterModel)
         {
-            var books = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take);
+            var bookRepository = _repositoryFactory.CreateBookRepository();
 
-            return _mapper.Map<IEnumerable<BookDTO>>(books);
-        }
-
-        public async Task<IEnumerable<BookDTO>> GetBooksWithFilterAsync(int take, int skip, BookFilterModel filterModel)
-        {
             if (filterModel.FilterIsNull())
-                return await GetBooksAsync(skip, take);
+                return _mapper.Map<IEnumerable<BookDTO>>(await bookRepository.GetAsync(skip, take));
 
             IQueryableFilterSpec<Book> filter = new BookPriceFilterSpecification(filterModel.BookPriceFrom, filterModel.BookPriceTo);
 
@@ -71,7 +66,7 @@ namespace BooksStore.Services.Implementation.Services
             if (filterModel.CategoryIds != null && filterModel.CategoryIds.Any())
                 filter = filter.And(new BookCategoryFilterSpecification(filterModel.CategoryIds));
 
-            var result = await _repositoryFactory.CreateBookRepository().GetAsync(skip, take, filter);
+            var result = await bookRepository.GetAsync(skip, take, filter);
 
             return _mapper.Map<IEnumerable<BookDTO>>(result);
         }

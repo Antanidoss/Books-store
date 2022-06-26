@@ -32,14 +32,11 @@ namespace BooksStore.Web.Сommon.Services
             return await _roleManagerService.DeleteAsync(roleId);
         }
 
-        public async Task<RoleViewModel> FindRoleByIdAsync(string roleId)
-        {
-            return _mapper.Map<RoleViewModel>(await _roleManagerService.FindRoleByIdAsync(roleId));
-        }
-
         public async Task<IEnumerable<RoleViewModel>> GetRolesAsync(int pageNum)
         {
-            var roles = await _roleManagerService.GetRolesAsync(PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Roles), PageSizes.Roles);
+            var take = PageSizes.Roles;
+            var skip = PaginationInfo.GetCountSkipItems(pageNum, take);
+            var roles = await _roleManagerService.GetRolesAsync(skip ,take);
 
             return _mapper.Map<IEnumerable<RoleViewModel>>(roles);
         }

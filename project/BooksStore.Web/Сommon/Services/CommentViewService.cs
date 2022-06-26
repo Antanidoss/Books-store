@@ -6,12 +6,9 @@ using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;
 using BooksStore.Web.Сommon.ViewModel.ReadModel;
-using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BooksStore.Common.Constants;
 
 namespace BooksStore.Web.Сommon.Services
 {
@@ -42,36 +39,18 @@ namespace BooksStore.Web.Сommon.Services
             await _commentService.AddCommentAsync(commentDto);
         }
 
-        public async Task<CommentViewModel> GetCommentByIdAsync(int commentId)
-        {
-            var comment = await _commentService.GetCommentById(commentId);
-
-            return _mapper.Map<CommentViewModel>(comment);
-        }
-
         public async Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum, int bookId)
         {
-            int pageSize = PageSizes.Comments;
-            int skip = (pageNum - 1) * pageSize;
-            var comments = await _commentService.GetComments(skip, pageSize, bookId);
+            int take = PageSizes.Comments;
+            int skip = PaginationInfo.GetCountSkipItems(pageNum, take);
+            var comments = await _commentService.GetComments(skip, take, bookId);
 
             return _mapper.Map<IEnumerable<CommentViewModel>>(comments);
-        }
-
-        public async Task<int> GetCountCommentsAsync(int bookId)
-        {
-            return await _commentService.GetCountComments();
         }
 
         public async Task RemoveCommentAsync(int commentId)
         {
             await _commentService.RemoveCommentAsync(commentId);
-        }
-
-        public async Task UpdateCommentAsync(CommentUpdateModel model)
-        {
-            var commentDTO = _mapper.Map<CommentDTO>(model);
-            await _commentService.UpdateCommentAsync(commentDTO);
         }
     }
 }

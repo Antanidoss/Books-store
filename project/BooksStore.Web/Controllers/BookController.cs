@@ -31,7 +31,7 @@ namespace BooksStore.Web.Controllers
         public async Task<IActionResult> IndexBooks(BookFilterModel filterModel, int pageNum = 1)
         {
             int booksCount = await _bookService.GetCountAsync();
-            var books = await _bookService.GetBooksWithFilter(pageNum, filterModel);
+            var books = await _bookService.GetBooks(pageNum, filterModel);
 
             ViewBag.FilterModel = filterModel;
 

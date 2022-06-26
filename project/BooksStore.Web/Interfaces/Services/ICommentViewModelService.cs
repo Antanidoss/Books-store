@@ -9,10 +9,7 @@ namespace BooksStore.Web.Interfaces.Services
     public interface ICommentViewModelService
     {
         Task AddCommentAsync(CommentCreateModel model);
-        Task<CommentViewModel> GetCommentByIdAsync(int commentId);
         Task<IEnumerable<CommentViewModel>> GetCommentsAsync(int pageNum, int bookId);
         Task RemoveCommentAsync(int commentId);
-        Task UpdateCommentAsync(CommentUpdateModel model);
-        Task<int> GetCountCommentsAsync(int bookId);
     }
 }

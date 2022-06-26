@@ -40,22 +40,15 @@ namespace BooksStore.Web.Сommon.Services
 
             var basketId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).BasketId;
             foreach (var bookId in model.BookOrderIds)
-            {
                 await _basketService.RemoveBasketBookAsync(basketId, bookId);
-            }
-        }
-
-        public async Task<OrderViewModel> GetOrderByIdAsync(int orderId)
-        {
-            var order = await _orderService.GetOrderByIdAsync(orderId);
-
-            return _mapper.Map<OrderViewModel>(order);
         }
 
         public async Task<IEnumerable<OrderViewModel>> GetOrdersAsync(int pageNum)
         {
             var curUserId = (await _currentUser.GetCurrentUser(_httpContextAccessor.HttpContext)).Id;
-            var orders = await _orderService.GetOrders(curUserId, PaginationInfo.GetCountTakeItems(pageNum, PageSizes.Orders), PageSizes.Orders);
+            var take = PageSizes.Orders;
+            var skip = PaginationInfo.GetCountSkipItems(pageNum, take);
+            var orders = await _orderService.GetOrders(curUserId, skip, take);
 
             return _mapper.Map<IEnumerable<OrderViewModel>>(orders);
         }
