@@ -10,8 +10,7 @@ namespace BooksStore.Services.Interfaces
         Task AddBookAsync(BookDTOCreateModel bookCreateModel);
         Task<BookDTO> GetBookByIdAsync(int bookId);
         Task RemoveBookAsync(int bookId);
-        Task<IEnumerable<BookDTO>> GetBooksAsync(int skip, int take);
-        Task<IEnumerable<BookDTO>> GetBooksWithFilterAsync(int skip, int take, BookFilterModel filterModel);
+        Task<IEnumerable<BookDTO>> GetBooksAsync(int take, int skip, BookFilterModel filterModel);
         Task UpdateBookAsync(BookDTO book);
         Task<bool> IsBookInBasketAsync(int basketId, int bookId);
         Task<int> GetCountBooksAsync();

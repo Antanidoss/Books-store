@@ -18,9 +18,9 @@ namespace BooksStore.Web.Сommon.Pagination
             return pageNumber >= 1;
         }
 
-        public static int GetCountTakeItems(int pageNumber, int countPageItems)
+        public static int GetCountSkipItems(int pageNum, int countPageItems)
         {
-            return (pageNumber - 1) * countPageItems;
+            return (pageNum - 1) * countPageItems;
         }
     }
 }
