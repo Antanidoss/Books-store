@@ -3,7 +3,7 @@ using BooksStore.Services.DTO.AppUser;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Interfaces.Services
+namespace BooksStore.Services.Interfaces.Services.Base
 {
     public interface IUserService
     {

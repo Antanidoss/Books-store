@@ -19,7 +19,7 @@ namespace BooksStore.Web.Controllers
 
         private readonly IMapper _mapper;
 
-        public BookController(IBookViewModelService bookService, IMapper mapper)
+        public BookController(IBookViewModelService bookService, IMapper mapper, ICategoryViewModelService categoryService)
         {
             _bookService = bookService;
             _mapper = mapper;

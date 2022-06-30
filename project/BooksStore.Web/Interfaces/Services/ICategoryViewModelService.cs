@@ -12,6 +12,7 @@ namespace BooksStore.Web.Interfaces.Services
         Task<CategoryViewModel> GetCategoryById(int categoryId);
         Task RemoveCategoryAsync(int categoryId);
         Task<IEnumerable<CategoryViewModel>> GetCategories(int pageNum);
+        Task<IEnumerable<CategoryViewModel>> GetCategories(int skip, int take);
         Task UpdateCategoryAsync(CategoryUpdateModel categoryDTO);
         Task<int> GetCountCategories();
     }

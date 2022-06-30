@@ -2,7 +2,7 @@
 using AutoMapper;
 using BooksStore.Services.DTO;
 using BooksStore.Services.DTO.AppUser;
-using BooksStore.Services.Interfaces.Services;
+using BooksStore.Services.Interfaces.Services.Base;
 using BooksStore.Web.Filters;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Сommon.ViewModel.CreateModel;

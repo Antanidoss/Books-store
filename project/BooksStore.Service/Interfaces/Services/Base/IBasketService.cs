@@ -1,7 +1,7 @@
 ﻿using BooksStore.Services.DTO.Basket;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Interfaces
+namespace BooksStore.Services.Interfaces.Services.Base
 {
     public interface IBasketService
     {

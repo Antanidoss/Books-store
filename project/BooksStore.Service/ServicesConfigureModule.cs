@@ -1,17 +1,15 @@
-﻿using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Implementation;
+﻿using BooksStore.Infrastructure.Implementation;
 using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.Implementation;
-using BooksStore.Services.Implementation.Services;
-using BooksStore.Services.AuthorSer;
-using BooksStore.Services.Implementation.Services;
-using BooksStore.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using BooksStore.Services.Profiles;
 using BooksStore.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
-using BooksStore.Services.Interfaces.Services;
+using BooksStore.Services.Implementation.Services.Base;
+using BooksStore.Services.Interfaces.Services.Base;
+using BooksStore.Services.Implementation.Services.WithCaching;
+using BooksStore.Services.Interfaces.Services.WithCaching;
 
 namespace BooksStore.Services
 {
@@ -24,17 +22,10 @@ namespace BooksStore.Services
 
             //CacheManager configuration
             services.AddTransient<ICacheManager, MemoryCacheManager>();
-
             services.AddScoped<IRepositoryFactory, RepositoryFactory>();
-            //Services configuration 
-            services.AddScoped<IBookService, BookService>();
-            services.AddScoped<IAuthorService, AuthorService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IBasketService, BasketService>();
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<ICommentService, CommentService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IRoleService, RoleService>();
+
+            RegisterServices(services);
+            RegisterCachingServices(services);
 
             return services;
         }
@@ -49,6 +40,26 @@ namespace BooksStore.Services
             mapperConfigure.AddProfile(new AppUserDTOProfile());
             mapperConfigure.AddProfile(new RoleDTOProfile());
             mapperConfigure.AddProfile(new CommentDTOProfile());
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
+        }
+
+        private void RegisterCachingServices(IServiceCollection services)
+        {
+            services.AddScoped<IBookCachingService, BookCachingService>();
+            services.AddScoped<IBasketCachingService, BasketCachingService>();
+            services.AddScoped<ICommentCachingService, CommentCachingService>();
+            services.AddScoped<IOrderCachingService, OrderCachingService>();
         }
     }
 }

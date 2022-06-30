@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Services.DTO.Comment;
-using BooksStore.Services.Interfaces;
+using BooksStore.Services.Interfaces.Services.Base;
+using BooksStore.Services.Interfaces.Services.WithCaching;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
@@ -14,7 +15,7 @@ namespace BooksStore.Web.Сommon.Services
 {
     public class CommentViewService : ICommentViewModelService
     {
-        private readonly ICommentService _commentService;
+        private readonly ICommentCachingService _commentService;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -22,7 +23,7 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IMapper _mapper;
 
-        public CommentViewService(ICommentService commentService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser,
+        public CommentViewService(ICommentCachingService commentService, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser,
             IMapper mapper)
         {
             _commentService = commentService;

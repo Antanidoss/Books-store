@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BooksStore.Services.Interfaces;
+using BooksStore.Services.Interfaces.Services.WithCaching;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
@@ -13,7 +13,7 @@ namespace BooksStore.Web.Сommon.Services
 {
     public class BasketViewService : IBasketViewModelService
     {
-        private readonly IBasketService _basketService;
+        private readonly IBasketCachingService _basketService;
 
         private readonly IMapper _mapper;
 
@@ -21,7 +21,7 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BasketViewService(IBasketService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
+        public BasketViewService(IBasketCachingService basketService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor)
         {
             _basketService = basketService;
             _mapper = mapper;

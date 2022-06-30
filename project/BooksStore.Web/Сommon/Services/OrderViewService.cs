@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
@@ -10,12 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BooksStore.Common.Constants;
+using BooksStore.Services.Interfaces.Services.Base;
+using BooksStore.Services.Interfaces.Services.WithCaching;
 
 namespace BooksStore.Web.Сommon.Services
 {
     public class OrderViewService : IOrderViewModelService
     {
-        private readonly IOrderService _orderService;
+        private readonly IOrderCachingService _orderService;
 
         private readonly IBasketService _basketService;
 
@@ -25,7 +26,7 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderViewService(IOrderService orderService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor, IBasketService basketService)
+        public OrderViewService(IOrderCachingService orderService, IMapper mapper, ICurrentUser currentUser, IHttpContextAccessor httpContextAccessor, IBasketService basketService)
         {
             _orderService = orderService;
             _mapper = mapper;
