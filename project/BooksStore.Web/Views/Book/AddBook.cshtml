@@ -1,6 +1,6 @@
 ﻿@model BookCreateModel
-@inject BooksStore.Services.Interfaces.ICategoryService categoryService
-@inject BooksStore.Services.Interfaces.IAuthorService authorService
+@inject BooksStore.Services.Interfaces.Services.Base.ICategoryService categoryService
+@inject BooksStore.Services.Interfaces.Services.Base.IAuthorService authorService
 @{
     var categoryCount = await categoryService.GetCountCategories();
     var categories = (await categoryService.GetCategories(0, categoryCount)).Select(c => new SelectListItem(c.Name, c.Id.ToString())); ;

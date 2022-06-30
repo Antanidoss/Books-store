@@ -3,13 +3,13 @@ using BooksStore.Common;
 using BooksStore.Core.Entities;
 using BooksStore.Infrastructure;
 using BooksStore.Services.DTO.AppUser;
-using BooksStore.Services.Interfaces.Services;
+using BooksStore.Services.Interfaces.Services.Base;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Implementation.Services
+namespace BooksStore.Services.Implementation.Services.Base
 {
     internal sealed class UserService : IUserService
     {
@@ -100,7 +100,7 @@ namespace BooksStore.Services.Implementation.Services
                 await SignInManager.SignInAsync(user, isPasrsistent);
             }
 
-            return (IdentityResultExtensions.AppUserNotFound());
+            return IdentityResultExtensions.AppUserNotFound();
         }
 
         public async Task<bool> IsInRoleAsync(AppUserDTO appUserDTO, string roleName)

@@ -1,5 +1,5 @@
 ﻿@model BooksStore.Services.Models.BookFilterModel
-@inject BooksStore.Services.Interfaces.ICategoryService categoryService
+@inject BooksStore.Services.Interfaces.Services.Base.ICategoryService categoryService
 
 @{ 
     int categoryCount = await categoryService.GetCountCategories();

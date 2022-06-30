@@ -4,7 +4,7 @@ using BooksStore.Services.DTO.Role;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Interfaces.Services
+namespace BooksStore.Services.Interfaces.Services.Base
 {
     public interface IRoleService
     {

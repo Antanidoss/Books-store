@@ -3,14 +3,14 @@ using BooksStore.Common;
 using BooksStore.Common.Exceptions;
 using BooksStore.Infrastructure;
 using BooksStore.Services.DTO.Role;
-using BooksStore.Services.Interfaces.Services;
+using BooksStore.Services.Interfaces.Services.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Implementation.Services
+namespace BooksStore.Services.Implementation.Services.Base
 {
     internal sealed class RoleService : IRoleService
     {
@@ -47,7 +47,7 @@ namespace BooksStore.Services.Implementation.Services
                 throw new NotFoundException(nameof(role), roleId);
             }
 
-            return (_mapper.Map<RoleDTO>(role));
+            return _mapper.Map<RoleDTO>(role);
         }
 
         public async Task<IEnumerable<RoleDTO>> GetRolesAsync(int skip, int take)

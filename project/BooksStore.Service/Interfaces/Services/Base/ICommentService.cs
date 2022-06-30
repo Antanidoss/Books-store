@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Services.Interfaces
+namespace BooksStore.Services.Interfaces.Services.Base
 {
     public interface ICommentService
     {

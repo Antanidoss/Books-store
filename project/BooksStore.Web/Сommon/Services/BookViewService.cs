@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BooksStore.Services.Models;
 using BooksStore.Services.DTO.Book;
-using BooksStore.Services.Interfaces;
 using BooksStore.Web.Interfaces;
 using BooksStore.Web.Interfaces.Services;
 using BooksStore.Web.Сommon.Pagination;
@@ -11,12 +10,13 @@ using BooksStore.Web.Сommon.ViewModel.UpdateModel;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksStore.Services.Interfaces.Services.WithCaching;
 
 namespace BooksStore.Web.Сommon.Services
 {
     public class BookViewService : IBookViewModelService
     {
-        private readonly IBookService _bookService;
+        private readonly IBookCachingService _bookService;
 
         private readonly IMapper _mapper;
 
@@ -24,7 +24,7 @@ namespace BooksStore.Web.Сommon.Services
 
         private readonly ICurrentUser _currentUser;
 
-        public BookViewService(IBookService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
+        public BookViewService(IBookCachingService bookService, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICurrentUser currentUser)
         {
             _bookService = bookService;
             _mapper = mapper;

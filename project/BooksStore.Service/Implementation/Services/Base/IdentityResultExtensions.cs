@@ -3,7 +3,7 @@ using BooksStore.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace BooksStore.Services.Implementation.Services
+namespace BooksStore.Services.Implementation.Services.Base
 {
     internal static class IdentityResultExtensions
     {
