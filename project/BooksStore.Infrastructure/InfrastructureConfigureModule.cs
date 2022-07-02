@@ -2,9 +2,7 @@
 using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
 using BooksStore.Infastructure.Implementation.Repositories;
-using BooksStore.Infastructure.Interfaces.Repositories;
-using BooksStore.Infrastructure.Implementation.Repositories;
-using BooksStore.Infrastructure.Interfaces.Repositories;
+using BooksStore.Services.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

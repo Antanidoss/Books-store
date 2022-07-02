@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces;
+using BooksStore.Services.Interfaces;
 using BooksStore.Services.DTO.Book;
 using BooksStore.Services.Interfaces.Services.Base;
 using BooksStore.Services.Interfaces.Services.WithCaching;
 using BooksStore.Services.Models;
-using BooksStore.Web.CacheOptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksStore.Services.CacheOptions;
 
 namespace BooksStore.Services.Implementation.Services.WithCaching
 {

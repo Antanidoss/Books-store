@@ -1,5 +1,5 @@
-﻿using BooksStore.Infastructure.Interfaces.Repositories;
-using BooksStore.Infrastructure.Interfaces;
+﻿using BooksStore.Services.Interfaces.Repositories;
+using BooksStore.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using BooksStore.Common;
 using BooksStore.Common.Exceptions;
-using BooksStore.Infrastructure;
 using BooksStore.Services.DTO.Role;
 using BooksStore.Services.Interfaces.Services.Base;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 

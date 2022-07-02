@@ -2,7 +2,7 @@
 using QueryableFilterSpecification.Interfaces;
 using System.Threading.Tasks;
 
-namespace BooksStore.Infastructure.Interfaces.Repositories
+namespace BooksStore.Services.Interfaces.Repositories
 {
     public interface IBasketRepository
     {

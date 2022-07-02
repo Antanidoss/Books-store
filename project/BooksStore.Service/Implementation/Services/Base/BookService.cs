@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.Models;
 using BooksStore.Services.DTO.Book;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LinqKit;
-using BooksStore.Common.Exceptions;
 using QueryableFilterSpecification;
 using BooksStore.Services.Implementation.Filters.BookFilters;
 using QueryableFilterSpecification.Interfaces;
 using BooksStore.Services.Interfaces.Services.Base;
+using BooksStore.Services.Interfaces.Repositories;
+using BooksStore.Common.Exceptions;
 
 namespace BooksStore.Services.Implementation.Services.Base
 {
