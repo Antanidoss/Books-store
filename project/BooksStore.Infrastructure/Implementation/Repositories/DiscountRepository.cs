@@ -1,12 +1,12 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
-using BooksStore.Infrastructure.Interfaces.Repositories;
+using BooksStore.Services.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BooksStore.Infrastructure.Implementation.Repositories
+namespace BooksStore.Infastructure.Implementation.Repositories
 {
     internal class DiscountRepository : IDiscountRepository
     {

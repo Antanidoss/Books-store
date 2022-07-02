@@ -3,7 +3,7 @@ using QueryableFilterSpecification.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BooksStore.Infastructure.Interfaces.Repositories
+namespace BooksStore.Services.Interfaces.Repositories
 {
     public interface IBookRepository
     {

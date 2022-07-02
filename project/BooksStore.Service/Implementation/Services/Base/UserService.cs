@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.Common;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure;
+using BooksStore.Services;
 using BooksStore.Services.DTO.AppUser;
 using BooksStore.Services.Interfaces.Services.Base;
 using Microsoft.AspNetCore.Identity;

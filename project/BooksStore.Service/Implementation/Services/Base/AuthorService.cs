@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using BooksStore.Common.Exceptions;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces;
+using BooksStore.Services.CacheOptions;
 using BooksStore.Services.DTO.Author;
 using BooksStore.Services.Implementation.Filters.AuthorFilters;
+using BooksStore.Services.Interfaces;
+using BooksStore.Services.Interfaces.Repositories;
 using BooksStore.Services.Interfaces.Services.Base;
-using BooksStore.Web.CacheOptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

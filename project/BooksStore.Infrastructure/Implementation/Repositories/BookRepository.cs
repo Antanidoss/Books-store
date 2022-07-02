@@ -1,10 +1,8 @@
 ﻿using BooksStore.Core.Entities;
 using BooksStore.Infastructure.Data;
-using BooksStore.Infastructure.Interfaces.Repositories;
-using LinqKit;
+using BooksStore.Services.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using QueryableFilterSpecification.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

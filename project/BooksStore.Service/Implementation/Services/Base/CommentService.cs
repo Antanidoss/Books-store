@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Comment;
 using BooksStore.Services.Implementation.Filters.CommentFilters;
 using BooksStore.Services.Interfaces.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksStore.Services.Interfaces.Repositories;
 
 namespace BooksStore.Services.Implementation.Services.Base
 {

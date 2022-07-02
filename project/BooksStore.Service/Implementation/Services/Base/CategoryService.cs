@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using BooksStore.Common.Exceptions;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Category;
 using BooksStore.Services.Implementation.Filters.CategoryFilters;
 using BooksStore.Services.Interfaces.Services.Base;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BooksStore.Services.Interfaces.Repositories;
+using BooksStore.Common.Exceptions;
 
 namespace BooksStore.Services.Implementation.Services.Base
 {

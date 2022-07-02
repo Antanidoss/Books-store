@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using BooksStore.Common.Exceptions;
 using BooksStore.Core.Entities;
-using BooksStore.Infrastructure.Interfaces;
 using BooksStore.Services.DTO.Basket;
 using BooksStore.Services.Implementation.Filters.BasketFilters;
 using BooksStore.Services.Implementation.Filters.BookFilters;
 using BooksStore.Services.Interfaces.Services.Base;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksStore.Services.Interfaces.Repositories;
 
 namespace BooksStore.Services.Implementation.Services.Base
 {

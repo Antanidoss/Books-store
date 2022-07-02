@@ -1,6 +1,4 @@
-﻿using BooksStore.Infrastructure.Implementation;
-using BooksStore.Infrastructure.Interfaces;
-using BooksStore.Services.Implementation;
+﻿using BooksStore.Services.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using BooksStore.Services.Profiles;
@@ -10,6 +8,8 @@ using BooksStore.Services.Implementation.Services.Base;
 using BooksStore.Services.Interfaces.Services.Base;
 using BooksStore.Services.Implementation.Services.WithCaching;
 using BooksStore.Services.Interfaces.Services.WithCaching;
+using BooksStore.Services.Interfaces;
+using BooksStore.Services.Interfaces.Repositories;
 
 namespace BooksStore.Services
 {

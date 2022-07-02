@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BooksStore.Web.CacheOptions
+﻿namespace BooksStore.Services.CacheOptions
 {
     public static class CacheKeys
     {

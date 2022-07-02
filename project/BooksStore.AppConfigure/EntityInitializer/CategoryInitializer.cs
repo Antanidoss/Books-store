@@ -1,5 +1,5 @@
 ﻿using BooksStore.Core.Entities;
-using BooksStore.Infastructure.Interfaces.Repositories;
+using BooksStore.Services.Interfaces.Repositories;
 using BooksStore.Services.Implementation.Filters.CategoryFilters;
 using System.Threading.Tasks;
 
