@@ -26,8 +26,7 @@ namespace BooksStore.Core.Entities
             BookBaskets = new List<BookBasketJunction>();
         }
 
-        public Book(string title, decimal price, bool inStock, int numberOfPages, string descriptions, Img img,
-            Author author, Category category) : base()
+        public Book(string title, decimal price, bool inStock, int numberOfPages, string descriptions, Img img, Author author, Category category) : base()
         {
             ValidateArgumentConstructor(title, price, inStock, numberOfPages, descriptions, img, author, category);
 

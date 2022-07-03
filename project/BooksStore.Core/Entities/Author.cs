@@ -8,6 +8,7 @@ namespace BooksStore.Core.Entities
     {
         [Index(Unique = true)]
         public string Firstname { get; set; }
+
         [Index(Unique = true)]
         public string Surname { get; set; }
         public IEnumerable<Book> Books { get; set; }
