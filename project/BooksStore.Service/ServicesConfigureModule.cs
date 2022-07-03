@@ -60,6 +60,7 @@ namespace BooksStore.Services
             services.AddScoped<IBasketCachingService, BasketCachingService>();
             services.AddScoped<ICommentCachingService, CommentCachingService>();
             services.AddScoped<IOrderCachingService, OrderCachingService>();
+            services.AddScoped<IAuthorCachingService, AuthorCachingService>();
         }
     }
 }
