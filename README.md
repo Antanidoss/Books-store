@@ -26,7 +26,7 @@
 ---
 #### 3. Next, build the solution by running:
 ### `dotnet build`
-
+---
 #### 4. Once the front end has started, within the \project\BooksStore.WEB directory, launch the back end by running:
 ### `dotnet run`
 ---
