@@ -30,7 +30,7 @@
 #### 4. Once the front end has started, within the \project\BooksStore.WEB directory, launch the back end by running:
 ### `dotnet run`
 ---
-#### 4. Copy the address and go to the site
+#### 5. Copy the address and go to the site
 ---
 #### To log in as an administrator you will need a email and password.
 
